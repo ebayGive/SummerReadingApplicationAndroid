@@ -1,0 +1,91 @@
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@drawable/summer_bg"
+  android:fillViewport="true">
+  <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"> <!-- android:background="#ffffff">  --> 
+ 
+        <!--  Header Starts-->
+        <!--  android:background="@drawable/header_gradient"-->
+		 <LinearLayout android:id="@+id/header"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:paddingTop="5dip"
+		    android:paddingBottom="5dip">
+		        <!-- Logo Start-->
+		        <ImageView android:src="@drawable/homeheader"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginLeft="2dip"/>
+		        <!-- Logo Ends -->
+		</LinearLayout>
+       <!--  Header Ends -->
+ 
+        <!-- Footer Start -->
+		 <LinearLayout android:id="@+id/footer"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+		    android:layout_alignParentBottom="true">
+		        <!-- Logo Start-->
+		        <ImageView android:src="@drawable/homefooter"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:gravity="center"
+		            android:layout_marginLeft="1dip"/>
+		        <!-- Logo Ends -->
+		</LinearLayout>
+		 		 <!-- Footer Ends -->
+ 
+        <!-- Login Form -->
+	<LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="10dip"
+          android:layout_marginLeft="16dip"
+          android:layout_marginRight="16dip"
+		  android:background="@color/LightBlue"
+          android:layout_below="@id/header">
+          <!--  Email Label
+          <TextView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#372c24"
+                android:text="Phone or User Name"
+          -->
+    	<ListView
+	        android:id="@+id/user_list"
+    	    android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" 
+	        android:divider="#b5b5b5"
+        	android:dividerHeight="1dp"
+        	android:cacheColorHint="#00000000"
+        />
+	</LinearLayout>
+        <!-- Login Form Ends -->
+ 
+  </RelativeLayout>
+</ScrollView>
+
+
+
+
+
+<!-- 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/summer_bg"
+    android:orientation="vertical" >
+     
+    <ListView
+        android:id="@+id/user_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+  
+</LinearLayout>
+-->

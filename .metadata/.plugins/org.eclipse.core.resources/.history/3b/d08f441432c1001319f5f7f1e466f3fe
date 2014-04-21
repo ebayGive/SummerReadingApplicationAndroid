@@ -1,0 +1,24 @@
+package com.sccl.summerreadingapp.helper;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.widget.Toast;
+
+public class MiscUtils {
+
+	public static  boolean isNetworkAvailable(Context c) {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+	
+	public static void displayToastMessage(Context context, String message) {
+		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+	}
+
+	public static boolean empty(String user) {
+		return user == null || user.length() == 0;
+	}
+}

@@ -1,0 +1,64 @@
+package com.sccl.summerreadingapp;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+	 
+public class ChooseUserFromListActivity extends Activity {
+     
+    // List view
+    private ListView lv;
+     
+    // Listview Adapter
+    ArrayAdapter<String> adapter;
+     
+    // Search EditText
+    EditText inputSearch;
+     
+     
+    // ArrayList for Listview
+    ArrayList<HashMap<String, String>> productList;
+ 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.choose_user_list);
+        
+        // Account user = (Account)getIntent().getSerializableExtra("user");
+         
+        // Listview Data
+        // final String users[] = {"User 1", "User 2", "User 3"};
+        
+        final String users[] = (String[])getIntent().getSerializableExtra("user");
+         
+        lv = (ListView) findViewById(R.id.user_list);
+         
+        // Adding items to listview
+        adapter = new ArrayAdapter<String>(this, R.layout.choose_user_detail, R.id.user_name, users);
+        lv.setAdapter(adapter);       
+         
+        // listening to single list item on click
+        lv.setOnItemClickListener(new OnItemClickListener() {
+          public void onItemClick(AdapterView<?> parent, View view,
+              int position, long id) {
+               
+             // selected item 
+             String userName = users[position];
+               
+			 Intent returnIntent = new Intent();
+			 returnIntent.putExtra("user", userName);
+			 setResult(RESULT_OK,returnIntent);     
+			 finish();			
+			 }
+        });
+    }
+     
+}

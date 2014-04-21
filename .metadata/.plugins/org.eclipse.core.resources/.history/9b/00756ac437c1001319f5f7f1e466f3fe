@@ -1,0 +1,335 @@
+package com.sccl.summerreadingapp;
+
+import java.util.Locale;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.sccl.summerreadingapp.adapter.SectionsPagerAdapter;
+import com.sccl.summerreadingapp.helper.JSONResultParser;
+import com.sccl.summerreadingapp.helper.MiscUtils;
+import com.sccl.summerreadingapp.model.Account;
+import com.sccl.summerreadingapp.model.Login;
+import com.sccl.summerreadingapp.model.User;
+
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+	private static final int REQUEST_CODE_LOGIN = 1;
+	private static final int REQUEST_CODE_SELECT_USER = 2;
+
+	/**
+	 * The {@link android.support.v4.view.PagerAdapter} that will provide
+	 * fragments for each of the sections. We use a
+	 * {@link FragmentPagerAdapter} derivative, which will keep every
+	 * loaded fragment in memory. If this becomes too memory intensive, it
+	 * may be best to switch to a
+	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+	 */
+	SectionsPagerAdapter mSectionsPagerAdapter;
+
+	/**
+	 * The {@link ViewPager} that will host the section contents.
+	 */
+	ViewPager mViewPager;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		// Set up the action bar.
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections of the activity.
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
+
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+
+		// When swiping between different sections, select the corresponding
+		// tab. We can also use ActionBar.Tab#select() to do this if we have
+		// a reference to the Tab.
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				actionBar.setSelectedNavigationItem(position);
+			}
+
+		});
+
+		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+			actionBar.addTab(
+					actionBar.newTab()
+					.setText(mSectionsPagerAdapter.getPageTitle(i))
+					.setTabListener(this));
+		}
+
+		SharedPreferences userDetails = getApplicationContext().getSharedPreferences("Account", MODE_PRIVATE);
+		String user = userDetails.getString("Name", "");
+		if (MiscUtils.empty(user)) {
+			Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+			startActivityForResult(i, REQUEST_CODE_LOGIN);
+		}
+		else {
+			String loginJSONResponse = userDetails.getString("LoginJSONResponse", "");
+            JSONObject jsonLoginObject;
+			try {
+				jsonLoginObject = new JSONObject(loginJSONResponse);
+	            Login login = JSONResultParser.createLogin(jsonLoginObject);
+				Account account = login.getAccount();
+				User users[] = account.getUsers();
+				if (users != null && users.length > 0) {
+					String userNames[] = new String[users.length];
+					String userTypes[] = new String[users.length];
+					for (int i = 0; i < users.length; i++) {
+						userNames[i] = users[i].getFirstName();
+						userTypes[i] = users[i].getUserType();
+					}
+					Intent i = new Intent(getApplicationContext(), ChooseUserFromListActivity.class);
+					i.putExtra("user", userNames);
+					i.putExtra("userType", userTypes);
+					startActivityForResult(i, REQUEST_CODE_SELECT_USER);
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK){
+			if (requestCode == REQUEST_CODE_LOGIN && handleLoginResult(data))
+				return;
+			if (requestCode == REQUEST_CODE_SELECT_USER && handleChooseUserResult(data))
+				return;
+		}
+		finish();
+	}//onActivityResult
+
+	private boolean handleChooseUserResult(Intent data) {
+		int userIndex = data.getIntExtra("index", -1);
+		// String user = data.getStringExtra("user");
+		
+		if (userIndex == -1)
+			return false;
+		
+		SharedPreferences userDetails = getApplicationContext().getSharedPreferences("Account", MODE_PRIVATE);
+		String loginJSONResponse = userDetails.getString("LoginJSONResponse", "");
+        JSONObject jsonLoginObject;
+		try {
+			jsonLoginObject = new JSONObject(loginJSONResponse);
+            Login login = JSONResultParser.createLogin(jsonLoginObject);
+			Account account = login.getAccount();
+			User users[] = account.getUsers();
+			if (users != null && users.length > 0) {
+				String user = users[userIndex].getFirstName();
+
+				if (!MiscUtils.empty(user))
+				{
+					displayToastMessage("User Selected "+ user);
+					Editor edit = userDetails.edit();
+					edit.putString("User", user);
+					edit.commit(); 
+					return true;
+				}
+
+				
+				String userNames[] = new String[users.length];
+				String userTypes[] = new String[users.length];
+				for (int i = 0; i < users.length; i++) {
+					userNames[i] = users[i].getFirstName();
+					userTypes[i] = users[i].getUserType();
+				}
+				Intent i = new Intent(getApplicationContext(), ChooseUserFromListActivity.class);
+				i.putExtra("user", userNames);
+				i.putExtra("userType", userTypes);
+				startActivityForResult(i, REQUEST_CODE_SELECT_USER);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	private boolean handleLoginResult(Intent data) {
+		Login login = (Login)data.getSerializableExtra("user");
+		if (login != null)
+		{
+			Account account = login.getAccount();				
+			displayToastMessage("User signed in "+ account.getName());
+			SharedPreferences userDetails = getApplicationContext().getSharedPreferences("Account", MODE_PRIVATE);
+			Editor edit = userDetails.edit();
+			edit.putString("LoginJSONResponse", login.getLoginJSONResponse());
+			edit.putString("Token", login.getAuthToken());
+			edit.putString("Name", account.getName());
+			User users[] = account.getUsers();
+			
+			if (users != null && users.length > 0) {
+				mSectionsPagerAdapter.setActivityGridData(users[0].getGridActivities());
+
+				edit.putInt("usercount", users.length);
+				String userNames[] = new String[users.length];
+				String userTypes[] = new String[users.length];
+			
+				for (int i = 0; i < users.length; i++)
+				{
+					String userName = users[i].getFirstName();
+					userNames[i] = userName;
+					userTypes[i] = users[i].getUserType();
+					edit.putString("User"+i, userName);
+					edit.putString("UserId"+i, users[i].getId());
+					edit.putString("UserType"+i, userTypes[i]);
+				}
+				edit.commit(); 
+//						return;
+				Intent i = new Intent(getApplicationContext(), ChooseUserFromListActivity.class);
+				i.putExtra("user", userNames);
+				i.putExtra("userType", userTypes);
+				startActivityForResult(i, REQUEST_CODE_SELECT_USER);
+			}
+			else
+			{
+				edit.commit(); 
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private void displayToastMessage(String message) {
+		// Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+		MiscUtils.displayToastMessage(getApplicationContext(), message);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+		// When the given tab is selected, switch to the corresponding page in
+		// the ViewPager.
+		mViewPager.setCurrentItem(tab.getPosition());
+	}
+
+	@Override
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	}
+
+	@Override
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	}
+
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class SectionsPagerAdapter1 extends FragmentPagerAdapter {
+
+		public SectionsPagerAdapter1(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			// getItem is called to instantiate the fragment for the given page.
+			// Return a PlaceholderFragment (defined as a static inner class below).
+			return PlaceholderFragment.newInstance(position + 1);
+		}
+
+		@Override
+		public int getCount() {
+			// Show 3 total pages.
+			return 3;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			Locale l = Locale.getDefault();
+			switch (position) {
+			case 0:
+				return getString(R.string.title_section1).toUpperCase(l);
+			case 1:
+				return getString(R.string.title_section2).toUpperCase(l);
+			case 2:
+				return getString(R.string.title_section3).toUpperCase(l);
+			}
+			return null;
+		}
+	}
+
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
+		/**
+		 * The fragment argument representing the section number for this
+		 * fragment.
+		 */
+		private static final String ARG_SECTION_NUMBER = "section_number";
+
+		/**
+		 * Returns a new instance of this fragment for the given section
+		 * number.
+		 */
+		public static PlaceholderFragment newInstance(int sectionNumber) {
+			PlaceholderFragment fragment = new PlaceholderFragment();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		public PlaceholderFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+			TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+			textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+			return rootView;
+		}
+	}
+
+}

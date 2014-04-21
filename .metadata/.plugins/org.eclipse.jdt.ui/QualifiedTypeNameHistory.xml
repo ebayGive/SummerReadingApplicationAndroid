@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.LoginActivity"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Account"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.JSONResultParser"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.UserType"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.RegistrationActivity"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.GridActivity"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.MiscUtils"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.drawable"/>
+</qualifiedTypeNameHistroy>
