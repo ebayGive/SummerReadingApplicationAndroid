@@ -11,6 +11,7 @@ import com.sccl.summerreadingapp.DailyReadingFragment;
 import com.sccl.summerreadingapp.InformationFragment;
 import com.sccl.summerreadingapp.R;
 import com.sccl.summerreadingapp.SummerActivityFragment;
+import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.GridActivity;
 import com.sccl.summerreadingapp.model.User;
 
@@ -24,6 +25,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     GridActivity[] data = null;
 	private User user;
 	SummerActivityFragment summer;
+	private Account account;
+	private int userIndex = -1;
 
     public SectionsPagerAdapter(FragmentManager fm, Context c) {
         super(fm);
@@ -36,7 +39,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         case 0:
         	summer =  new SummerActivityFragment();
         	// fragment.setGridData(data);
-        	summer.setUser(user);
+        	// summer.setAccountAndSelectedUserIndex(user, account, userIndex);
+        	summer.setAccountAndSelectedUserIndex(account, userIndex);
         	return summer;
         case 1:
             return new DailyReadingFragment();
@@ -82,18 +86,21 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 	  	}
     }
 
-	public void setUser(FragmentManager fm, User user) {
-    	this.user = user;
-//    	SummerActivityFragment summer = (SummerActivityFragment)getItem(0);
-//    	if (summer != null && summer.imageAdapter != null)
-//    		summer.setUser(user);
-    	SummerActivityFragment fragment = 
-    			(SummerActivityFragment) fm.findFragmentByTag(
+	// public void setAccountAndSelectedUserIndex(FragmentManager fm, User user, Account account, int userIndex) {
+	public void setAccountAndSelectedUserIndex(FragmentManager fm, Account account, int userIndex) {
+    	// this.user = user;
+    	this.account = account;
+    	this.userIndex  = userIndex;
+    	
+    	User users[] = account.getUsers();
+    	this.user = users[userIndex];
+    	
+    	SummerActivityFragment fragment = (SummerActivityFragment) fm.findFragmentByTag(
   	                       "android:switcher:"+R.id.pager+":0");
 	  	if(fragment != null)  {
-	  		fragment.setUser(user);
-;	  	}
-    	
+	  		// fragment.setAccountAndSelectedUserIndex(user, account, userIndex);
+	  		fragment.setAccountAndSelectedUserIndex(account, userIndex);
+	  	}
     }
 
 

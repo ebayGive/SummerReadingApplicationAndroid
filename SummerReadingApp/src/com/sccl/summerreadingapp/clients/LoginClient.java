@@ -58,7 +58,7 @@ public class LoginClient extends AsyncTask<String, Void, Login> {
         nameValuePair.add(new BasicNameValuePair("passcode", arg0[1]));
 
         // Making a request to url and getting response
-       String jsonStr = new ServiceInvoker().makeServiceCall(LOGIN_REQUEST, ServiceInvoker.POST, nameValuePair);
+       String jsonStr = new ServiceInvoker().invoke(LOGIN_REQUEST, ServiceInvoker.POST, nameValuePair);
        // String jsonStr = "";
        Login login = null;
 

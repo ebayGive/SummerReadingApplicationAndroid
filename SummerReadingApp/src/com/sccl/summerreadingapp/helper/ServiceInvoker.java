@@ -17,84 +17,71 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
  
 public class ServiceInvoker {
- 
-    static String response = null;
-    public final static int GET = 1;
-    public final static int POST = 2;
+
+	public final static int GET = 1;
+	public final static int POST = 2;
 	public final static int PUT = 3;
- 
-    public ServiceInvoker() {
- 
-    }
- 
-    /**
-     * Making service call
-     * @url - url to make request
-     * @method - http request method
-     * */
-    public String makeServiceCall(String url, int method) {
-        return this.makeServiceCall(url, method, null);
-    }
- 
-    /**
-     * Making service call
-     * @url - url to make request
-     * @method - http request method
-     * @params - http request params
-     * */
-    public String makeServiceCall(String url, int method,
-            List<NameValuePair> params) {
-        try {
-            // http client
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpEntity httpEntity = null;
-            HttpResponse httpResponse = null;
-             
-            // Checking http request method type
-            if (method == POST) {
-                HttpPost httpPost = new HttpPost(url);
-                // adding post params
-                if (params != null) {
-                    httpPost.setEntity(new UrlEncodedFormEntity(params));
-                }
- 
-                httpResponse = httpClient.execute(httpPost);
- 
-            } else if (method == PUT) {
-            	HttpPut HttpPut = new HttpPut(url);
-                // adding post params
-                if (params != null) {
-                	HttpPut.setEntity(new UrlEncodedFormEntity(params));
-                }
- 
-                httpResponse = httpClient.execute(HttpPut);
- 
-            } else if (method == GET) {
-                // appending params to url
-                if (params != null) {
-                    String paramString = URLEncodedUtils
-                            .format(params, "utf-8");
-                    url += "?" + paramString;
-                }
-                HttpGet httpGet = new HttpGet(url);
-                httpGet.setHeader("Content-Type", "application/json"); 
-                httpGet.setHeader("Accept", "application/json");
- 
-                httpResponse = httpClient.execute(httpGet);
- 
-            }
-            httpEntity = httpResponse.getEntity();
-            response = EntityUtils.toString(httpEntity);
- 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         
-        return response;
- 
-    }
+
+	public ServiceInvoker() {
+	}
+
+	public String invoke(String url, int method) {
+		return this.invoke(url, method, null);
+	}
+
+	public String invoke(String url, int method, List<NameValuePair> params) {
+		String response = null;
+		try {
+			HttpResponse httpResponse = null;
+
+			if (method == POST) {
+				httpResponse = handlePost(url, params);
+			} else if (method == PUT) {
+				httpResponse = handlePut(url, params);
+			} else if (method == GET) {
+				httpResponse = handleGet(url, params);
+			}
+			HttpEntity httpEntity = httpResponse.getEntity();
+			response = EntityUtils.toString(httpEntity);
+
+		} catch (Exception e) {
+		}
+
+		return response;
+
+	}
+
+	public HttpResponse handleGet(String url, List<NameValuePair> params) 
+			throws IOException, ClientProtocolException {
+		if (params != null) {
+			String paramString = URLEncodedUtils.format(params, "utf-8");
+			url += "?" + paramString;
+		}
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Content-Type", "application/json"); 
+		httpGet.setHeader("Accept", "application/json");
+
+		return new DefaultHttpClient().execute(httpGet);
+	}
+
+	public HttpResponse handlePut(String url, List<NameValuePair> params) 
+			throws UnsupportedEncodingException, IOException, ClientProtocolException {
+		HttpPut HttpPut = new HttpPut(url);
+		// adding post params
+		if (params != null) {
+			HttpPut.setEntity(new UrlEncodedFormEntity(params));
+		}
+
+		return new DefaultHttpClient().execute(HttpPut);
+	}
+
+	public HttpResponse handlePost(String url, List<NameValuePair> params)
+			throws UnsupportedEncodingException, IOException, ClientProtocolException {
+		HttpPost httpPost = new HttpPost(url);
+		if (params != null) {
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
+		}
+
+		return new DefaultHttpClient().execute(httpPost);
+	}
 }

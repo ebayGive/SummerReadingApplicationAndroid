@@ -16,10 +16,13 @@ import com.sccl.summerreadingapp.model.GridActivity;
 public class ImageAdapter extends BaseAdapter implements Serializable{
     private Context mContext;
     private GridActivity[] gridData;
+    int imageSize;
 
     public ImageAdapter(Context c, GridActivity[] gridData) {
         mContext = c;
         this.gridData = gridData;
+        imageSize = (int) mContext.getResources().getDimension(R.dimen.image_size);
+
     }
 
     public int getCount() {
@@ -46,10 +49,9 @@ public class ImageAdapter extends BaseAdapter implements Serializable{
     	ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            int size = (int) mContext.getResources().getDimension(R.dimen.image_size);
-            imageView.setLayoutParams(new GridView.LayoutParams(size, size));
+            imageView.setLayoutParams(new GridView.LayoutParams(imageSize, imageSize));
 
-            MiscUtils.displayToastMessage(mContext, "size="+size);
+            // MiscUtils.displayToastMessage(mContext, "size="+imageSize);
             //imageView.setLayoutParams(new GridView.LayoutParams(180, 180));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(2, 2, 2, 2);

@@ -2,6 +2,7 @@ package com.sccl.summerreadingapp.model;
 
 import java.io.Serializable;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,13 +100,20 @@ public class Account implements Serializable {
 	
 	public String toJSON(){
 
-	    JSONObject jsonObject= new JSONObject();
+	    JSONObject jsonObject = new JSONObject();
 	    try {
 	        jsonObject.put(ID, getId());
 	        jsonObject.put(NAME, getName());
 	        jsonObject.put(EMAIL_ADDRESS, getEmailAddress());
 	        jsonObject.put(BRANCH_ID, getBranchId());
 	        jsonObject.put(ROLE, getRole());
+	        
+	        JSONArray jsonUserArray = new JSONArray();
+	        User[] users = getUsers();
+	        for (int i = 0; i < users.length; i++){
+	        	jsonUserArray.put(users[i].toJSONObject());
+	        }
+	        jsonObject.put(USERS, jsonUserArray);
 
 	        return jsonObject.toString();
 	    } catch (JSONException e) {

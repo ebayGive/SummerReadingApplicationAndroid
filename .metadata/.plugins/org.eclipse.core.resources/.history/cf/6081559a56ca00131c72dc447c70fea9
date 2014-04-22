@@ -1,0 +1,10 @@
+package com.sccl.summerreadingapp;
+import android.app.Application;
+import android.content.Context;
+
+import com.sccl.summerreadingapp.model.Account;
+import com.sccl.summerreadingapp.model.User;
+ 
+public class PrizeImageHandler {
+
+}

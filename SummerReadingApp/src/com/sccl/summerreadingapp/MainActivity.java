@@ -129,14 +129,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		try {
 			JSONObject jsonLoginObject = new JSONObject(loginJSONResponse);
             Login login = JSONResultParser.createLogin(jsonLoginObject);
-			Account account = login.getAccount();
-			User users[] = account.getUsers();
+			// Account account = login.getAccount();
+            String accountStr = userDetails.getString("Account", "");
+            Account account = JSONResultParser.createAccount(new JSONObject(accountStr));
+   			User users[] = account.getUsers();
 			if (users != null && userIndex < users.length) {
 				String user = users[userIndex].getFirstName();
 				if (!MiscUtils.empty(user)) {
 					displayToastMessage("User Selected "+ user);
 					// mSectionsPagerAdapter.setActivityGridData(users[userIndex].getGridActivities());
-					mSectionsPagerAdapter.setUser(getSupportFragmentManager(), users[userIndex]);
+					// mSectionsPagerAdapter.setAccountAndSelectedUserIndex(getSupportFragmentManager(), users[userIndex], account, userIndex);
+					mSectionsPagerAdapter.setAccountAndSelectedUserIndex(getSupportFragmentManager(), account, userIndex);
 					SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
 					summerReadingApplication.setAccount(account);
 					summerReadingApplication.setUser(users[userIndex]);
@@ -163,6 +166,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 			edit.putString("LoginJSONResponse", login.getLoginJSONResponse());
 			edit.putString("Token", login.getAuthToken());
 			edit.putString("Name", account.getName());
+			edit.putString("Account", account.toJSON());
 			edit.commit(); 
 			User users[] = account.getUsers();
 			

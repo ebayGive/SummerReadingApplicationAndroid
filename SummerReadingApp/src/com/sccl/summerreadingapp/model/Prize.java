@@ -25,7 +25,7 @@ public class Prize implements Serializable {
 		try {
 			int state = jsonObj.getInt(STATE);
 			String notes = jsonObj.getString(NOTES);
-			String dateString = jsonObj.getString(UPDATED_AT);
+			String dateString = ""; // jsonObj.getString(UPDATED_AT);
 			Date d = null;
 			if (dateString != null)
 			{
@@ -70,18 +70,21 @@ public class Prize implements Serializable {
 	}
 
 	public String toJSON(){
+	    JSONObject jsonObject = this.toJSONObject();
+	    return jsonObject.toString();
+	}	
+
+	public JSONObject toJSONObject(){
 
 	    JSONObject jsonObject= new JSONObject();
 	    try {
 	        jsonObject.put(STATE, getState());
 	        jsonObject.put(NOTES, getNotes());
 //	        jsonObject.put(UPDATED_AT, getLastUpdated());
-
-	        return jsonObject.toString();
 	    } catch (JSONException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
-	        return "";
 	    }
+	    return jsonObject;
 	}	
 }

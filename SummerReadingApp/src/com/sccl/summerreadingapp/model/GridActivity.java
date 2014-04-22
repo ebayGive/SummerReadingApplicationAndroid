@@ -27,7 +27,7 @@ public class GridActivity implements Serializable {
 		try {
 			int type = jsonObj.getInt(TYPE);
 			String notes = jsonObj.getString(NOTES);
-			String dateString = jsonObj.getString(UPDATED_AT);
+			String dateString = ""; // jsonObj.getString(UPDATED_AT);
 			Date d = MiscUtils.parseDateString(dateString);
 			// Date d = null;
 			if (dateString != null)
@@ -74,17 +74,21 @@ public class GridActivity implements Serializable {
 
 	public String toJSON(){
 
+	    JSONObject jsonObject = this.toJSONObject();
+	    return jsonObject.toString();
+	}	
+
+	public JSONObject toJSONObject(){
+
 	    JSONObject jsonObject= new JSONObject();
 	    try {
 	        jsonObject.put(TYPE, getType());
 	        jsonObject.put(NOTES, getNotes());
 //	        jsonObject.put(UPDATED_AT, getLastUpdated());
-
-	        return jsonObject.toString();
 	    } catch (JSONException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
-	        return "";
 	    }
+        return jsonObject;
 	}	
 }

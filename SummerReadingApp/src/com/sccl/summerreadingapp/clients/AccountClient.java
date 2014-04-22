@@ -44,7 +44,7 @@ public class AccountClient extends AsyncTask<String, Void, Account> {
         String url = "http://hackathon.ebaystratus.com/accounts/2A8F81D9-F040-445C-BFA7-A44C26E9968B";
 
         // Making a request to url and getting response
-       String jsonStr = sh.makeServiceCall(url, ServiceInvoker.GET);
+       String jsonStr = sh.invoke(url, ServiceInvoker.GET);
        // String jsonStr = "";
        Account account = null;
 

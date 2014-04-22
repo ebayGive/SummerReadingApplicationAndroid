@@ -1,12 +1,10 @@
 package com.sccl.summerreadingapp;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +19,7 @@ import android.widget.ImageView;
 import com.sccl.summerreadingapp.adapter.ImageAdapter;
 import com.sccl.summerreadingapp.clients.GridActivityClient;
 import com.sccl.summerreadingapp.helper.MiscUtils;
+import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.GridActivity;
 import com.sccl.summerreadingapp.model.Prize;
 import com.sccl.summerreadingapp.model.User;
@@ -30,10 +29,11 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 	private static final int TOTAL_COLUMNS = 5;
 	private static final int TOTAL_PRIZES = 5;
 	public ImageAdapter imageAdapter;
-	// GridActivity[] gridActivities = null;
 	View rootView;
 	User user;
 	int selectedIndex = -1;
+	private Account account;
+	private int userIndex = -1;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,25 +108,34 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 	}
 
 	public void setPrizeImageBasedOnState(View rootView, Prize prize, int prizeResourceId) {
+		int imageId = R.drawable.prize_not_ready_to_claim;
 		if (prize.getState() == 1) {
-			ImageView prizeView = (ImageView) rootView.findViewById(prizeResourceId);
-			prizeView.setImageResource(R.drawable.prize_ready_to_claim);
-
+			imageId = R.drawable.prize_ready_to_claim;
 		}
+		else if (prize.getState() == 2) {
+			imageId = R.drawable.prize_claimed;
+		}
+		ImageView prizeView = (ImageView) rootView.findViewById(prizeResourceId);
+		prizeView.setImageResource(imageId);
 	}
 
-	public void setUser(User user) {
-    	this.user = user;
+	// public void setAccountAndSelectedUserIndex(User user, Account account, int userIndex) {
+	public void setAccountAndSelectedUserIndex(Account account, int userIndex) {
+    	// this.user = user;
+    	this.account = account;
+    	this.userIndex = userIndex;
+    	
+    	if (account != null && userIndex >=0) {
+    		User users[] = account.getUsers();
+    		this.user = users[userIndex];
+    	}
+    	
+    	
     	if (user != null && imageAdapter != null) {
     		imageAdapter.setGridData(user.getGridActivities());
         	prizeWon(getActivity(), rootView);
     	}
     }
-
-	private void setGridData1(GridActivity[] data) {
-    	//this.gridActivities = data;
-    }
-
 
     private void showAlertDialog(int index) {
     	if (user != null)
@@ -165,15 +174,9 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
     private void updateSharedPreferences() {
     	Context c = getActivity().getApplicationContext();
 		SharedPreferences userDetails = c.getSharedPreferences("Account", c.MODE_PRIVATE);
-		String loginJSONResponse = userDetails.getString("LoginJSONResponse", "");
-		try {
-			JSONObject jsonLoginObject = new JSONObject(loginJSONResponse);
-			
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Editor edit = userDetails.edit();
+		edit.putString("Account", account.toJSON());
+		edit.commit(); 
 	}
 
 	private void prizeWon(Context context, View rootView)
@@ -193,7 +196,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
     			
     	total += countOfCompletedColumns(userGrid);
     	
-		if (isLeftDiagonalCompleted(userGrid, total)) {
+		if (isLeftDiagonalCompleted(userGrid)) {
 			total++;
 		}
 
@@ -211,7 +214,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
         MiscUtils.displayToastMessage(context, "Prizes="+total);
     }
 
-	public void setPrizes(Prize[] prizes, int total) {
+	private void setPrizes(Prize[] prizes, int total) {
 		if (total > 0)
         	prizes[0].setState(1);
 
@@ -228,7 +231,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
         	prizes[4].setState(1);
 	}
 
-	public boolean isRightDiagonalCompleted(GridActivity[] userGrid) {
+	private boolean isRightDiagonalCompleted(GridActivity[] userGrid) {
 		boolean completed = true;
     	for (int i = TOTAL_COLUMNS - 1, totalIterations = 0; totalIterations < TOTAL_ROWS; i+= (TOTAL_COLUMNS - 1), totalIterations++) {
     		if (userGrid[i].getType() != 1) {
@@ -239,7 +242,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 		return completed;
 	}
 
-	public boolean isLeftDiagonalCompleted(GridActivity[] userGrid, int totalPrizes) {
+	private boolean isLeftDiagonalCompleted(GridActivity[] userGrid) {
 		boolean completed = true;
     	for (int i = 0; i < TOTAL_ROWS * TOTAL_COLUMNS; i += (TOTAL_COLUMNS + 1)) {
     		if (userGrid[i].getType() != 1) {
@@ -250,7 +253,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 		return completed;
 	}
 
-	public int countOfCompletedColumns(GridActivity[] userGrid) {
+	private int countOfCompletedColumns(GridActivity[] userGrid) {
 		int total = 0;
 		for (int i = 0; i < TOTAL_COLUMNS; i++) {
     		boolean good = true;
@@ -269,7 +272,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 		return total;
 	}
 
-	public int countOfCompletedRows(GridActivity[] userGrid) {
+	private int countOfCompletedRows(GridActivity[] userGrid) {
 		int total = 0;
 		for (int i = 0; i < TOTAL_ROWS; i++) {
     		int firstIndex = i * TOTAL_COLUMNS;

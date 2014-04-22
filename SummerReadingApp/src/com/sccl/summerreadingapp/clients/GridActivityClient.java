@@ -59,7 +59,7 @@ public class GridActivityClient extends AsyncTask<Void, Void, Void> {
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
         nameValuePair.add(new BasicNameValuePair("activity", ""+gridActivities.getType()));
         nameValuePair.add(new BasicNameValuePair("notes", gridActivities.getNotes()));
-        new ServiceInvoker().makeServiceCall(url, ServiceInvoker.PUT, nameValuePair);
+        new ServiceInvoker().invoke(url, ServiceInvoker.PUT, nameValuePair);
         return null;
     }
 

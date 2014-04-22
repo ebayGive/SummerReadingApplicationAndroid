@@ -3,3 +3,12 @@
 1398063086424	Rename local variable 'loginbutton'
 1398065757943	Rename field 'data'
 1398116993969	Copy file
+1398125271267	Rename field 'size'
+1398142954497	Rename method 'makeServiceCall'
+1398142965813	Rename method 'makeServiceCall'
+1398143003121	Extract method 'handlePost'
+1398143046653	Extract method 'handlePut'
+1398143086723	Extract method 'handleGet'
+1398146579675	Rename local variable 'jsonGridArray'
+1398192938636	Rename method 'setUser'
+1398192982791	Rename method 'setUser'
