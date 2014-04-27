@@ -91,11 +91,11 @@ public class User implements Serializable {
 	
 	public String toJSON(){
 
-	    JSONObject jsonObject = this.toJSONObject();
+	    JSONObject jsonObject = this.toJSONObject(true);
 	    return jsonObject.toString();
 	}	
 
-	public JSONObject toJSONObject(){
+	public JSONObject toJSONObject(boolean addChildren){
 	    JSONObject jsonObject = new JSONObject();
 	    try {
 	        jsonObject.put(ID, getId());
@@ -103,19 +103,21 @@ public class User implements Serializable {
 	        jsonObject.put(LAST_NAME, getLastName());
 	        jsonObject.put(USER_TYPE_ID, getUserType());
 
-	        JSONArray jsonGridArray = new JSONArray();
-	        GridActivity[] grid = getGridActivities();
-	        for (int i = 0; i < grid.length; i++){
-	        	jsonGridArray.put(grid[i].toJSONObject());
+	        if (addChildren) {
+		        JSONArray jsonGridArray = new JSONArray();
+		        GridActivity[] grid = getGridActivities();
+		        for (int i = 0; grid != null && i < grid.length; i++){
+		        	jsonGridArray.put(grid[i].toJSONObject());
+		        }
+		        jsonObject.put("activityGrid", jsonGridArray);
+	
+		        JSONArray jsonPrizeArray = new JSONArray();
+		        Prize[] prizes = getPrizes();
+		        for (int i = 0; prizes != null && i < prizes.length; i++){
+		        	jsonPrizeArray.put(prizes[i].toJSONObject());
+		        }
+		        jsonObject.put("prizes", jsonPrizeArray);
 	        }
-	        jsonObject.put("activityGrid", jsonGridArray);
-
-	        JSONArray jsonPrizeArray = new JSONArray();
-	        Prize[] prizes = getPrizes();
-	        for (int i = 0; i < prizes.length; i++){
-	        	jsonPrizeArray.put(prizes[i].toJSONObject());
-	        }
-	        jsonObject.put("prizes", jsonPrizeArray);
 	    } catch (JSONException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();

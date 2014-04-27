@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@drawable/summer_bg"
+  android:fillViewport="true">
+  <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"> <!-- android:background="#ffffff">  -->
+ 
+        <!--  Header  Starts-->
+         <!--  android:background="@drawable/header_gradient"-->
+        <LinearLayout android:id="@+id/header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dip"
+                android:paddingBottom="5dip">
+                <!-- Logo Start-->
+                <ImageView android:src="@drawable/homeheader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dip"/>
+                <!-- Logo Ends -->
+        </LinearLayout>
+        <!--  Header Ends -->
+        <!-- Footer Start -->
+<!--
+ 		 <LinearLayout android:id="@+id/footer"
+		    android:layout_width="fill_parent"
+		    android:background="@drawable/footer_repeat"
+		    android:layout_height="90dip"
+		    android:layout_alignParentBottom="true">
+			<TextView android:layout_height="1dip" 
+          		android:layout_width="fill_parent"
+		          android:layout_weight="1" />
+		 		</LinearLayout>
+-->
+        <!-- android:background="@drawable/footer_repeat" -->
+
+		 <LinearLayout android:id="@+id/footer"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+		    android:layout_alignParentBottom="true">
+		        <!-- Logo Start-->
+		        <ImageView android:src="@drawable/homefooter"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:gravity="center"
+		            android:layout_marginLeft="2dip"/>
+		        <!-- Logo Ends -->
+		</LinearLayout>
+
+ 		 <!-- Footer Ends -->
+ 
+        <!-- Registration Form -->
+        <LinearLayout
+		  android:background="@color/LightBlue"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="10dip"
+          android:layout_marginLeft="16dip"
+          android:layout_marginRight="16dip"
+          android:layout_below="@id/header">
+          <!-- Full Name Label -->
+          <EditText android:id="@+id/add_fname"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:hint="@string/label_fname"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
+          <!--  Name Label -->
+          <EditText android:id="@+id/add_lname"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:hint="@string/label_lname"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
+		 <Spinner
+		        android:id="@+id/reader_type"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:entries="@array/reader_type"
+		        android:prompt="@string/reader_type" 
+                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
+		           <!-- Register Button -->
+          <Button android:id="@+id/btnRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="@string/label_register"/>
+          <!-- Link to Login Screen -->
+          <TextView android:id="@+id/link_to_login"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="2dip"
+                android:text="@string/label_login_in_register"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#025f7c"/>
+ 
+        </LinearLayout>
+        <!-- Registration Form Ends -->
+  </RelativeLayout>
+</ScrollView>

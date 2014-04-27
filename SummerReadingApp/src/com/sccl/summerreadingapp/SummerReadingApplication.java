@@ -1,8 +1,16 @@
 package com.sccl.summerreadingapp;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
+import com.sccl.summerreadingapp.helper.JSONResultParser;
+import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.model.Account;
+import com.sccl.summerreadingapp.model.Branch;
+import com.sccl.summerreadingapp.model.GridCell;
 import com.sccl.summerreadingapp.model.User;
  
 public class SummerReadingApplication extends Application {
@@ -14,6 +22,10 @@ public class SummerReadingApplication extends Application {
     
     private Account account;
     private User user;
+
+	private Branch branch;
+
+	private GridCell gridCell;
  
     public Account getAccount() {
 		return account;
@@ -34,10 +46,13 @@ public class SummerReadingApplication extends Application {
 	@Override
     public void onCreate() {
         super.onCreate();
- 
         sContext = getApplicationContext();
- 
-    }
+		SharedPreferences userDetails = sContext.getSharedPreferences("Account", MODE_PRIVATE);
+		Account account = getAccountFromSharedPreferences(userDetails);
+		if (account != null) {
+			this.setAccount(account);
+		}
+   }
  
     /**
      * Returns the application context
@@ -48,4 +63,25 @@ public class SummerReadingApplication extends Application {
         return sContext;
     }
  
+	private Account getAccountFromSharedPreferences(SharedPreferences userDetails) {
+		Account account = null;
+		try {
+            String accountStr = userDetails.getString("Account", "");
+            if (!MiscUtils.empty(accountStr)) {
+            	account = JSONResultParser.createAccount(new JSONObject(accountStr));
+            }
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return account;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public void setGridCell(GridCell gridCell) {
+		this.gridCell = gridCell;
+	}
+
 }

@@ -9,4 +9,16 @@
         android:title="@string/action_settings"
         app:showAsAction="never"/>
 
+   <item
+        android:id="@+id/miChangeUser"
+        android:icon="@drawable/ic_action_person"
+        app:showAsAction="always"
+        android:title="Change User">
+    </item>
+    <item
+        android:id="@+id/miAddUser"
+        android:icon="@drawable/ic_action_add_person"
+        app:showAsAction="ifRoom"
+        android:title="Add User">
+    </item>
 </menu>

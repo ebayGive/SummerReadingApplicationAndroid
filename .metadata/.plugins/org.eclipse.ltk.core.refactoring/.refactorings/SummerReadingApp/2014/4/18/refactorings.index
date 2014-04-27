@@ -1,0 +1,3 @@
+1398579482046	Extract method 'createProgressDialog'
+1398579522152	Extract local variable 'parentActivity'
+1398584928534	Rename field 'REQUEST_CODE_LOGIN'

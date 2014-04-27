@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
@@ -42,6 +43,14 @@ public class MiscUtils {
 	       });
 		AlertDialog alertDialog = builder.create();
 		alertDialog.show();
+	}
+
+	public static ProgressDialog createProgressDialog(Activity parentActivity) {
+		ProgressDialog pDialog = new ProgressDialog(parentActivity);
+        pDialog.setMessage("Adding User...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        return pDialog;
 	}
 
 	public static Date parseDateString(String dateString) {

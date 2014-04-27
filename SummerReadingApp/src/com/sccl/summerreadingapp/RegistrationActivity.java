@@ -1,9 +1,8 @@
 package com.sccl.summerreadingapp;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +11,12 @@ import android.widget.TextView;
 
 import com.sccl.summerreadingapp.clients.RegistrationClient;
 import com.sccl.summerreadingapp.helper.MiscUtils;
-import com.sccl.summerreadingapp.model.Login;
+import com.sccl.summerreadingapp.model.Account;
  
 public class RegistrationActivity extends Activity implements RegistrationAsyncListener{
-    @Override
+    private static final int REQUEST_CODE_REGISTER = 1;
+
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set View to register.xml
@@ -28,30 +29,24 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
  
 			@Override
 			public void onClick(View v) {
-			    EditText userNameEdit = (EditText) findViewById(R.id.username);
+			    EditText userNameEdit = (EditText) findViewById(R.id.reg_username);
 			    String userName = userNameEdit.getText().toString();
 			    
-			    EditText passwordEdit = (EditText) findViewById(R.id.password);
+			    EditText passwordEdit = (EditText) findViewById(R.id.reg_password);
 			    String password = passwordEdit.getText().toString();
 
-				if (MiscUtils.isNetworkAvailable(getApplicationContext()))
-				{
-				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password);
+			    EditText emailEdit = (EditText) findViewById(R.id.reg_email);
+			    String email = emailEdit.getText().toString();
+
+			    EditText fullNameEdit = (EditText) findViewById(R.id.reg_fullname);
+			    String fullName = fullNameEdit.getText().toString();
+			    String branch = "C36F2906-1173-459D-B5BC-73AD058673A3";
+			    
+			    if (MiscUtils.isNetworkAvailable(getApplicationContext())) {
+				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, fullName, branch);
 				}
-				else
-				{
-					AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationActivity.this);
-					builder.setTitle("Network Error");
-					builder.setMessage("No user logged in. You need to enable network to login.");
-					builder.setCancelable(false);
-					builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				           public void onClick(DialogInterface dialog, int id) {
-				                //do things
-				       		dialog.dismiss();
-				           }
-				       });
-					AlertDialog alertDialog = builder.create();
-					alertDialog.show();
+				else {
+					MiscUtils.showAlertDialog(RegistrationActivity.this, "Network Error", "User not registered. You need to enable network to login.");
 				}
 			}
  
@@ -63,14 +58,25 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
             public void onClick(View arg0) {
                 // Switching to Register screen
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(i);
+                // startActivity(i);
+        		startActivityForResult(i, REQUEST_CODE_REGISTER);
             }
         });
     }
 
 	@Override
-	public void onResult(Login login) {
-		// TODO Auto-generated method stub
+	public void onResult(Account account) {
+		 Intent returnIntent = new Intent();
+		 returnIntent.putExtra("account", account);
+		 setResult(RESULT_OK,returnIntent);     
+		 finish();			
 		
 	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK){
+			if (requestCode == REQUEST_CODE_REGISTER)
+				return;
+		}
+	}//onActivityResult
 }

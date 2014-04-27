@@ -14,7 +14,10 @@
     <string name="dialog_submit">OK</string>
     <string name="dialog_cancel">Cancel</string>
     
-
+    
+    <string name="confirm_activity_completed">Completed</string>
+    <string name="confirm_activity_later">Finish Later</string>
+    
     <string name="label_register">Register New Account</string>
     <string name="label_login">Login</string>
     <string name="label_phone_or_user">Phone or User Name</string>
@@ -25,10 +28,15 @@
     <string name="label_fyp">Forgot Pin?</string>
     <string name="label_register_in_login">Don\'t have an account? Register Here</string>
     
+    <string name="label_fname">First Name</string>
+    <string name="label_lname">Last  Name</string>
+    
     <string-array name="reader_type">
         <item>Pre Reader</item>
         <item>Reader</item>
         <item>Advanced</item>
     </string-array>
     
+    <string name="label_add">Add</string>
+    <string name="label_done">Done</string>
 </resources>

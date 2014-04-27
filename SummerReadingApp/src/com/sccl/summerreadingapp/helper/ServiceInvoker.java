@@ -13,8 +13,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
  
 public class ServiceInvoker {
 
@@ -80,6 +82,39 @@ public class ServiceInvoker {
 		HttpPost httpPost = new HttpPost(url);
 		if (params != null) {
 			httpPost.setEntity(new UrlEncodedFormEntity(params));
+		}
+
+		return new DefaultHttpClient().execute(httpPost);
+	}
+
+	public String invokeJson(String url, int method, JSONObject jsonObject) {
+		String response = null;
+		try {
+			HttpResponse httpResponse = null;
+
+			if (method == POST) {
+				httpResponse = handleJsonPost(url, jsonObject);
+			}
+			HttpEntity httpEntity = httpResponse.getEntity();
+			response = EntityUtils.toString(httpEntity);
+
+		} catch (Exception e) {
+		}
+
+		return response;
+
+	}
+
+	public HttpResponse handleJsonPost(String url, JSONObject jsonObject)
+			throws UnsupportedEncodingException, IOException, ClientProtocolException {
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("Content-Type", "application/json"); 
+		httpPost.setHeader("Accept", "application/json");
+		
+		if (jsonObject != null) {
+			StringEntity se = new StringEntity(jsonObject.toString());
+			// se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+			httpPost.setEntity(se);
 		}
 
 		return new DefaultHttpClient().execute(httpPost);

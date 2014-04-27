@@ -10,6 +10,17 @@ import com.sccl.summerreadingapp.model.Prize;
 public class PrizeImageHandler {
     private Activity activity;
 	
+	public PrizeImageHandler(Activity activity) {
+		super();
+		this.activity = activity;
+	}
+
+	public void setImagesAndAssignClickHandler(View rootView, Prize[] prizes) {
+        setPrizeImages(rootView, prizes);
+        handlePrizeImageClick(rootView, prizes);
+	}
+
+	
 	public void handlePrizeImageClick(View rootView, Prize[] prizes) {
 		int[] resourceIds = {R.id.prize1, R.id.prize2, R.id.prize3, R.id.prize4, R.id.prize5};
 		
@@ -18,27 +29,6 @@ public class PrizeImageHandler {
 				getPrizeTitle(prizes[i]), getPrizeMessage(prizes[i]));
 		}
 
-	}
-
-	public String getPrizeTitle(Prize prize) {
-		String title = prize.getState() == 1 ? "Great Job" : "Good Luck";
-		return title;
-	}
-
-	public String getPrizeMessage(Prize prize) {
-    	String message = prize.getState() == 1 ? 
-        		"Congratulations on earning the prize. You can collect the prize by visiting library!" : "You need to finish one row/column/diagonal activities to earn prize. ";
-		return message;
-	}
-
-	public void setPrizeImageClickListener(ImageView prizeView, String title, String message) {
-    	final String finalTitle = title;
-		final String finalMessage = message;
-		prizeView.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				MiscUtils.showAlertDialog(activity, finalTitle, finalMessage);
-            }
-        });
 	}
 
 	public void setPrizeImages(View rootView, Prize[] prizes) {
@@ -51,7 +41,28 @@ public class PrizeImageHandler {
 		}
 	}
 
-	public void setPrizeImageBasedOnState(View rootView, Prize prize, int prizeResourceId) {
+	private String getPrizeTitle(Prize prize) {
+		String title = prize.getState() == 1 ? "Great Job" : "Good Luck";
+		return title;
+	}
+
+	private String getPrizeMessage(Prize prize) {
+    	String message = prize.getState() == 1 ? 
+        		"Congratulations on earning the prize. You can collect the prize by visiting library!" : "You need to finish one row/column/diagonal activities to earn prize. ";
+		return message;
+	}
+
+	private void setPrizeImageClickListener(ImageView prizeView, String title, String message) {
+    	final String finalTitle = title;
+		final String finalMessage = message;
+		prizeView.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				MiscUtils.showAlertDialog(activity, finalTitle, finalMessage);
+            }
+        });
+	}
+
+	private void setPrizeImageBasedOnState(View rootView, Prize prize, int prizeResourceId) {
 		int imageId = R.drawable.prize_not_ready_to_claim;
 		if (prize.getState() == 1) {
 			imageId = R.drawable.prize_ready_to_claim;

@@ -16,14 +16,15 @@ import android.util.Log;
 import com.sccl.summerreadingapp.RegistrationAsyncListener;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
+import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.Login;
 
 /**
  * Async task class to get json by making HTTP call
  * */
-public class RegistrationClient extends AsyncTask<String, Void, Login> {
+public class RegistrationClient extends AsyncTask<String, Void, Account> {
 	
-	private static final String LOGIN_REQUEST = "http://hackathon.ebaystratus.com/accounts/signin.json";
+	private static final String REGISTRATION_REQUEST = "http://hackathon.ebaystratus.com/accounts.json";
 	private Activity parent;
 	private RegistrationAsyncListener listener;
 	private ProgressDialog pDialog;
@@ -41,33 +42,35 @@ public class RegistrationClient extends AsyncTask<String, Void, Login> {
         super.onPreExecute();
         // Showing progress dialog
         pDialog = new ProgressDialog(parent);
-        pDialog.setMessage("Logging In...");
+        pDialog.setMessage("Registering User ...");
         pDialog.setCancelable(false);
         pDialog.show();
 
     }
 
     @Override
-    protected Login doInBackground(String... arg0) {
+    protected Account doInBackground(String... arg0) {
         // Creating service handler class instance
-        if (arg0.length < 2)
+        if (arg0.length < 4)
         	return null;
         
-        List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+        List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(4);
         nameValuePair.add(new BasicNameValuePair("accountName", arg0[0]));
         nameValuePair.add(new BasicNameValuePair("passcode", arg0[1]));
+        nameValuePair.add(new BasicNameValuePair("emailAddress", arg0[2]));
+        nameValuePair.add(new BasicNameValuePair("branchId", arg0[3]));
 
         // Making a request to url and getting response
-       String jsonStr = new ServiceInvoker().invoke(LOGIN_REQUEST, ServiceInvoker.POST, nameValuePair);
+       String jsonStr = new ServiceInvoker().invoke(REGISTRATION_REQUEST, ServiceInvoker.POST, nameValuePair);
        // String jsonStr = "";
-       Login login = null;
+       Account account = null;
 
         Log.d("Response: ", "> " + jsonStr);
 
         if (jsonStr != null) {
             try {
                 JSONObject jsonLoginObject = new JSONObject(jsonStr);
-                return JSONResultParser.createLogin(jsonLoginObject);
+                return JSONResultParser.createAccount(jsonLoginObject);
                 } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -75,11 +78,11 @@ public class RegistrationClient extends AsyncTask<String, Void, Login> {
             Log.e("ServiceHandler", "Couldn't get any data from the url");
         }
 
-        return login;
+        return account;
     }
 
     @Override
-    protected void onPostExecute(Login result) {
+    protected void onPostExecute(Account result) {
         super.onPostExecute(result);
         // Dismiss the progress dialog
         if (pDialog.isShowing())

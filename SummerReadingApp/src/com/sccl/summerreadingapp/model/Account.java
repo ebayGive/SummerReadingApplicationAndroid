@@ -110,11 +110,29 @@ public class Account implements Serializable {
 	        
 	        JSONArray jsonUserArray = new JSONArray();
 	        User[] users = getUsers();
-	        for (int i = 0; i < users.length; i++){
-	        	jsonUserArray.put(users[i].toJSONObject());
+	        if (users != null) {
+		        for (int i = 0; i < users.length; i++){
+		        	jsonUserArray.put(users[i].toJSONObject(true));
+		        }
 	        }
 	        jsonObject.put(USERS, jsonUserArray);
 
+	        return jsonObject.toString();
+	    } catch (JSONException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	        return "";
+	    }
+	}
+
+	public String toJSONRegister(){
+
+	    JSONObject jsonObject = new JSONObject();
+	    try {
+	        jsonObject.put(ID, "");
+	        jsonObject.put(NAME, getName());
+	        jsonObject.put(EMAIL_ADDRESS, getEmailAddress());
+	        jsonObject.put(BRANCH_ID, getBranchId());
 	        return jsonObject.toString();
 	    } catch (JSONException e) {
 	        // TODO Auto-generated catch block
