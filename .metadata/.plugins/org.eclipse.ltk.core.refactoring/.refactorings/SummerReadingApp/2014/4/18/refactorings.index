@@ -1,3 +1,10 @@
 1398579482046	Extract method 'createProgressDialog'
 1398579522152	Extract local variable 'parentActivity'
 1398584928534	Rename field 'REQUEST_CODE_LOGIN'
+1398592845556	Delete elements
+1398593845637	Delete elements
+1398671612952	Extract method 'returnLoginResult'
+1398748076156	Rename method 'updateSharedPreferences'
+1398748206380	Rename method 'showAlertDialog'
+1398750692402	Extract method 'handleAddingFirstTimeUsers'
+1398750884970	Extract method 'handleAddingNewUsers'

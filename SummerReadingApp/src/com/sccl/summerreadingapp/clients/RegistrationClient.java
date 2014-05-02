@@ -22,7 +22,7 @@ import com.sccl.summerreadingapp.model.Login;
 /**
  * Async task class to get json by making HTTP call
  * */
-public class RegistrationClient extends AsyncTask<String, Void, Account> {
+public class RegistrationClient extends AsyncTask<String, Void, Login> {
 	
 	private static final String REGISTRATION_REQUEST = "http://hackathon.ebaystratus.com/accounts.json";
 	private Activity parent;
@@ -49,7 +49,7 @@ public class RegistrationClient extends AsyncTask<String, Void, Account> {
     }
 
     @Override
-    protected Account doInBackground(String... arg0) {
+    protected Login doInBackground(String... arg0) {
         // Creating service handler class instance
         if (arg0.length < 4)
         	return null;
@@ -63,26 +63,34 @@ public class RegistrationClient extends AsyncTask<String, Void, Account> {
         // Making a request to url and getting response
        String jsonStr = new ServiceInvoker().invoke(REGISTRATION_REQUEST, ServiceInvoker.POST, nameValuePair);
        // String jsonStr = "";
-       Account account = null;
+//       Account account = null;
+       Login login = null;
 
         Log.d("Response: ", "> " + jsonStr);
 
         if (jsonStr != null) {
             try {
+                // JSONObject jsonLoginObject = new JSONObject(jsonStr);
+                // return JSONResultParser.createAccount(jsonLoginObject);
+
                 JSONObject jsonLoginObject = new JSONObject(jsonStr);
-                return JSONResultParser.createAccount(jsonLoginObject);
-                } catch (JSONException e) {
+                login = JSONResultParser.createLogin(jsonLoginObject);
+                login.setLoginJSONResponse(jsonStr);
+            
+            	} catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
             Log.e("ServiceHandler", "Couldn't get any data from the url");
         }
 
-        return account;
+        // return account;
+        return login;
     }
 
     @Override
-    protected void onPostExecute(Account result) {
+//    protected void onPostExecute(Account result) {
+    protected void onPostExecute(Login result) {
         super.onPostExecute(result);
         // Dismiss the progress dialog
         if (pDialog.isShowing())

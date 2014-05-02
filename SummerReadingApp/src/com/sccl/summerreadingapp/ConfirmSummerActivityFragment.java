@@ -75,8 +75,9 @@ public class ConfirmSummerActivityFragment  extends DialogFragment {
 	private void handleButtonClick(final EditText noteText, View view) {
     	grid.setNotes(noteText.getText().toString());
     	int type = 1;
-    	if (view.getId() == R.id.btn_cancel)
+    	if (view.getId() == R.id.btn_cancel) {
     		type = 0;
+    	}
         grid.setType(type);
         getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, getActivity().getIntent());
 

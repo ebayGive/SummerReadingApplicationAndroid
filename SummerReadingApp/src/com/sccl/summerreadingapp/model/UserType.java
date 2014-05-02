@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class UserType {
 
 	static Map<String, String> idToDescription = new HashMap<String, String>();
@@ -28,4 +31,55 @@ public class UserType {
 		return "C2747BE4-E0C9-45AC-9E50-549F43B49D31";
 	}
 	
+	private static String ID = "id"; 
+	private static String NAME = "name"; 
+	private static String DESCRIPTION = "description"; 
+	
+	private String id;
+	private String name;
+	private String description;
+	
+	static public UserType createUserType (JSONObject jsonObj)
+	{
+		try {
+			String id = jsonObj.getString(ID);
+			String name = jsonObj.getString(NAME);
+			String desc = jsonObj.getString(DESCRIPTION);
+	
+			return new UserType(id, name, desc);
+		} catch (JSONException e) {
+			return null;
+		}
+	}
+	
+	public UserType(String id, String name, String desc) {
+		this.id = id;
+		this.name = name;
+		this.description = desc;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

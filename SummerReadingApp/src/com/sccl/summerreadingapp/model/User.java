@@ -11,6 +11,7 @@ public class User implements Serializable {
 	private static String FIRST_NAME = "firstName"; 
 	private static String LAST_NAME = "lastName"; 
 	private static String USER_TYPE_ID = "userType"; 
+	private static String READING_LOG = "readingLog"; 
 	
 	private String id;
 	private String firstName;
@@ -18,6 +19,7 @@ public class User implements Serializable {
 	private String userType;
 	private GridActivity[] activities;
 	private Prize[] prizes;
+	private int readingLog;
 	
 	static public User createUser (JSONObject jsonObj)
 	{
@@ -26,19 +28,21 @@ public class User implements Serializable {
 			String firstName = jsonObj.getString(FIRST_NAME);
 			String lastName = jsonObj.getString(LAST_NAME);
 			String userType = jsonObj.getString(USER_TYPE_ID);
+			int readingLog = jsonObj.getInt(READING_LOG);
 	
-			return new User(id, firstName, lastName, userType);
+			return new User(id, firstName, lastName, userType, readingLog);
 		} catch (JSONException e) {
 			return null;
 		}
 	}
 	
-	public User (String id, String firstName, String lastName, String userType)
+	public User (String id, String firstName, String lastName, String userType, int readingLog)
 	{
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userType = userType;
+		this.readingLog = readingLog;
 	}
 
 	public String getId() {
@@ -89,6 +93,18 @@ public class User implements Serializable {
 		this.prizes = prizes;
 	}
 	
+	public int getReadingLog() {
+		return readingLog;
+	}
+
+	public void setReadingLog(int readingLog) {
+		this.readingLog = readingLog;
+	}
+
+	public void addTwentyToReadingLog() {
+		this.readingLog++;
+	}
+
 	public String toJSON(){
 
 	    JSONObject jsonObject = this.toJSONObject(true);
@@ -117,6 +133,8 @@ public class User implements Serializable {
 		        	jsonPrizeArray.put(prizes[i].toJSONObject());
 		        }
 		        jsonObject.put("prizes", jsonPrizeArray);
+
+		        jsonObject.put(READING_LOG, getReadingLog());
 	        }
 	    } catch (JSONException e) {
 	        // TODO Auto-generated catch block

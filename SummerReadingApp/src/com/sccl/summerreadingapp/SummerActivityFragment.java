@@ -3,8 +3,6 @@ package com.sccl.summerreadingapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +16,7 @@ import android.widget.GridView;
 import com.sccl.summerreadingapp.adapter.ImageAdapter;
 import com.sccl.summerreadingapp.clients.GridActivityClient;
 import com.sccl.summerreadingapp.helper.MiscUtils;
+import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
 import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.GridActivity;
 import com.sccl.summerreadingapp.model.Prize;
@@ -55,7 +54,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
         gridview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				showAlertDialog(position);
+				showConfirmActivityDialog(position);
 			}
 
         });
@@ -81,7 +80,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
     	}
     }
 
-    private void showAlertDialog(int index) {
+    private void showConfirmActivityDialog(int index) {
     	if (user != null)
     	{
 	        FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -101,10 +100,9 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
                     	prizeWon(getActivity(), rootView);
                     	imageAdapter.notifyDataSetChanged();
                     	if (selectedIndex != -1 && MiscUtils.isNetworkAvailable(getActivity().getApplicationContext())) {
-
                     		new GridActivityClient(getActivity(), user, selectedIndex).execute();
                     	}
-                    	updateSharedPreferences();
+                    	updateAccountInSharedPreferences();
                 			//new GridActivityClient(getActivity(), SummerActivityFragment.this, user, gridActivities[selectedIndex]).execute();
                         // After Ok code.
                     } else if (resultCode == Activity.RESULT_CANCELED){
@@ -115,13 +113,14 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
             }
         }
  
-    private void updateSharedPreferences() {
+    private void updateAccountInSharedPreferences() {
     	Context c = getActivity().getApplicationContext();
-		SharedPreferences userDetails = c.getSharedPreferences("Account", c.MODE_PRIVATE);
+    	SharedPreferenceHelper.storeAccountDataIntoSharedPreferences(c, null, account);
+/*		SharedPreferences userDetails = c.getSharedPreferences("Account", c.MODE_PRIVATE);
 		Editor edit = userDetails.edit();
 		edit.putString("Account", account.toJSON());
 		edit.commit(); 
-	}
+*/	}
 
 	private void prizeWon(Context context, View rootView)
     {

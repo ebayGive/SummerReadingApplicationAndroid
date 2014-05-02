@@ -8,9 +8,9 @@ import android.content.SharedPreferences;
 
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.MiscUtils;
+import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
 import com.sccl.summerreadingapp.model.Account;
-import com.sccl.summerreadingapp.model.Branch;
-import com.sccl.summerreadingapp.model.GridCell;
+import com.sccl.summerreadingapp.model.Config;
 import com.sccl.summerreadingapp.model.User;
  
 public class SummerReadingApplication extends Application {
@@ -23,9 +23,7 @@ public class SummerReadingApplication extends Application {
     private Account account;
     private User user;
 
-	private Branch branch;
-
-	private GridCell gridCell;
+	private Config config;
  
     public Account getAccount() {
 		return account;
@@ -47,10 +45,15 @@ public class SummerReadingApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sContext = getApplicationContext();
-		SharedPreferences userDetails = sContext.getSharedPreferences("Account", MODE_PRIVATE);
-		Account account = getAccountFromSharedPreferences(userDetails);
+		// SharedPreferences userDetails = sContext.getSharedPreferences("Account", MODE_PRIVATE);
+		// Account account = getAccountFromSharedPreferences(userDetails);
+		Account account = SharedPreferenceHelper.getAccountFromSharedPreferences(sContext);
 		if (account != null) {
 			this.setAccount(account);
+		}
+		Config config = SharedPreferenceHelper.getConfigFromSharedPreferences(sContext);
+		if (config != null) {
+			this.setConfig(config);
 		}
    }
  
@@ -76,12 +79,12 @@ public class SummerReadingApplication extends Application {
 		return account;
 	}
 
-	public void setBranch(Branch branch) {
-		this.branch = branch;
+	public void setConfig(Config config) {
+		this.config = config;
 	}
 
-	public void setGridCell(GridCell gridCell) {
-		this.gridCell = gridCell;
+	public Config getConfig() {
+		return this.config;
 	}
 
 }

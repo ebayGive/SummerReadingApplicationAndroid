@@ -1,0 +1,12 @@
+<resources>
+    <!-- Samsung Galaxy S4 is using this. -->
+    
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="login_register_margin_top">5dp</dimen>
+    <dimen name="login_register_margin_bottom">5dp</dimen>
+	<dimen name="image_size_old">55dp</dimen>    
+	<dimen name="image_size">58dp</dimen>    
+</resources>

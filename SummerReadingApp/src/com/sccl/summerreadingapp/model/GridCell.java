@@ -70,6 +70,15 @@ public class GridCell {
 		this.userType = name;
 	}
 
+	public CellData[] getCellData() {
+		return cellData;
+	}
+
+	public void setCellData(CellData[] cellData) {
+		this.cellData = cellData;
+	}
+
+
 	public String toJSON(){
 
 	    JSONObject jsonObject= new JSONObject();

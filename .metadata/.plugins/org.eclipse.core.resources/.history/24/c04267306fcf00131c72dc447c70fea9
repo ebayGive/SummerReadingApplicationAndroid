@@ -1,0 +1,151 @@
+package com.sccl.summerreadingapp.clients;
+
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.sccl.summerreadingapp.SummerReadingApplication;
+import com.sccl.summerreadingapp.helper.ServiceInvoker;
+import com.sccl.summerreadingapp.model.Branch;
+import com.sccl.summerreadingapp.model.GridCell;
+import com.sccl.summerreadingapp.model.UserType;
+
+/**
+ * Async task class to get json by making HTTP call
+ * */
+public class BranchClient extends AsyncTask<Void, Void, Void> {
+	
+	private static final String BRANCH_REQUEST = "http://hackathon.ebaystratus.com/branches.json";
+	private static final String USER_TYPE_REQUEST = "http://hackathon.ebaystratus.com/user_types.json";
+	private static final String GRID_CELL_REQUEST = "http://hackathon.ebaystratus.com/grids.json";
+	private Activity parent;
+	private ProgressDialog pDialog;
+	
+	// JSON Node names
+
+	public BranchClient(Activity parent) {
+		super();
+		this.parent = parent;
+	}
+
+	@Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // Showing progress dialog
+        pDialog = new ProgressDialog(parent);
+        pDialog.setMessage("Setting Grid result...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+    	SummerReadingApplication summerReadingApplication = (SummerReadingApplication) parent.getApplicationContext();
+    	ServiceInvoker serviceInvoker = new ServiceInvoker();
+    	getBranchFromUrl(summerReadingApplication, serviceInvoker);
+    	getGridCellFromUrl(summerReadingApplication, serviceInvoker);
+
+    	return null;
+    }
+
+	private void getBranchFromUrl(
+			SummerReadingApplication summerReadingApplication,
+			ServiceInvoker serviceInvoker) {
+		String jsonStr = serviceInvoker.invoke(BRANCH_REQUEST, ServiceInvoker.GET);
+    	ArrayList<Branch> branches = new ArrayList<Branch>();
+
+		Branch branch = null;
+
+    	Log.d("Response: ", "> " + jsonStr);
+
+    	if (jsonStr != null) {
+    		try {
+    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			for (int i = 0; i < jsonArray.length(); i++) {
+	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
+	    			branch = Branch.createBranch(jsonObj);
+	    			branches.add(branch);
+    			}
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		Log.e("ServiceHandler", "Couldn't get any data from the url");
+    	}
+
+    	summerReadingApplication.setBranches(branches);
+	}
+
+	private void getUserTypesFromUrl(
+			SummerReadingApplication summerReadingApplication,
+			ServiceInvoker serviceInvoker) {
+		String jsonStr = serviceInvoker.invoke(USER_TYPE_REQUEST, ServiceInvoker.GET);
+
+    	ArrayList<UserType> userTypes = new ArrayList<UserType>();
+		UserType userType = null;
+
+    	Log.d("Response: ", "> " + jsonStr);
+
+    	if (jsonStr != null) {
+    		try {
+    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			for (int i = 0; i < jsonArray.length(); i++) {
+	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
+	    			userType = UserType.createUserType(jsonObj);
+	    			userTypes.add(userType);
+    			}
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		Log.e("ServiceHandler", "Couldn't get any data from the url");
+    	}
+
+		summerReadingApplication.setUserTypes(userTypes);
+	}
+
+	private void getGridCellFromUrl(
+			SummerReadingApplication summerReadingApplication,
+			ServiceInvoker serviceInvoker) {
+		String jsonStr = serviceInvoker.invoke(GRID_CELL_REQUEST, ServiceInvoker.GET);
+    	ArrayList<GridCell> gridCells = new ArrayList<GridCell>();
+    	GridCell gridCell = null;
+
+    	Log.d("Response: ", "> " + jsonStr);
+
+    	if (jsonStr != null) {
+    		try {
+    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			for (int i = 0; i < jsonArray.length(); i++) {
+	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
+	    			gridCell = GridCell.createGridCell(jsonObj);
+	    			gridCells.add(gridCell);
+    			}
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		Log.e("ServiceHandler", "Couldn't get any data from the url");
+    	}
+
+		summerReadingApplication.setGridCells(gridCells);
+	}
+
+    @Override
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
+        // Dismiss the progress dialog
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+//        listener.onResult(result);
+    }
+
+}

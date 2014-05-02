@@ -1,14 +1,21 @@
 package com.sccl.summerreadingapp.helper;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.sccl.summerreadingapp.model.Account;
+import com.sccl.summerreadingapp.model.Branch;
 import com.sccl.summerreadingapp.model.GridActivity;
+import com.sccl.summerreadingapp.model.GridCell;
 import com.sccl.summerreadingapp.model.Login;
 import com.sccl.summerreadingapp.model.Prize;
 import com.sccl.summerreadingapp.model.User;
+import com.sccl.summerreadingapp.model.UserType;
 
 public class JSONResultParser {
     private static final String ACCOUNT = "account";
@@ -83,4 +90,76 @@ public class JSONResultParser {
 	    }
 		return prize;
 	}
+	
+	public static ArrayList<Branch> createBranches(String jsonStr) {
+		ArrayList<Branch> branches = new ArrayList<Branch>();
+
+    	Log.d("Response: ", "> " + jsonStr);
+
+    	if (jsonStr != null) {
+    		try {
+    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			for (int i = 0; i < jsonArray.length(); i++) {
+	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
+	    			branches.add(Branch.createBranch(jsonObj));
+    			}
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		Log.e("ServiceHandler", "Couldn't get any data from the url");
+    	}
+
+    	return branches;
+	}
+
+	public static ArrayList<UserType> createUserTypes(String jsonStr) {
+		ArrayList<UserType> userTypes = new ArrayList<UserType>();
+		UserType userType = null;
+
+    	Log.d("Response: ", "> " + jsonStr);
+
+    	if (jsonStr != null) {
+    		try {
+    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			for (int i = 0; i < jsonArray.length(); i++) {
+	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
+	    			userType = UserType.createUserType(jsonObj);
+	    			userTypes.add(userType);
+    			}
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		Log.e("ServiceHandler", "Couldn't get any data from the url");
+    	}
+
+		return userTypes;
+	}
+
+	
+	public static ArrayList<GridCell> createGridCells(String jsonStr) {
+		ArrayList<GridCell> gridCells = new ArrayList<GridCell>();
+    	GridCell gridCell = null;
+
+    	Log.d("Response: ", "> " + jsonStr);
+
+    	if (jsonStr != null) {
+    		try {
+    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			for (int i = 0; i < jsonArray.length(); i++) {
+	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
+	    			gridCell = GridCell.createGridCell(jsonObj);
+	    			gridCells.add(gridCell);
+    			}
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		Log.e("ServiceHandler", "Couldn't get any data from the url");
+    	}
+
+		return gridCells;
+	}
+
 }

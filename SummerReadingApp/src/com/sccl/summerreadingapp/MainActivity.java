@@ -18,13 +18,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.sccl.summerreadingapp.adapter.SectionsPagerAdapter;
+import com.sccl.summerreadingapp.clients.ConfigClient;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.MiscUtils;
+import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
 import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.Login;
 import com.sccl.summerreadingapp.model.User;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, ConfigAsyncListener {
 	private static final int REQUEST_CODE_LOGIN = 1;
 	private static final int REQUEST_CODE_SELECT_USER = 2;
 	private static final int REQUEST_CODE_ADD_USER = 3;
@@ -88,8 +90,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		if (summerReadingApplication.getAccount() != null) {
 			handleLoggedInUser(summerReadingApplication);
 		}
-		else {
+		else if (summerReadingApplication.getConfig() != null && summerReadingApplication.getConfig().getBranchesString() != null) {
 			startLoginActivity();
+		}
+		else {
+		    new ConfigClient(MainActivity.this, MainActivity.this).execute();
 		}
 
 	}
@@ -189,30 +194,39 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		Account account = summerReadingApplication.getAccount();
 		User users[] = account.getUsers();
 		if (users == null || users.length == 0) {
-			if (userList.size() == 0)
-				return false;
-			users = new User[userList.size()];
-			System.arraycopy(userList.toArray(), 0, users, 0, userList.size());
-			account.setUsers(users);
+			return handleAddingFirstTimeUsers(userList, summerReadingApplication, account);
 		}
-		else {
-			if (userList.size() != 0) {
-				User[] newUsers = new User[users.length + userList.size()];
-				System.arraycopy(users, 0, newUsers, 0, users.length);
-				System.arraycopy(userList.toArray(), 0, newUsers, users.length, userList.size());
-				users = newUsers;
-				account.setUsers(users);
-			}
+		else 
+			return handleAddingNewUsers(userList, account, users);
+	}
+
+	public boolean handleAddingNewUsers(ArrayList<User> userList, Account account,
+			User[] users) {
+		if (userList.size() != 0) {
+			User[] newUsers = new User[users.length + userList.size()];
+			System.arraycopy(users, 0, newUsers, 0, users.length);
+			System.arraycopy(userList.toArray(), 0, newUsers, users.length, userList.size());
+			account.setUsers(newUsers);
+			SharedPreferenceHelper.storeAccountDataIntoSharedPreferences(getApplicationContext(), null, account);
 		}
-		
+		return true;
+	}
+
+	public boolean handleAddingFirstTimeUsers(ArrayList<User> userList,
+			SummerReadingApplication summerReadingApplication, Account account) {
+		if (userList.size() == 0)
+			return false;
+		User[] users = new User[userList.size()];
+		System.arraycopy(userList.toArray(), 0, users, 0, userList.size());
+		account.setUsers(users);
+		SharedPreferenceHelper.storeAccountDataIntoSharedPreferences(getApplicationContext(), null, account);
+
 		if (users.length == 1) {
 			String user = users[0].getFirstName();
-			if (!MiscUtils.empty(user)) {
-				displayToastMessage("User Selected "+ user);
-				mSectionsPagerAdapter.setAccountAndSelectedUserIndex(getSupportFragmentManager(), account, 0);
-				summerReadingApplication.setUser(users[0]);
-				return true;
-			}
+			displayToastMessage("User Selected "+ user);
+			mSectionsPagerAdapter.setAccountAndSelectedUserIndex(getSupportFragmentManager(), account, 0);
+			summerReadingApplication.setUser(users[0]);
+			return true;
 		}
 		// Choose user from list
 		return startChooseUserActivity(account);
@@ -253,7 +267,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		if (login != null) {
 			Account account = login.getAccount();				
 			displayToastMessage("User signed in "+ account.getName());
-			storeDataIntoSharedPreferences(login, account); 
+			// storeDataIntoSharedPreferences(login, account);
+			SharedPreferenceHelper.storeAccountDataIntoSharedPreferences(getApplicationContext(), login, account);
 			SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
 			summerReadingApplication.setAccount(account);
 
@@ -363,5 +378,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 	@Override
 	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
+
+	@Override
+	public void onResult() {
+		// TODO Auto-generated method stub
+		startLoginActivity();
+}
 
 }

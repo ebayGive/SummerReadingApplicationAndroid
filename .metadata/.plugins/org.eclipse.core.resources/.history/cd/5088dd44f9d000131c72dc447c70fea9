@@ -1,0 +1,11 @@
+package com.sccl.summerreadingapp.model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Config implements Serializable {
+	private ArrayList<Branch> branches;
+	private ArrayList<GridCell> gridCells;
+	private ArrayList<UserType> userTypes;
+
+}

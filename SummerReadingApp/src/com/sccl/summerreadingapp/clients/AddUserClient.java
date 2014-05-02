@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import com.sccl.summerreadingapp.AddUserAsyncListener;
+import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
 import com.sccl.summerreadingapp.model.User;
@@ -58,11 +59,14 @@ public class AddUserClient extends AsyncTask<String, Void, User> {
 			jsonUserObject.accumulate("userType", arg0[2]);
 			jsonObject.put("user", jsonUserObject);
 */			
-			User user = new User("-1", arg0[0], arg0[1], arg0[2]);
+			User user = new User("-1", arg0[0], arg0[1], arg0[2], 0);
 			jsonObject.put("user", user.toJSONObject(false));
 			String newUser = new ServiceInvoker().invokeJson(url, ServiceInvoker.POST, jsonObject);
-			// return JSONResultParser.createUser(new JSONObject(newUser));
-			return user;
+			JSONObject userResponse = new JSONObject(newUser);
+	        JSONObject jsonUserObj = userResponse.getJSONObject("user");
+
+			return JSONResultParser.createUser(jsonUserObj);
+			// return user;
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

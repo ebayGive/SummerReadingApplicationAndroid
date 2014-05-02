@@ -1,0 +1,21 @@
+package com.sccl.summerreadingapp.helper;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
+import com.sccl.summerreadingapp.model.Account;
+import com.sccl.summerreadingapp.model.Login;
+
+public class SharedPreferenceHelper {
+
+	public void storeDataIntoSharedPreferences(Login login, Account account) {
+		SharedPreferences userDetails = getApplicationContext().getSharedPreferences("Account", MODE_PRIVATE);
+		Editor edit = userDetails.edit();
+		// edit.putString("LoginJSONResponse", login.getLoginJSONResponse());
+		edit.putString("Token", login.getAuthToken());
+		edit.putString("Name", account.getName());
+		edit.putString("Account", account.toJSON());
+		edit.commit();
+	}
+	
+}

@@ -43,7 +43,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         	summer.setAccountAndSelectedUserIndex(account, userIndex);
         	return summer;
         case 1:
-            return new DailyReadingFragment();
+        	DailyReadingFragment daily =  new DailyReadingFragment();
+        	daily.setAccountAndSelectedUserIndex(account, userIndex);
+        	return daily;
         case 2:
             return new InformationFragment();
         }
@@ -101,7 +103,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 	  		// fragment.setAccountAndSelectedUserIndex(user, account, userIndex);
 	  		fragment.setAccountAndSelectedUserIndex(account, userIndex);
 	  	}
-    }
+
+    	DailyReadingFragment dailyFragment = (DailyReadingFragment) fm.findFragmentByTag(
+                  "android:switcher:"+R.id.pager+":1");
+		if(dailyFragment != null)  {
+			// fragment.setAccountAndSelectedUserIndex(user, account, userIndex);
+			dailyFragment.setAccountAndSelectedUserIndex(account, userIndex);
+		}
+	}
 
 
 }

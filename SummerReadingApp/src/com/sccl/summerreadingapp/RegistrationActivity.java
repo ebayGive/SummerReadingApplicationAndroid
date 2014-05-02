@@ -1,20 +1,27 @@
 package com.sccl.summerreadingapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sccl.summerreadingapp.clients.RegistrationClient;
 import com.sccl.summerreadingapp.helper.MiscUtils;
-import com.sccl.summerreadingapp.model.Account;
+import com.sccl.summerreadingapp.model.Branch;
+import com.sccl.summerreadingapp.model.Config;
+import com.sccl.summerreadingapp.model.Login;
  
 public class RegistrationActivity extends Activity implements RegistrationAsyncListener{
     private static final int REQUEST_CODE_REGISTER = 1;
+    Config config;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,11 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
  
         TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
         Button button = (Button) findViewById(R.id.btnRegister);
+
+		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
+		config = summerReadingApplication.getConfig();
+		
+	    populateBranches(config.getBranches());
         
 		button.setOnClickListener(new View.OnClickListener() {
  
@@ -40,10 +52,16 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
 
 			    EditText fullNameEdit = (EditText) findViewById(R.id.reg_fullname);
 			    String fullName = fullNameEdit.getText().toString();
-			    String branch = "C36F2906-1173-459D-B5BC-73AD058673A3";
+			    
+				Spinner branchSpinner = (Spinner) findViewById(R.id.branch);
+			    String branchSpinnerText = String.valueOf(branchSpinner.getSelectedItem()); 
+			    
+			    Branch branch = config.getBranch(branchSpinnerText);
+			    String branchId = branch.getId();
+			    //String branch = "C36F2906-1173-459D-B5BC-73AD058673A3";
 			    
 			    if (MiscUtils.isNetworkAvailable(getApplicationContext())) {
-				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, fullName, branch);
+				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, fullName, branchId);
 				}
 				else {
 					MiscUtils.showAlertDialog(RegistrationActivity.this, "Network Error", "User not registered. You need to enable network to login.");
@@ -64,10 +82,23 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
         });
     }
 
+	private void populateBranches(ArrayList<Branch> branchList) {
+		 
+		Spinner branchSpinner = (Spinner) findViewById(R.id.branch);
+		List<String> branchNames = new ArrayList<String>();
+		for (Branch branch:branchList) {
+			branchNames.add(branch.getName());
+		}
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+			android.R.layout.simple_spinner_item, branchNames);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		branchSpinner.setAdapter(dataAdapter);
+	  }
+	
 	@Override
-	public void onResult(Account account) {
+	public void onResult(Login account) {
 		 Intent returnIntent = new Intent();
-		 returnIntent.putExtra("account", account);
+		 returnIntent.putExtra("login", account);
 		 setResult(RESULT_OK,returnIntent);     
 		 finish();			
 		
