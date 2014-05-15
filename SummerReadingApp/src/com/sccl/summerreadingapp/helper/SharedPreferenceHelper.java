@@ -52,16 +52,19 @@ public class SharedPreferenceHelper {
 		Config config = new Config();;
         String branchesStr = userDetails.getString("Branches", "");
         if (!MiscUtils.empty(branchesStr)) {
+        	config.setBranchesString(branchesStr);
         	config.setBranches(JSONResultParser.createBranches(branchesStr));
         }
 
         String userTypesStr = userDetails.getString("UserTypes", "");
         if (!MiscUtils.empty(userTypesStr)) {
+        	config.setUserTypesString(userTypesStr);
         	config.setUserTypes(JSONResultParser.createUserTypes(userTypesStr));
         }
 
         String gridCellsStr = userDetails.getString("GridCells", "");
         if (!MiscUtils.empty(gridCellsStr)) {
+        	config.setGridCellsString(gridCellsStr);
         	config.setGridCells(JSONResultParser.createGridCells(gridCellsStr));
         }
 

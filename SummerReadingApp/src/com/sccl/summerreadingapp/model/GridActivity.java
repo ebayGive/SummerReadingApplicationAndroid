@@ -29,12 +29,6 @@ public class GridActivity implements Serializable {
 			String notes = jsonObj.getString(NOTES);
 			String dateString = ""; // jsonObj.getString(UPDATED_AT);
 			Date d = MiscUtils.parseDateString(dateString);
-			// Date d = null;
-			if (dateString != null)
-			{
-//				d = new Date(dateString);
-			}
-	
 			return new GridActivity(type, notes, d);
 		} catch (JSONException e) {
 			return null;

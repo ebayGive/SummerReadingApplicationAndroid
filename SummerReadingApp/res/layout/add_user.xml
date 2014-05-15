@@ -2,12 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/summer_bg"
+    android:background="@drawable/summer_bg_blue"
     android:fillViewport="true" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" > <!-- android:background="#ffffff"> -->
+
 
         <!-- Header  Starts -->
         <!-- android:background="@drawable/header_gradient" -->
@@ -20,6 +21,7 @@
             android:paddingTop="5dip" >
 
             <!-- Logo Start -->
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,18 +52,23 @@
 
         <!-- Footer Ends -->
 
+
         <!-- Registration Form -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
             android:layout_marginLeft="16dip"
             android:layout_marginRight="16dip"
-            android:background="@color/LightBlue"
             android:orientation="vertical"
+            android:background="@color/White"
             android:padding="10dip" >
 
+<!--             android:background="@color/LightBlue"
+ -->
             <!-- First Name Label -->
+
             <EditText
                 android:id="@+id/add_fname"
                 android:layout_width="fill_parent"
@@ -71,7 +78,7 @@
                 android:hint="@string/label_fname"
                 android:singleLine="true"
                 android:textSize="12sp" />
- 
+
             <!-- Last Name Label -->
 
             <EditText
@@ -90,34 +97,53 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/login_register_margin_bottom"
                 android:layout_marginTop="@dimen/login_register_margin_top" />
-            <!--  
-                android:entries="@array/reader_type"
-                android:prompt="@string/reader_type" /> --> 
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            
+		 	<View style="@style/DividerHorizontal"
+		        android:id="@+id/firstDivider"
+		        android:layout_marginTop="15dip"
+			    />
+            
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" >
-
-                <!-- Add Button -->
-                <Button
-                    android:id="@+id/btnAdd"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                android:layout_marginTop="10dip"
+                android:onClick="onButtonClickHandler"
+            	android:background="@color/LibraryOrange"
+                android:text="@string/label_add" />
+		 	
+			<!-- RelativeLayout
+		        android:layout_width="match_parent"
+		        android:paddingLeft="5dip"
+		        android:paddingRight="5dip"
+		        android:layout_height="50dip">
+		            
+				<Button
+					android:id="@+id/btnAdd"
+		            android:layout_width='140dp'
+		            android:layout_height='wrap_content'
+		            android:layout_centerVertical="true"
+		            android:layout_alignParentLeft="true"
                     android:onClick="onButtonClickHandler"
-                    android:text="@string/label_add" />
-
-                <!-- Done Button -->
-                <Button
-                    android:id="@+id/btnDone"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+		            android:text="@string/label_add" /> 
+		        
+		        <Button
+					android:id="@+id/btnDone"
+		            android:layout_width='140dp'
+		            android:layout_height='wrap_content'
+		            android:layout_centerVertical="true"
+		            android:layout_alignParentRight="true"
                     android:onClick="onButtonClickHandler"
-                    android:text="@string/label_done" />
-            </LinearLayout>
+		            android:text="@string/label_done" />
+			</RelativeLayout -->
+        
+            <!--
+                android:entries="@array/reader_type"
+                android:prompt="@string/reader_type" />
+            -->
+
         </LinearLayout>
-    </RelativeLayout>
+        
+	</RelativeLayout>
 
 </ScrollView>

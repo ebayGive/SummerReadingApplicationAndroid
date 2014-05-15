@@ -146,11 +146,13 @@ public class JSONResultParser {
 
     	if (jsonStr != null) {
     		try {
-    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			JSONObject jsonGrid = new JSONObject(jsonStr);
+    			JSONArray jsonArray = jsonGrid.getJSONArray("grids");
     			for (int i = 0; i < jsonArray.length(); i++) {
 	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
 	    			gridCell = GridCell.createGridCell(jsonObj);
-	    			gridCells.add(gridCell);
+	    			if (gridCell != null)
+	    				gridCells.add(gridCell);
     			}
     		} catch (JSONException e) {
     			e.printStackTrace();

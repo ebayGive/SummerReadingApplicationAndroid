@@ -42,7 +42,8 @@ public class AddUserActivity extends Activity implements AddUserAsyncListener {
 		Spinner readerTypeSpinner = (Spinner) findViewById(R.id.reader_type);
 		List<String> readerTypeNames = new ArrayList<String>();
 		for (UserType userType:readerTypeList) {
-			readerTypeNames.add(userType.getName());
+			if (userType.getName().indexOf("STAFF") < 0)
+				readerTypeNames.add(userType.getName());
 		}
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 			android.R.layout.simple_spinner_item, readerTypeNames);
@@ -58,7 +59,12 @@ public class AddUserActivity extends Activity implements AddUserAsyncListener {
             handleDone();
       }
     
-	private void handleAdd() {
+    @Override
+    public void onBackPressed() {
+        handleDone();
+    }
+    
+    private void handleAdd() {
 	    EditText firstNameEdit = (EditText) findViewById(R.id.add_fname);
 	    String firstName = firstNameEdit.getText().toString();
 	    
@@ -92,5 +98,9 @@ public class AddUserActivity extends Activity implements AddUserAsyncListener {
 	public void onResult(User user) {
 		// TODO Auto-generated method stub
 		userList.add(user);
+		Intent returnIntent = new Intent();
+		returnIntent.putExtra("user", userList);
+		setResult(RESULT_OK,returnIntent);     
+		finish();			
 	}
 }

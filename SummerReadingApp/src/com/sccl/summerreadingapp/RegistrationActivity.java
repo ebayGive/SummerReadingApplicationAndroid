@@ -50,8 +50,8 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
 			    EditText emailEdit = (EditText) findViewById(R.id.reg_email);
 			    String email = emailEdit.getText().toString();
 
-			    EditText fullNameEdit = (EditText) findViewById(R.id.reg_fullname);
-			    String fullName = fullNameEdit.getText().toString();
+			    // EditText fullNameEdit = (EditText) findViewById(R.id.reg_fullname);
+			    // String fullName = fullNameEdit.getText().toString();
 			    
 				Spinner branchSpinner = (Spinner) findViewById(R.id.branch);
 			    String branchSpinnerText = String.valueOf(branchSpinner.getSelectedItem()); 
@@ -61,7 +61,8 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
 			    //String branch = "C36F2906-1173-459D-B5BC-73AD058673A3";
 			    
 			    if (MiscUtils.isNetworkAvailable(getApplicationContext())) {
-				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, fullName, branchId);
+				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, branchId);
+				    // new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, fullName, branchId);
 				}
 				else {
 					MiscUtils.showAlertDialog(RegistrationActivity.this, "Network Error", "User not registered. You need to enable network to login.");

@@ -2,9 +2,6 @@ package com.sccl.summerreadingapp;
 
 import java.util.ArrayList;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -19,7 +16,6 @@ import android.view.MenuItem;
 
 import com.sccl.summerreadingapp.adapter.SectionsPagerAdapter;
 import com.sccl.summerreadingapp.clients.ConfigClient;
-import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
 import com.sccl.summerreadingapp.model.Account;
@@ -88,8 +84,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		
 		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
 		if (summerReadingApplication.getAccount() != null) {
+			// TBD - Refactor the below. 
+			summerReadingApplication.setCurrentUserIndex(-1);
 			handleLoggedInUser(summerReadingApplication);
 		}
+		// TBD - Refactor the below condition. 
 		else if (summerReadingApplication.getConfig() != null && summerReadingApplication.getConfig().getBranchesString() != null) {
 			startLoginActivity();
 		}
@@ -99,7 +98,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 	}
 
-	//private void handleLoggedInUser(SharedPreferences userDetails) {
 	private void handleLoggedInUser(SummerReadingApplication summerReadingApplication) {
 		// Account account = getAccountFromSharedPreferences(userDetails);
 		Account account = summerReadingApplication.getAccount();
@@ -109,37 +107,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 				startAddUserActivity(account);
 			}
 		}
-		
-/*
-		String loginJSONResponse = userDetails.getString("LoginJSONResponse", "");
-		try {
-			JSONObject jsonLoginObject = new JSONObject(loginJSONResponse);
-		    Login login = JSONResultParser.createLogin(jsonLoginObject);
-			Account account = login.getAccount();
-			User users[] = account.getUsers();
-			if (users != null && users.length > 0) {
-				String userNames[] = new String[users.length];
-				String userTypes[] = new String[users.length];
-				for (int i = 0; i < users.length; i++) {
-					userNames[i] = users[i].getFirstName();
-					userTypes[i] = users[i].getUserType();
-				}
-				Intent i = new Intent(getApplicationContext(), ChooseUserFromListActivity.class);
-				i.putExtra("user", userNames);
-				i.putExtra("userType", userTypes);
-				startActivityForResult(i, REQUEST_CODE_SELECT_USER);
-			}
-			else {
-				Intent i = new Intent(getApplicationContext(), AddUserActivity.class);
-				i.putExtra("accountId", account.getId());
-				startActivityForResult(i, REQUEST_CODE_ADD_USER);
-			}
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-*/
 	}
 
 	private void startAddUserActivity(Account account) {
@@ -160,6 +127,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 			Intent i = new Intent(getApplicationContext(), ChooseUserFromListActivity.class);
 			i.putExtra("user", userNames);
 			i.putExtra("userType", userTypes);
+			i.putExtra("accountId", account.getId());
 			startActivityForResult(i, REQUEST_CODE_SELECT_USER);
 			return true;
 		}
@@ -200,7 +168,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 			return handleAddingNewUsers(userList, account, users);
 	}
 
-	public boolean handleAddingNewUsers(ArrayList<User> userList, Account account,
+	private boolean handleAddingNewUsers(ArrayList<User> userList, Account account,
 			User[] users) {
 		if (userList.size() != 0) {
 			User[] newUsers = new User[users.length + userList.size()];
@@ -209,10 +177,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 			account.setUsers(newUsers);
 			SharedPreferenceHelper.storeAccountDataIntoSharedPreferences(getApplicationContext(), null, account);
 		}
-		return true;
+		return startChooseUserActivity(account);
+		// return true;
 	}
 
-	public boolean handleAddingFirstTimeUsers(ArrayList<User> userList,
+	private boolean handleAddingFirstTimeUsers(ArrayList<User> userList,
 			SummerReadingApplication summerReadingApplication, Account account) {
 		if (userList.size() == 0)
 			return false;
@@ -221,40 +190,74 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		account.setUsers(users);
 		SharedPreferenceHelper.storeAccountDataIntoSharedPreferences(getApplicationContext(), null, account);
 
-		if (users.length == 1) {
+/*		if (users.length == 1) {
 			String user = users[0].getFirstName();
 			displayToastMessage("User Selected "+ user);
 			mSectionsPagerAdapter.setAccountAndSelectedUserIndex(getSupportFragmentManager(), account, 0);
 			summerReadingApplication.setUser(users[0]);
+			summerReadingApplication.setCurrentUserIndex(0);
+			getSupportActionBar().setTitle(user);
+			
 			return true;
 		}
-		// Choose user from list
+*/		// Choose user from list
 		return startChooseUserActivity(account);
 	}
 
 	private boolean handleChooseUserResult(Intent data) {
+		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
+
+		int restart = data.getIntExtra("restart", -1);
+		if (restart == 1) {
+			return handleAddUserResult(data);
+		}
+		
 		int userIndex = data.getIntExtra("index", -1);
-		if (userIndex == -1)
-			return false;
+		int currentIndex = summerReadingApplication.getCurrentUserIndex();
+
+		if (userIndex != -1) {
+			if (userIndex == currentIndex)
+				return true;
+		}
+
+		if (userIndex == -1) {
+			// userIndex = currentIndex;
+			if (currentIndex >= 0)
+				return true;
+			userIndex = 0;
+		}
+		
+//		if (userIndex == -1) {
+//			userIndex = 0;
+//		}
+
+		// I should optimize even when user preses the back button (userIndex -1) case.
+		// Here if there is already a current index set, I should return true just like when selected index and current index are same
+		// The problem is ApplicationContext object initializes ONLY once. Even when the app closes, context does not 
+		// go away. So this can lead to a serious problem of app not starting at all when try to restart and if you hit the 
+		// back button. MAY BE REST SummerReadingApplication.setCurrentUserIndex(-1) during onCreate???
+		
+		// if (userIndex == -1)
+			//return false;
 		
 		// SharedPreferences userDetails = getApplicationContext().getSharedPreferences("Account", MODE_PRIVATE);
 		// Account account = getAccountFromSharedPreferences(userDetails);
 
-		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
 		Account account = summerReadingApplication.getAccount();
 		if (account != null) {
    			User users[] = account.getUsers();
 			if (users != null && userIndex < users.length) {
 				String user = users[userIndex].getFirstName();
 				if (!MiscUtils.empty(user)) {
+					summerReadingApplication.setUser(users[userIndex]);
+					summerReadingApplication.setCurrentUserIndex(userIndex);
 					displayToastMessage("User Selected "+ user);
-					getSupportActionBar().setTitle(user);
+					getSupportActionBar().setTitle(account.getName() + "/" + user);
 					// mSectionsPagerAdapter.setActivityGridData(users[userIndex].getGridActivities());
 					// mSectionsPagerAdapter.setAccountAndSelectedUserIndex(getSupportFragmentManager(), users[userIndex], account, userIndex);
 					mSectionsPagerAdapter.setAccountAndSelectedUserIndex(getSupportFragmentManager(), account, userIndex);
 					// SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
 					// summerReadingApplication.setAccount(account);
-					summerReadingApplication.setUser(users[userIndex]);
 					return true;
 				}
 			}
@@ -316,19 +319,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		edit.commit();
 	}
 	
-	private Account getAccountFromSharedPreferences(SharedPreferences userDetails) {
-		Account account = null;
-		try {
-            String accountStr = userDetails.getString("Account", "");
-            if (!MiscUtils.empty(accountStr)) {
-            	account = JSONResultParser.createAccount(new JSONObject(accountStr));
-            }
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return account;
-	}
-
 	private void displayToastMessage(String message) {
 		MiscUtils.displayToastMessage(getApplicationContext(), message);
 	}
@@ -345,18 +335,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 	public boolean onOptionsItemSelected(MenuItem item) {
 		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getApplicationContext();
 		switch (item.getItemId()) {
-		case R.id.miAddUser:
+/*		case R.id.miAddUser:
 			displayToastMessage("Add selected");
 			startAddUserActivity(summerReadingApplication.getAccount());
 			break;
-		case R.id.miChangeUser:
-			displayToastMessage("Change selected");
-			startChooseUserActivity(summerReadingApplication.getAccount());
-			break;
+
 		case R.id.action_settings:
-			displayToastMessage("Settings selected");
 			break;
 
+*/		case R.id.miChangeUser:
+			startChooseUserActivity(summerReadingApplication.getAccount());
+			break;
 		default:
 			super.onOptionsItemSelected(item);
 			break;

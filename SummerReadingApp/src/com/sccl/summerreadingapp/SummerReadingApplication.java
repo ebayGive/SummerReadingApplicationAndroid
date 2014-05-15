@@ -1,13 +1,7 @@
 package com.sccl.summerreadingapp;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.sccl.summerreadingapp.helper.JSONResultParser;
-import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
 import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.Config;
@@ -24,6 +18,8 @@ public class SummerReadingApplication extends Application {
     private User user;
 
 	private Config config;
+
+	private int userIndex = -1;
  
     public Account getAccount() {
 		return account;
@@ -66,25 +62,20 @@ public class SummerReadingApplication extends Application {
         return sContext;
     }
  
-	private Account getAccountFromSharedPreferences(SharedPreferences userDetails) {
-		Account account = null;
-		try {
-            String accountStr = userDetails.getString("Account", "");
-            if (!MiscUtils.empty(accountStr)) {
-            	account = JSONResultParser.createAccount(new JSONObject(accountStr));
-            }
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return account;
-	}
-
 	public void setConfig(Config config) {
 		this.config = config;
 	}
 
 	public Config getConfig() {
 		return this.config;
+	}
+
+	public void setCurrentUserIndex(int userIndex) {
+		this.userIndex = userIndex;
+	}
+
+	public int getCurrentUserIndex() {
+		return this.userIndex;
 	}
 
 }

@@ -3,6 +3,8 @@ package com.sccl.summerreadingapp.adapter;
 import java.io.Serializable;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,7 +12,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.sccl.summerreadingapp.R;
-import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.User;
 
@@ -56,29 +57,63 @@ public class DailyReadingImageAdapter extends BaseAdapter implements Serializabl
             imageView = new ImageView(mContext);
             // imageView.setLayoutParams(new GridView.LayoutParams(370, 100));
             // MiscUtils.displayToastMessage(mContext, "w="+batteryWidth + "h="+batteryHeight);
+            // imageView.setLayoutParams(new GridView.LayoutParams(batteryWidth, batteryHeight));
+            // imageView.setLayoutParams(new GridView.LayoutParams(370, 200));
+            // imageView.setLayoutParams(new GridView.LayoutParams(260, 200));
+            // imageView.setLayoutParams(new GridView.LayoutParams(208, 160));
+
+            // Good for 9 by 5
+            // imageView.setLayoutParams(new GridView.LayoutParams(192, 146));
             imageView.setLayoutParams(new GridView.LayoutParams(batteryWidth, batteryHeight));
+            
+            // below for 15 by 3
+            // imageView.setLayoutParams(new GridView.LayoutParams(122, 94));
 
             // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            
+/*            WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            int width = display.getWidth();  // deprecated
+            int height = display.getHeight();  // deprecated
+            MiscUtils.displayToastMessage(mContext, "w="+width + "h="+height);
+*/            
         } else {
             imageView = (ImageView) convertView;
         }
-        int id = R.drawable.robottestoff01 + position;
+        // int id = R.drawable.robottestoff01 + position;
+        // int id = R.drawable.battery101 + position;
+        // Last best version
+        // int id = R.drawable.appbatteryoff01 + position;
+        int id = R.drawable.appbatteryoff201 + position;
         
-        int twentyAdded = user != null ? user.getReadingLog() : 0;
-        if (position < twentyAdded) {
-        	id = R.drawable.robotactivated01 + position;
+        int twentyAdded = user != null ? user.getReadingLog() / 20 : 0;
+        if (position >= 45 - twentyAdded) {
+        	// id = R.drawable.robotactivated01 + position;
+        	// id = R.drawable.batteryon01 + position;
+
+            // Last best version
+        	// id = R.drawable.appbatteryon01 + position;
+        	id = R.drawable.appbatteryon201 + position;
         }
-        imageView.setImageResource(id);
+        // imageView.setImageResource(id);
+        
+        Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), id);
+        if (bitmap != null) {
+        	Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+        	imageView.setImageBitmap(resizedBitmap);
+        }
+
         // int id = R.drawable.robotactivated01;
         // imageView.setImageResource(position + id);
         return imageView;
     	}
 
 	public void addTwenty() {
-		if (user != null)
+		if (user != null) {
 			user.addTwentyToReadingLog();
-    	this.notifyDataSetChanged();
+			this.notifyDataSetChanged();
+    	}
 	}
 
 	public void setAccountAndUser(Account account, User user) {

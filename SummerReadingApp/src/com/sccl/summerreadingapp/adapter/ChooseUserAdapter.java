@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sccl.summerreadingapp.R;
@@ -18,6 +19,7 @@ public class ChooseUserAdapter extends BaseAdapter {
     private static LayoutInflater inflater =null;
     String users[];
     String userTypes[];
+    int mCurrSelected = -1;
  
     public ChooseUserAdapter(Activity a, String users[], String userTypes[]) {
         activity = a;
@@ -49,17 +51,47 @@ public class ChooseUserAdapter extends BaseAdapter {
         String name  = users[position];
         title.setText(name);
 
-        String description = UserType.getDescription(userTypes[position]);
-        if ("Adult".equalsIgnoreCase(description)) 
-        	imageView.setImageResource(R.drawable.adult);
-        else if ("Pre-Reader".equalsIgnoreCase(description)) 
-        	imageView.setImageResource(R.drawable.prereader);
-        else if ("Teen".equalsIgnoreCase(description)) 
-        	imageView.setImageResource(R.drawable.teen);
-        else // if ("Reader".equalsIgnoreCase(description)) 
-        	imageView.setImageResource(R.drawable.reader);
+        RelativeLayout layout= (RelativeLayout) vi.findViewById(R.id.user_detail_layout);
 
+        String description = UserType.getDescription(userTypes[position]);
+        int bgColor = vi.getResources().getColor(R.color.LibraryRed);
+		if ("Adult".equalsIgnoreCase(description)) { 
+        	imageView.setImageResource(R.drawable.adult);
+        	bgColor = vi.getResources().getColor(R.color.LibraryGreen);
+        }
+        else if ("Pre-Reader".equalsIgnoreCase(description)) {
+        	imageView.setImageResource(R.drawable.prereader);
+        	bgColor = vi.getResources().getColor(R.color.LibraryOrange);
+    	}
+        else if ("Teen".equalsIgnoreCase(description)) {
+        	imageView.setImageResource(R.drawable.teen);
+        	bgColor = vi.getResources().getColor(R.color.LibraryBlue);
+        }
+        else if ("Staff".equalsIgnoreCase(description)) {
+        	imageView.setImageResource(R.drawable.staff);
+        	bgColor = vi.getResources().getColor(R.color.LibraryGray);
+        }
+        else { // if ("Reader".equalsIgnoreCase(description)) 
+        	imageView.setImageResource(R.drawable.reader);
+        }
+
+        if (position == mCurrSelected) {
+        	vi.setBackgroundColor(activity.getResources().getColor(R.color.LightSkyBlue));
+        }
+        else {
+        	vi.setBackgroundColor(bgColor);
+        }
 
         return vi;
     }
+
+    public void setSelectedPosition(int position) {
+    	mCurrSelected = position;
+    	notifyDataSetChanged();
+    }
+ 
+    public int getSelectedPosition() {
+    	return mCurrSelected;
+    }
+ 
 }

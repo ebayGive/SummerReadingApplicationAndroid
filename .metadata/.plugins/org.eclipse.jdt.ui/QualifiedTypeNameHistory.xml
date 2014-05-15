@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.LoginActivity"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.drawable"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.clients.GridActivityClient"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.GridActivityAsyncListener"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.GridActivity"/>
+<fullyQualifiedTypeName name="org.apache.http.client.methods.HttpPut"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.RegistrationActivity"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Account"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.AddUserActivity"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.id"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.SummerReadingApplication"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Branch"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.GridCell.CellData"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.DailyReadingFragment"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.clients.BranchClient"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.SharedPreferenceHelper"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.JSONResultParser"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.UserType"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.RegistrationActivity"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.GridActivity"/>
-<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.widget.GridView"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Config"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.MiscUtils"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.drawable"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.color"/>
 </qualifiedTypeNameHistroy>

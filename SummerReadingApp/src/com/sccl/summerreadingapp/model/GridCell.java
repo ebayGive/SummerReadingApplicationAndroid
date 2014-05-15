@@ -10,22 +10,38 @@ public class GridCell {
 	private static String CELLS = "cells"; 
 	private static String CELL_INDEX = "index"; 
 	private static String CELL_DESC = "description"; 
-	private static String CELL_IMAGE_URL = "imageSrc"; 
+	private static String GRID_ICON = "gridIcon"; 
 	
 	private String id;
 	private String userType;
 	
 	private CellData cellData[]; 
 
-	class CellData {
+	public class CellData {
 		int index;
 		String description;
-		String imageUrl;
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		public String getGridIcon() {
+			return gridIcon;
+		}
+
+		public void setGridIcon(String gridIcon) {
+			this.gridIcon = gridIcon;
+		}
+
+		String gridIcon;
 		
-		CellData(int index, String desc, String imageUrl) {
+		CellData(int index, String desc, String gridIcon) {
 			this.index = index;
 			this.description = desc;
-			this.imageUrl = imageUrl;
+			this.gridIcon = gridIcon;
 		}
 	}
 
@@ -48,7 +64,7 @@ public class GridCell {
 		try {
 			for (int i = 0; i < cells.length(); i ++) {
 				JSONObject jsonObject = cells.getJSONObject(i);
-				cellData[i] = new CellData(jsonObject.getInt(CELL_INDEX), jsonObject.getString(CELL_DESC), jsonObject.getString(CELL_IMAGE_URL));
+				cellData[i] = new CellData(jsonObject.getInt(CELL_INDEX), jsonObject.getString(CELL_DESC), jsonObject.getString(GRID_ICON));
 			}
 		} catch (JSONException e) {
 		}

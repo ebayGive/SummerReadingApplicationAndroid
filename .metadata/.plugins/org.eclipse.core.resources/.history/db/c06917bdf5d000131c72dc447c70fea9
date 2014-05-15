@@ -1,7 +1,0 @@
-package com.sccl.summerreadingapp;
-
-import com.sccl.summerreadingapp.model.Login;
-
-public interface ConfigAsyncListener {
-    public void onResult(Login login);
-}

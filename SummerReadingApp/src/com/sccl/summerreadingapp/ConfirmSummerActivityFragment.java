@@ -3,6 +3,7 @@ package com.sccl.summerreadingapp;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.sccl.summerreadingapp.adapter.ImageAdapter;
 import com.sccl.summerreadingapp.model.GridActivity;
 
 public class ConfirmSummerActivityFragment  extends DialogFragment {
 	GridActivity grid;
-	ImageAdapter imageAdapter;
 	
     public ConfirmSummerActivityFragment() {
           // Empty constructor required for DialogFragment
@@ -42,44 +41,65 @@ public class ConfirmSummerActivityFragment  extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_confirm_summer_activity, container);
         String title = getArguments().getString("title");
         this.grid = (GridActivity)getArguments().getSerializable("grid");
-        this.imageAdapter = (ImageAdapter)getArguments().getSerializable("adapter");
         
         getDialog().setTitle(title);
         // Show soft keyboard automatically
+        
         final EditText noteText = (EditText) view.findViewById(R.id.txt_name);
         noteText.setText(grid.getNotes());
-        noteText.requestFocus();
 
-        Button okbutton = (Button) view.findViewById(R.id.btn_ok);
-        Button cancelbutton = (Button) view.findViewById(R.id.btn_cancel);
-                  
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        Button okButton = (Button) view.findViewById(R.id.btn_ok);
+        Button cancelButton = (Button) view.findViewById(R.id.btn_cancel);
+        Button donebutton = (Button) view.findViewById(R.id.btnDone);
 
-        okbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleButtonClick(noteText, v);
-            }
-           });
+        if (grid.getType() == 1) {
+        	noteText.setEnabled(false);
+        	noteText.setInputType(InputType.TYPE_NULL);
+        	
+            okButton.setVisibility(View.INVISIBLE);            
+            cancelButton.setVisibility(View.INVISIBLE);            
+            
+            donebutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                	dismiss();
+                }
+               });
+        }
+        else {
+            donebutton.setVisibility(View.INVISIBLE);
 
-        cancelbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleButtonClick(noteText, v);
-            }
-           });
+        	okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleButtonClick(noteText, v);
+                }
+               });
 
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleButtonClick(noteText, v);
+                }
+               });
+
+            getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+	        noteText.requestFocus();
+        }
       return view;
     }
     
 	private void handleButtonClick(final EditText noteText, View view) {
-    	grid.setNotes(noteText.getText().toString());
-    	int type = 1;
-    	if (view.getId() == R.id.btn_cancel) {
-    		type = 0;
-    	}
-        grid.setType(type);
-        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, getActivity().getIntent());
+		
+		if (grid.getType() != 1) {
+	    	grid.setNotes(noteText.getText().toString());
+	    	int type = 1;
+	    	if (view.getId() == R.id.btn_cancel) {
+	    		type = 0;
+	    	}
+	        grid.setType(type);
+	        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, getActivity().getIntent());
+		}
 
     	dismiss();
 	}

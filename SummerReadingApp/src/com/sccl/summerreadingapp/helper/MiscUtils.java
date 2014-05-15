@@ -14,7 +14,7 @@ import android.net.NetworkInfo;
 import android.widget.Toast;
 
 public class MiscUtils {
-	static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+	static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 	public static  boolean isNetworkAvailable(Context c) {
 	    ConnectivityManager connectivityManager 
@@ -27,8 +27,8 @@ public class MiscUtils {
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 
-	public static boolean empty(String user) {
-		return user == null || user.length() == 0;
+	public static boolean empty(String text) {
+		return text == null || text.length() == 0;
 	}
 
 	public static void showAlertDialog(Activity activity, String title, String message) {

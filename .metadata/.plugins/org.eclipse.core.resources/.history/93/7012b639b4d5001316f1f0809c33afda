@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="@string/daily_reading_add_twenty" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_ok"
+        android:layout_marginLeft="19dip"
+        android:layout_marginRight="20dip"
+        android:orientation="horizontal" >
+
+        <!--
+
+        // below works well for 15 by 3 grid
+        android:layout_marginLeft="118dip"
+        android:layout_marginRight="118dip"
+
+            android:layout_marginLeft="49dip"
+            android:layout_marginRight="49dip"
+        -->
+
+        <GridView
+            android:id="@+id/gridviewDailyReading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="true"
+            android:columnWidth="120dp"
+            android:gravity="center"
+            android:horizontalSpacing="0dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="5"
+            android:padding="0dp"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0dp" />
+        <!-- android:layout_alignParentBottom="true" -->
+    </LinearLayout>
+
+</RelativeLayout>

@@ -18,7 +18,9 @@ import com.sccl.summerreadingapp.clients.GridActivityClient;
 import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
 import com.sccl.summerreadingapp.model.Account;
+import com.sccl.summerreadingapp.model.Config;
 import com.sccl.summerreadingapp.model.GridActivity;
+import com.sccl.summerreadingapp.model.GridCell;
 import com.sccl.summerreadingapp.model.Prize;
 import com.sccl.summerreadingapp.model.User;
 
@@ -32,6 +34,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 	int selectedIndex = -1;
 	private Account account;
 	private int userIndex = -1;
+	GridCell gridCell;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,10 +48,15 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
         
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
     
-        GridActivity[] userGrid = null;
-        if (user != null)
+		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getActivity().getApplicationContext();
+		Config config = summerReadingApplication.getConfig();
+
+		GridActivity[] userGrid = null;
+        if (user != null) {
         	userGrid = user.getGridActivities();
-        imageAdapter = new ImageAdapter(container.getContext(), userGrid);
+        	gridCell = config.getGridCell(user.getUserType());
+        }
+        imageAdapter = new ImageAdapter(container.getContext(), userGrid, gridCell);
 		gridview.setAdapter(imageAdapter);
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
@@ -75,20 +83,33 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
     	
     	
     	if (user != null && imageAdapter != null) {
-    		imageAdapter.setGridData(user.getGridActivities());
+    		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getActivity().getApplicationContext();
+    		Config config = summerReadingApplication.getConfig();
+        	gridCell = config.getGridCell(user.getUserType());
+    		imageAdapter.setGridData(user.getGridActivities(), gridCell);
         	prizeWon(getActivity(), rootView);
     	}
     }
 
     private void showConfirmActivityDialog(int index) {
-    	if (user != null)
-    	{
-	        FragmentManager fm = getActivity().getSupportFragmentManager();
-	        ConfirmSummerActivityFragment alertDialog = ConfirmSummerActivityFragment.newInstance("Confirm Activity", user.getGridActivities()[index]);
+    	if (user != null) {
+        	if (index == 12) {
+        		if (user.getReadingLog() >= 900)
+        			MiscUtils.showAlertDialog(getActivity(), "Congratulations", "You finished charging the reading battery. Please go to Library to collect your prize.");
+        		else
+        			MiscUtils.showAlertDialog(getActivity(), "Finish Charging", "You need to charge the reading battery completely to activate this grid");
+        		return;
+        	}
+
+	        GridCell.CellData cellDataArray[] = gridCell.getCellData();
+        	GridCell.CellData cellData = cellDataArray[index];
+        	String title = cellData.getDescription();
+        	
+	        ConfirmSummerActivityFragment alertDialog = ConfirmSummerActivityFragment.newInstance(title, user.getGridActivities()[index]);
 	        alertDialog.setTargetFragment(this, 1);
-	        alertDialog.setCancelable(false);
+	        // alertDialog.setCancelable(false);
 	        selectedIndex = index;
-	        alertDialog.show(fm, "fragment_alert");
+	        alertDialog.show(getActivity().getSupportFragmentManager(), "fragment_alert");
     	}
       }
 
@@ -99,12 +120,16 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
                     if (resultCode == Activity.RESULT_OK) {
                     	prizeWon(getActivity(), rootView);
                     	imageAdapter.notifyDataSetChanged();
-                    	if (selectedIndex != -1 && MiscUtils.isNetworkAvailable(getActivity().getApplicationContext())) {
-                    		new GridActivityClient(getActivity(), user, selectedIndex).execute();
+                    	String notes = null;
+                    	if (selectedIndex != -1) {
+                    		notes = user.getGridActivities()[selectedIndex].getNotes();
                     	}
-                    	updateAccountInSharedPreferences();
-                			//new GridActivityClient(getActivity(), SummerActivityFragment.this, user, gridActivities[selectedIndex]).execute();
-                        // After Ok code.
+                    	if (!MiscUtils.empty(notes) || user.getGridActivities()[selectedIndex].getType() == 1) {
+                    		if (MiscUtils.isNetworkAvailable(getActivity().getApplicationContext())) {
+                    			new GridActivityClient(getActivity(), user, selectedIndex).execute();
+                    		}
+                        	updateAccountInSharedPreferences();
+                    	}
                     } else if (resultCode == Activity.RESULT_CANCELED){
                         // After Cancel code.
                     }

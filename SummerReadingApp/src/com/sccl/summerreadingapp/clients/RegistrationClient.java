@@ -16,7 +16,6 @@ import android.util.Log;
 import com.sccl.summerreadingapp.RegistrationAsyncListener;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
-import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.Login;
 
 /**

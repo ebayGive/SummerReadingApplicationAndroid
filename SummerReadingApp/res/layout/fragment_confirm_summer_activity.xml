@@ -2,7 +2,7 @@
     android:layout_width='fill_parent'
     android:layout_height='fill_parent'
     android:orientation='vertical'
-    android:padding='10sp' >
+    android:padding='2dp' >
 
     <!--  Switch android:id="@+id/completed"
                 android:text="Completed"
@@ -12,7 +12,7 @@
     
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:gravity="top|left"
         />
     
@@ -24,55 +24,48 @@
         android:lines="10"
         android:minLines="6"
         android:gravity="top|left"
-        android:hint='Enter Note Here'
+        android:hint='@string/confirm_activity_enter_note'
        >
 
         <requestFocus />
     </EditText>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:layout_height="50dip">
+        
+        <Button
+            android:id='@+id/btn_ok'
+            android:layout_width='140dp'
+            android:layout_height='wrap_content'
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text='@string/confirm_activity_completed' 
+            />
+        
+        <Button
+            android:id='@+id/btn_cancel'
+            android:layout_width='140dp'
+            android:layout_height='wrap_content'
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text='@string/confirm_activity_later' />
+        
+    </RelativeLayout>
+    
     <LinearLayout
         android:layout_width='match_parent'
         android:layout_height='wrap_content' 
         android:layout_gravity='center' 
+        android:gravity="center"
         >
-
         <Button
-            android:id='@+id/btn_ok'
+            android:id='@+id/btnDone'
             android:layout_width='160dp'
             android:layout_height='wrap_content'
-            android:layout_marginLeft='1dp'
-            android:text='@string/confirm_activity_completed' 
-            />
-
-        <Button
-            android:id='@+id/btn_cancel'
-            android:layout_width='160dp'
-            android:layout_height='wrap_content'
-            android:layout_marginRight='1dp'
-            android:text='@string/confirm_activity_later' />
-    </LinearLayout>
-    
-<!-- 
-    <RelativeLayout
-        android:layout_width='match_parent'
-        android:layout_height='wrap_content' >
-
-        <Button
-            android:id='@+id/btn_ok'
-            android:layout_width='120dp'
-            android:layout_height='wrap_content'
-            android:layout_marginLeft='10dp'
-            android:text='@string/dialog_submit' 
-            />
-
-        <Button
-            android:id='@+id/btn_cancel'
-            android:layout_width='120dp'
-            android:layout_height='wrap_content'
-            android:layout_alignParentTop='true'
-            android:layout_marginRight='10dp'
-            android:layout_toRightOf='@+id/btn_ok'
-            android:text='@string/dialog_cancel' />
-    </RelativeLayout>
- -->
+			android:gravity="center"
+            android:text='@string/dialog_close' />
+	</LinearLayout>
 </LinearLayout>

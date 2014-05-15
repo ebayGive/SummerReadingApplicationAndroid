@@ -1,25 +1,15 @@
 package com.sccl.summerreadingapp.clients;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.sccl.summerreadingapp.ConfigAsyncListener;
 import com.sccl.summerreadingapp.SummerReadingApplication;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
 import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
-import com.sccl.summerreadingapp.model.Branch;
 import com.sccl.summerreadingapp.model.Config;
-import com.sccl.summerreadingapp.model.GridCell;
-import com.sccl.summerreadingapp.model.UserType;
 
 /**
  * Async task class to get json by making HTTP call
@@ -71,7 +61,7 @@ public class ConfigClient extends AsyncTask<Void, Void, Void> {
     	SummerReadingApplication summerReadingApplication = (SummerReadingApplication) parent.getApplicationContext();
     	summerReadingApplication.setConfig(config);
 
-    	SharedPreferenceHelper.storeConfigDataIntoSharedPreferences(summerReadingApplication.getContext(), config);
+    	SharedPreferenceHelper.storeConfigDataIntoSharedPreferences(SummerReadingApplication.getContext(), config);
     	return null;
     }
 

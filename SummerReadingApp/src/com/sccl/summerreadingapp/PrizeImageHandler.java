@@ -47,9 +47,10 @@ public class PrizeImageHandler {
 	}
 
 	private String getPrizeMessage(Prize prize) {
-    	String message = prize.getState() == 1 ? 
-        		"Congratulations on earning the prize. You can collect the prize by visiting library!" : "You need to finish one row/column/diagonal activities to earn prize. ";
-		return message;
+//    	String message = prize.getState() == 1 ? 
+//        		"Congratulations on earning the prize. You can collect the prize by visiting library!" : "You need to finish one row/column/diagonal activities to earn prize. ";
+    	String message = "Complete 5 squares in a row (vertical, horizontal, or diagonal) to win a [prize name here]. Visit your local library to pick up prizes from June 2 to July 31.";
+    	return message;
 	}
 
 	private void setPrizeImageClickListener(ImageView prizeView, String title, String message) {
@@ -63,12 +64,12 @@ public class PrizeImageHandler {
 	}
 
 	private void setPrizeImageBasedOnState(View rootView, Prize prize, int prizeResourceId) {
-		int imageId = R.drawable.prize_not_ready_to_claim;
+		int imageId = R.drawable.prize_not_ready;
 		if (prize.getState() == 1) {
-			imageId = R.drawable.prize_ready_to_claim;
+			imageId = R.drawable.prize_1_ready + prizeResourceId - R.id.prize1;
 		}
 		else if (prize.getState() == 2) {
-			imageId = R.drawable.prize_claimed;
+			imageId = R.drawable.prize_claimed_badge;
 		}
 		ImageView prizeView = (ImageView) rootView.findViewById(prizeResourceId);
 		prizeView.setImageResource(imageId);

@@ -7,6 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 820256012561578272L;
 	private static String ID = "id"; 
 	private static String FIRST_NAME = "firstName"; 
 	private static String LAST_NAME = "lastName"; 
@@ -102,7 +106,7 @@ public class User implements Serializable {
 	}
 
 	public void addTwentyToReadingLog() {
-		this.readingLog++;
+		this.readingLog += 20;
 	}
 
 	public String toJSON(){

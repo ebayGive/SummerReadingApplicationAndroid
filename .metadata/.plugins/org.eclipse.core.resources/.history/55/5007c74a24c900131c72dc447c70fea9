@@ -1,8 +1,0 @@
-package com.sccl.summerreadingapp;
-
-import com.sccl.summerreadingapp.model.GridActivity;
-import com.sccl.summerreadingapp.model.Login;
-
-public interface GridActivityAsyncListener {
-    public void onResult(GridActivity grid);
-}

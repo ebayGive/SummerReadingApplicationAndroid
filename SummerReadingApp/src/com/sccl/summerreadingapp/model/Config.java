@@ -27,6 +27,16 @@ public class Config implements Serializable {
 	public void setGridCells(ArrayList<GridCell> gridCells) {
 		this.gridCells = gridCells;
 	}
+		
+	public GridCell getGridCell(String userType)
+	{
+		for (GridCell gridCell:this.gridCells) {
+			if (userType.equalsIgnoreCase(gridCell.getUserType()))
+				return gridCell;
+		}
+		return null;
+	}
+
 	public ArrayList<UserType> getUserTypes() {
 		return userTypes;
 	}
@@ -69,14 +79,4 @@ public class Config implements Serializable {
 		}
 		return null;
 	}
-
-	public GridCell getGridCell(String userType)
-	{
-		for (GridCell gridCell:this.gridCells) {
-			if (userType.equalsIgnoreCase(gridCell.getUserType()))
-				return gridCell;
-		}
-		return null;
-	}
-
 }

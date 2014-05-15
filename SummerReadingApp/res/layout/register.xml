@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:background="@drawable/summer_bg"
-  android:fillViewport="true">
-  <RelativeLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/summer_bg_blue"
+    android:fillViewport="true" >
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"> <!-- android:background="#ffffff">  -->
- 
-        <!--  Header  Starts-->
-         <!--  android:background="@drawable/header_gradient"-->
-        <LinearLayout android:id="@+id/header"
-                android:layout_width="fill_parent"
+        android:layout_height="wrap_content" > <!-- android:background="#ffffff"> -->
+
+
+        <!-- Header  Starts -->
+        <!-- android:background="@drawable/header_gradient" -->
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
+
+            <!-- Logo Start -->
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dip"
-                android:paddingBottom="5dip">
-                <!-- Logo Start-->
-                <ImageView android:src="@drawable/homeheader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dip"/>
-                <!-- Logo Ends -->
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/homeheader" />
+            <!-- Logo Ends -->
         </LinearLayout>
-        <!--  Header Ends -->
+        <!-- Header Ends -->
         <!-- Footer Start -->
-<!--
+        <!--
  		 <LinearLayout android:id="@+id/footer"
 		    android:layout_width="fill_parent"
 		    android:background="@drawable/footer_repeat"
@@ -35,98 +41,127 @@
           		android:layout_width="fill_parent"
 		          android:layout_weight="1" />
 		 		</LinearLayout>
--->
+        -->
         <!-- android:background="@drawable/footer_repeat" -->
 
-		 <LinearLayout android:id="@+id/footer"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:gravity="center"
-		    android:layout_alignParentBottom="true">
-		        <!-- Logo Start-->
-		        <ImageView android:src="@drawable/homefooter"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:gravity="center"
-		            android:layout_marginLeft="2dip"/>
-		        <!-- Logo Ends -->
-		</LinearLayout>
-
- 		 <!-- Footer Ends -->
- 
-        <!-- Registration Form -->
         <LinearLayout
-		  android:background="@color/LightBlue"
-          android:orientation="vertical"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="10dip"
-          android:layout_marginLeft="16dip"
-          android:layout_marginRight="16dip"
-          android:layout_below="@id/header">
-          <!-- Full Name Label -->
-          <EditText android:id="@+id/reg_username"
+            android:id="@+id/footer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center" >
+
+            <!-- Logo Start -->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:gravity="center"
+                android:src="@drawable/homefooter" />
+            <!-- Logo Ends -->
+        </LinearLayout>
+
+        <!-- Footer Ends -->
+
+
+        <!-- Registration Form -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="16dip"
+            android:orientation="vertical"
+            android:background="@color/White"
+            android:padding="10dip" >
+
+            <!-- Full Name Label -->
+
+            <EditText
+                android:id="@+id/reg_username"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top"
                 android:hint="@string/label_phone_or_user"
-                android:textSize="12sp"
-                android:layout_marginTop="@dimen/login_register_margin_top"
-                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
-          <!-- Pin -->
-          <EditText android:id="@+id/reg_password"
+                android:singleLine="true"
+                android:textSize="12sp" />
+            <!-- Pin -->
+
+            <EditText
+                android:id="@+id/reg_password"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top"
                 android:fontFamily="sans-serif"
-                android:inputType="textPassword"
                 android:hint="@string/label_pin"
-                android:textSize="12sp"
-                android:layout_marginTop="@dimen/login_register_margin_top"
-                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
-          <!--  Name Label -->
-          <EditText android:id="@+id/reg_fullname"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:singleLine="true"
-                android:hint="@string/label_name"
-                android:textSize="12sp"
-                android:layout_marginTop="@dimen/login_register_margin_top"
-                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
-          <!--  Email Label -->
-          <EditText android:id="@+id/reg_email"
+                android:textSize="12sp" />
+            <!-- Name Label 
+
+            <EditText
+                android:id="@+id/reg_fullname"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:hint="@string/label_name"
+                android:singleLine="true"
+                android:textSize="12sp" />
+                
+			-->                
+            <!-- Email Label -->
+
+            <EditText
+                android:id="@+id/reg_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:hint="@string/label_email"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:hint="@string/label_email"
-                android:textSize="12sp"
-                android:layout_marginTop="@dimen/login_register_margin_top"
-                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
-		 <Spinner
-		        android:id="@+id/branch"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/login_register_margin_top"
-                android:layout_marginBottom="@dimen/login_register_margin_bottom"/>
-		           <!-- Register Button -->
-          <Button android:id="@+id/btnRegister"
+                android:textSize="12sp" />
+
+            <Spinner
+                android:id="@+id/branch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top" />
+
+		 	<View style="@style/DividerHorizontal"
+		        android:id="@+id/firstDivider"
+		        android:layout_marginTop="15dip"
+			    />
+            
+            <!-- Register Button -->
+
+            <Button
+                android:id="@+id/btnRegister"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:text="@string/label_register"/>
-          <!-- Link to Login Screen -->
-          <TextView android:id="@+id/link_to_login"
+	            android:background="@color/LibraryRed"
+                android:text="@string/label_register" />
+            <!-- Link to Login Screen -->
+
+            <TextView
+                android:id="@+id/link_to_login"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
                 android:layout_marginBottom="2dip"
-                android:text="@string/label_login_in_register"
+                android:layout_marginTop="10dip"
                 android:gravity="center"
-                android:textSize="12sp"
-                android:textColor="#025f7c"/>
- 
+                android:text="@string/label_login_in_register"
+                android:textColor="#025f7c"
+                android:textSize="12sp" />
         </LinearLayout>
         <!-- Registration Form Ends -->
-  </RelativeLayout>
+    </RelativeLayout>
+
 </ScrollView>

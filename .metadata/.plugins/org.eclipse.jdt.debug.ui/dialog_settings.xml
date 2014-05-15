@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="EXPRESSION_INPUT_DIALOG">
+		<item value="472" key="DIALOG_WIDTH"/>
+		<item value="274" key="DIALOG_Y_ORIGIN"/>
+		<item value="604" key="DIALOG_X_ORIGIN"/>
+		<item value="295" key="DIALOG_HEIGHT"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+	</section>
 	<section name="org.eclipse.jdt.internal.debug.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
 		<item value="500" key="SashWeightDetails"/>
 		<item value="500" key="SashWeightTree"/>
 		<item value="156" key="HEIGHT"/>
 		<item value="600" key="WIDTH"/>
+	</section>
+	<section name="STRING_VALUE_INPUT_DIALOG">
+		<item value="366" key="DIALOG_WIDTH"/>
+		<item value="false" key="USE_EVALUATION"/>
+		<item value="209" key="DIALOG_Y_ORIGIN"/>
+		<item value="true" key="WRAP_TEXT"/>
+		<item value="657" key="DIALOG_X_ORIGIN"/>
+		<item value="392" key="DIALOG_HEIGHT"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 </section>

@@ -73,21 +73,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
     
-    public void setActivityGridData1(FragmentManager fm, GridActivity[] data)
-    {
-    	this.data = data;
-    	// SummerActivityFragment summer = (SummerActivityFragment)getItem(0);
-//    	if (summer != null && summer.imageAdapter != null)
-//    		summer.imageAdapter.setGridData(data);
-
-    	SummerActivityFragment fragment = 
-    			(SummerActivityFragment) fm.findFragmentByTag(
-  	                       "android:switcher:"+R.id.pager+":0");
-	  	if(fragment != null)  {
-	  		fragment.imageAdapter.setGridData(data);
-	  	}
-    }
-
 	// public void setAccountAndSelectedUserIndex(FragmentManager fm, User user, Account account, int userIndex) {
 	public void setAccountAndSelectedUserIndex(FragmentManager fm, Account account, int userIndex) {
     	// this.user = user;

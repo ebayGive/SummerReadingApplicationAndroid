@@ -140,4 +140,10 @@
  <color name="DarkBlue">#00008B</color>
  <color name="Navy">#000080</color>
  <color name="Black">#000000</color>
+ <color name="LibraryOrange">#D5843A</color>
+ <color name="LibraryRed">#D5453A</color>
+ <color name="LibraryBlue">#257782</color>
+ <color name="LibraryGreen">#2CA341</color>
+ <color name="LibraryGray">#6D6E70</color>
+ <color name="LibraryTextGreen">#2CA341</color>
 </resources>
