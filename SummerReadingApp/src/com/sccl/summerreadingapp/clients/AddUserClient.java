@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import com.sccl.summerreadingapp.AddUserAsyncListener;
+import com.sccl.summerreadingapp.helper.Constants;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
@@ -18,7 +19,8 @@ import com.sccl.summerreadingapp.model.User;
  * */
 public class AddUserClient extends AsyncTask<String, Void, User> {
 	
-	private static final String ADD_USER_REQUEST = "http://hackathon.ebaystratus.com/accounts/";
+	// private static final String ADD_USER_REQUEST = "http://hackathon.ebaystratus.com/accounts/";
+	private static final String ADD_USER_REQUEST = Constants.ACCOUNT_REQUEST;
 	private Activity parent;
 	private AddUserAsyncListener listener;
 	private ProgressDialog pDialog;
@@ -42,7 +44,7 @@ public class AddUserClient extends AsyncTask<String, Void, User> {
     @Override
     protected User doInBackground(String... arg0) {
         // Creating service handler class instance
-        if (arg0.length < 4)
+        if (arg0.length < 5)
         	return null;
         
         String accountId = arg0[3];
@@ -59,7 +61,10 @@ public class AddUserClient extends AsyncTask<String, Void, User> {
 			jsonUserObject.accumulate("userType", arg0[2]);
 			jsonObject.put("user", jsonUserObject);
 */			
-			User user = new User("-1", arg0[0], arg0[1], arg0[2], 0);
+            String ageStr = arg0[4];
+            int age = Integer.parseInt(ageStr);
+
+            User user = new User("-1", arg0[0], arg0[1], arg0[2], 0, age);
 			jsonObject.put("user", user.toJSONObject(false));
 			String newUser = new ServiceInvoker().invokeJson(url, ServiceInvoker.POST, jsonObject);
 			JSONObject userResponse = new JSONObject(newUser);

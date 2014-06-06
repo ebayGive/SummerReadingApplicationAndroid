@@ -22,6 +22,7 @@ public class AddUserActivity extends Activity implements AddUserAsyncListener {
 	ArrayList<User> userList = new ArrayList<User>();
 	private ArrayList<UserType> readerTypeList;
 	Config config;
+	private ArrayList<UserType> listWithoutStaff = new ArrayList<UserType>();
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,13 @@ public class AddUserActivity extends Activity implements AddUserAsyncListener {
 		Spinner readerTypeSpinner = (Spinner) findViewById(R.id.reader_type);
 		List<String> readerTypeNames = new ArrayList<String>();
 		for (UserType userType:readerTypeList) {
-			if (userType.getName().indexOf("STAFF") < 0)
-				readerTypeNames.add(userType.getName());
+			if (userType.getName().indexOf("STAFF") < 0) {
+				listWithoutStaff.add(userType);
+				String withAgeRange = userType.getDescription() + 
+						" [" + userType.getMinAge() + " - " + userType.getMaxAge() + "]";
+				readerTypeNames.add(withAgeRange);
+			}
+				// readerTypeNames.add(userType.getName());
 		}
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 			android.R.layout.simple_spinner_item, readerTypeNames);
@@ -71,16 +77,28 @@ public class AddUserActivity extends Activity implements AddUserAsyncListener {
 	    EditText lastNameEdit = (EditText) findViewById(R.id.add_lname);
 	    String lastName = lastNameEdit.getText().toString();
 	    
+	    if (MiscUtils.empty(firstName) || MiscUtils.empty(lastName)) {
+			MiscUtils.showAlertDialog(AddUserActivity.this, "Error", "First Name and Last Name cannot be empty!");
+			return;
+	    }
+
 	    Spinner readerTypeSpinner = (Spinner) findViewById(R.id.reader_type);
-	    String readerType = String.valueOf(readerTypeSpinner.getSelectedItem());
+//	    String readerType = String.valueOf(readerTypeSpinner.getSelectedItem());
 	    
-	    UserType userType = config.getUserType(readerType);
+	    UserType userType = listWithoutStaff.get(readerTypeSpinner.getSelectedItemPosition());
+//	    UserType userType = config.getUserType(readerType);
 	    String userTypeId = userType.getId();
 
 //	    String id = UserType.getId(readerType);
-	    
+
+	    EditText ageEdit = (EditText) findViewById(R.id.add_lage);
+	    String age = ageEdit.getText().toString();
+	    if (MiscUtils.empty(age)) {
+	    	age = "-1";
+	    }
+
 	    if (MiscUtils.isNetworkAvailable(getApplicationContext())) {
-		    new AddUserClient(AddUserActivity.this, AddUserActivity.this).execute(firstName, lastName, userTypeId, accountId);
+		    new AddUserClient(AddUserActivity.this, AddUserActivity.this).execute(firstName, lastName, userTypeId, accountId, age);
 		}
 		else {
 			MiscUtils.showAlertDialog(AddUserActivity.this, "Network Error", "User not added. You need to enable network to login.");

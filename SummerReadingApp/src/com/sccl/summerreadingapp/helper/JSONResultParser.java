@@ -18,7 +18,8 @@ import com.sccl.summerreadingapp.model.User;
 import com.sccl.summerreadingapp.model.UserType;
 
 public class JSONResultParser {
-    private static final String ACCOUNT = "account";
+    private static final String PRIZE_DESCRIPTION = "prize";
+	private static final String ACCOUNT = "account";
     private static final String USERS = "users";
     private static final String USER_GRIDS = "activityGrid";
     private static final String USER_PRIZES = "prizes";
@@ -65,6 +66,11 @@ public class JSONResultParser {
 	    JSONArray prizesArray = jsonObj.getJSONArray(USER_PRIZES);
 	    if (prizesArray.length() > 0)
 	    	user.setPrizes(createPrizeArray(prizesArray));
+
+	    if (jsonObj.has(PRIZE_DESCRIPTION)) {
+	    	JSONObject jsonPrizeDescription = jsonObj.getJSONObject(PRIZE_DESCRIPTION);
+	    	user.setPrizeDesscription(createPrizeDescriptionArray(jsonPrizeDescription));
+	    }
 	    
 	    return user;
 	}
@@ -89,6 +95,18 @@ public class JSONResultParser {
 	        prize[j] = Prize.createPrize(prizeJson);
 	    }
 		return prize;
+	}
+	
+	static private String[] createPrizeDescriptionArray(JSONObject prizeDescriptionJson) {
+		String prizeDescription[] = new String[5];
+		try {
+			for (int i = 0; i < prizeDescription.length; i++) {
+				prizeDescription[i] = prizeDescriptionJson.getString(PRIZE_DESCRIPTION+(i+1));
+			}
+		} 
+		catch (Exception e) {}
+		
+		return prizeDescription;
 	}
 	
 	public static ArrayList<Branch> createBranches(String jsonStr) {

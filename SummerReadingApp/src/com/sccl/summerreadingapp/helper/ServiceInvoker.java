@@ -17,6 +17,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+
+import android.util.Log;
  
 public class ServiceInvoker {
 
@@ -47,6 +49,7 @@ public class ServiceInvoker {
 			response = EntityUtils.toString(httpEntity);
 
 		} catch (Exception e) {
+			Log.e("error", e.getMessage());
 		}
 
 		return response;

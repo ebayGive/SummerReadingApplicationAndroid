@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.sccl.summerreadingapp.LoginAsyncListener;
+import com.sccl.summerreadingapp.helper.Constants;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
 import com.sccl.summerreadingapp.model.Login;
@@ -23,7 +24,8 @@ import com.sccl.summerreadingapp.model.Login;
  * */
 public class LoginClient extends AsyncTask<String, Void, Login> {
 	
-	private static final String LOGIN_REQUEST = "http://hackathon.ebaystratus.com/accounts/signin.json";
+	// private static final String LOGIN_REQUEST = "http://hackathon.ebaystratus.com/accounts/signin.json";
+	private static final String LOGIN_REQUEST = Constants.ACCOUNT_REQUEST + "signin.json";
 	private Activity parent;
 	private LoginAsyncListener listener;
 	private ProgressDialog pDialog;

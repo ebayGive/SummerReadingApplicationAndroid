@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +32,8 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 	User user;
 	int selectedIndex = -1;
 	private Account account;
-	private int userIndex = -1;
 	GridCell gridCell;
+	private boolean refresh;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,31 +73,46 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 	public void setAccountAndSelectedUserIndex(Account account, int userIndex) {
     	// this.user = user;
     	this.account = account;
-    	this.userIndex = userIndex;
     	
     	if (account != null && userIndex >=0) {
     		User users[] = account.getUsers();
     		this.user = users[userIndex];
     	}
     	
-    	
-    	if (user != null && imageAdapter != null) {
+    	refreshImageAndPrizes();
+    }
+
+	public void refreshImageAndPrizes() {
+		if (user != null && imageAdapter != null) {
     		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getActivity().getApplicationContext();
     		Config config = summerReadingApplication.getConfig();
         	gridCell = config.getGridCell(user.getUserType());
     		imageAdapter.setGridData(user.getGridActivities(), gridCell);
         	prizeWon(getActivity(), rootView);
     	}
-    }
+	}
+
+	public void setRefreshImageAndPrizes(boolean refresh) {
+		this.refresh = refresh;
+	}
+
+	public boolean getRefreshImageAndPrizes() {
+		return this.refresh;
+	}
 
     private void showConfirmActivityDialog(int index) {
     	if (user != null) {
         	if (index == 12) {
-        		if (user.getReadingLog() >= 900)
-        			MiscUtils.showAlertDialog(getActivity(), "Congratulations", "You finished charging the reading battery. Please go to Library to collect your prize.");
-        		else
-        			MiscUtils.showAlertDialog(getActivity(), "Finish Charging", "You need to charge the reading battery completely to activate this grid");
+        		((MainActivity)getActivity()).setCurrentPagerItem(1);
         		return;
+/*        		if (user.getReadingLog() < 900)
+        		{
+        			MiscUtils.showAlertDialog(getActivity(), "Finish Charging", "You need to charge the reading battery completely to activate this grid");
+        			return;
+        		}
+*/        		// else
+        			// MiscUtils.showAlertDialog(getActivity(), "Congratulations", "You finished charging the reading battery. Please go to Library to collect your prize.");
+        		// return;
         	}
 
 	        GridCell.CellData cellDataArray[] = gridCell.getCellData();
@@ -125,10 +139,14 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
                     		notes = user.getGridActivities()[selectedIndex].getNotes();
                     	}
                     	if (!MiscUtils.empty(notes) || user.getGridActivities()[selectedIndex].getType() == 1) {
+                    		user.getGridActivities()[selectedIndex].setLastUpdated(MiscUtils.getCurrentTimeInString());
                     		if (MiscUtils.isNetworkAvailable(getActivity().getApplicationContext())) {
                     			new GridActivityClient(getActivity(), user, selectedIndex).execute();
                     		}
-                        	updateAccountInSharedPreferences();
+                    		else
+                    			user.getGridActivities()[selectedIndex].saveToServer(true);
+
+                    		updateAccountInSharedPreferences();
                     	}
                     } else if (resultCode == Activity.RESULT_CANCELED){
                         // After Cancel code.
@@ -176,23 +194,23 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 
         new PrizeImageHandler(getActivity()).setImagesAndAssignClickHandler(rootView, prizes);
         
-        MiscUtils.displayToastMessage(context, "Prizes="+total);
+        // MiscUtils.displayToastMessage(context, "Prizes="+total);
     }
 
 	private void setPrizes(Prize[] prizes, int total) {
-		if (total > 0)
+		if (total > 0 && prizes[0].getState() == 0)
         	prizes[0].setState(1);
 
-        if (total > 1)
+        if (total > 1 && prizes[1].getState() == 0)
         	prizes[1].setState(1);
 
-        if (total > 2)
+        if (total > 2 && prizes[2].getState() == 0)
         	prizes[2].setState(1);
 
-        if (total > 3)
+        if (total > 3 && prizes[3].getState() == 0)
         	prizes[3].setState(1);
 
-        if (total > 11)
+        if (total > 11 && prizes[4].getState() == 0)
         	prizes[4].setState(1);
 	}
 

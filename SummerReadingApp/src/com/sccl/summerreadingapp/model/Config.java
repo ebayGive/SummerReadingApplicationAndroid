@@ -37,6 +37,33 @@ public class Config implements Serializable {
 		return null;
 	}
 
+	public Branch getBranch(String branchName)
+	{
+		for (Branch branch:this.branches) {
+			if (branchName.equalsIgnoreCase(branch.getName()))
+				return branch;
+		}
+		return null;
+	}
+
+	public UserType getUserType(String userTypeName)
+	{
+		for (UserType userType:this.userTypes) {
+			if (userTypeName.equalsIgnoreCase(userType.getDescription()))
+				return userType;
+		}
+		return null;
+	}
+
+	public UserType getUserTypeById(String id)
+	{
+		for (UserType userType:this.userTypes) {
+			if (id.equalsIgnoreCase(userType.getId()))
+				return userType;
+		}
+		return null;
+	}
+
 	public ArrayList<UserType> getUserTypes() {
 		return userTypes;
 	}
@@ -60,23 +87,5 @@ public class Config implements Serializable {
 	}
 	public String getGridCellsString() {
 		return gridCellsString;
-	}
-	
-	public Branch getBranch(String branchName)
-	{
-		for (Branch branch:this.branches) {
-			if (branchName.equalsIgnoreCase(branch.getName()))
-				return branch;
-		}
-		return null;
-	}
-
-	public UserType getUserType(String userTypeName)
-	{
-		for (UserType userType:this.userTypes) {
-			if (userTypeName.equalsIgnoreCase(userType.getName()))
-				return userType;
-		}
-		return null;
 	}
 }

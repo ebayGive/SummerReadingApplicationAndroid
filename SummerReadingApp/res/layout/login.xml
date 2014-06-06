@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/summer_bg_blue"
+    android:background="@drawable/summer_bg_green"
     android:fillViewport="true" >
 
     <RelativeLayout
@@ -18,12 +18,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dip"
-            android:paddingTop="5dip" >
+            android:paddingTop="5dip" 
+            android:gravity="center" >
 
             <!-- Logo Start -->
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:src="@drawable/homeheader" />

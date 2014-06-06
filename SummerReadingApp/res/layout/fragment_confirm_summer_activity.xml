@@ -8,13 +8,26 @@
                 android:text="Completed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dip" / -->
-    
+                android:layout_marginBottom="32dip" / 
+                
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:gravity="top|left"
         />
+
+                -->
+    
+    <TextView
+        android:id="@+id/textCinfirmSummerActivityTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/LibraryTextGreen"
+        android:paddingLeft="5dip"
+		android:paddingBottom="5dip"
+		android:linksClickable="true"
+		android:autoLink="web"
+        android:textStyle="bold" />
     
     <EditText
         android:id='@+id/txt_name'

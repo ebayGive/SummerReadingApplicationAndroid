@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.sccl.summerreadingapp.ConfigAsyncListener;
 import com.sccl.summerreadingapp.SummerReadingApplication;
+import com.sccl.summerreadingapp.helper.Constants;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
 import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
@@ -16,19 +17,21 @@ import com.sccl.summerreadingapp.model.Config;
  * */
 public class ConfigClient extends AsyncTask<Void, Void, Void> {
 	
-	private static final String BRANCH_REQUEST = "http://hackathon.ebaystratus.com/branches.json";
-	private static final String USER_TYPE_REQUEST = "http://hackathon.ebaystratus.com/user_types.json";
-	private static final String GRID_CELL_REQUEST = "http://hackathon.ebaystratus.com/grids.json";
+	private static final String BRANCH_REQUEST = Constants.BRANCH_REQUEST; // "http://hackathon.ebaystratus.com/branches.json";
+	private static final String USER_TYPE_REQUEST = Constants.USER_TYPE_REQUEST; // "http://hackathon.ebaystratus.com/user_types.json";
+	private static final String GRID_CELL_REQUEST = Constants.GRID_CELL_REQUEST; // "http://hackathon.ebaystratus.com/grids.json";
 	private Activity parent;
 	private ProgressDialog pDialog;
 	private ConfigAsyncListener listener;
+	private boolean sendResult;
 	
 	// JSON Node names
 
-	public ConfigClient(Activity parent, ConfigAsyncListener listener) {
+	public ConfigClient(Activity parent, ConfigAsyncListener listener, boolean sendResult) {
 		super();
 		this.parent = parent;
 		this.listener = listener;
+		this.sendResult = sendResult;
 	}
 
 	@Override
@@ -36,7 +39,7 @@ public class ConfigClient extends AsyncTask<Void, Void, Void> {
         super.onPreExecute();
         // Showing progress dialog
         pDialog = new ProgressDialog(parent);
-        pDialog.setMessage("Setting Grid result...");
+        pDialog.setMessage("Getting Configuration Data...");
         pDialog.setCancelable(false);
         pDialog.show();
 
@@ -86,7 +89,9 @@ public class ConfigClient extends AsyncTask<Void, Void, Void> {
         // Dismiss the progress dialog
         if (pDialog.isShowing())
             pDialog.dismiss();
-        listener.onResult();
+        if (sendResult) {
+        	listener.onResult();
+        }
     }
 
 }

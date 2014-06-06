@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/summer_bg_blue"
+    android:background="@drawable/summer_bg_green"
     android:fillViewport="true" >
 
     <RelativeLayout
@@ -18,12 +18,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dip"
+            android:gravity="center"
             android:paddingTop="5dip" >
 
             <!-- Logo Start -->
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
                 android:src="@drawable/homeheader" />
@@ -90,6 +91,18 @@
                 android:hint="@string/label_lname"
                 android:singleLine="true"
                 android:textSize="12sp" />
+            
+            <EditText
+                android:id="@+id/add_lage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:hint="@string/label_age"
+                android:singleLine="true"
+				android:inputType="number"
+                android:textSize="12sp" />
+            
 
             <Spinner
                 android:id="@+id/reader_type"

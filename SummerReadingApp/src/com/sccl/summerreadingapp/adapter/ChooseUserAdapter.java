@@ -11,7 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sccl.summerreadingapp.R;
-import com.sccl.summerreadingapp.model.UserType;
+import com.sccl.summerreadingapp.SummerReadingApplication;
+import com.sccl.summerreadingapp.model.Config;
 
 public class ChooseUserAdapter extends BaseAdapter {
     
@@ -53,7 +54,11 @@ public class ChooseUserAdapter extends BaseAdapter {
 
         RelativeLayout layout= (RelativeLayout) vi.findViewById(R.id.user_detail_layout);
 
-        String description = UserType.getDescription(userTypes[position]);
+        SummerReadingApplication summerReadingApplication = (SummerReadingApplication) activity.getApplicationContext();
+		Config config = summerReadingApplication.getConfig();
+
+        // String description = UserType.getDescription(userTypes[position]);
+        String description = config.getUserTypeById(userTypes[position]).getDescription();
         int bgColor = vi.getResources().getColor(R.color.LibraryRed);
 		if ("Adult".equalsIgnoreCase(description)) { 
         	imageView.setImageResource(R.drawable.adult);

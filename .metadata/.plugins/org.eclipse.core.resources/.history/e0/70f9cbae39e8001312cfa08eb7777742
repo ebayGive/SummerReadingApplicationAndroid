@@ -1,0 +1,11 @@
+package com.sccl.summerreadingapp.helper;
+
+
+public class Constants {
+	static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+	public static final String BASE_URL = "http://hackathon.ebaystratus.com";
+
+	public static final String ADD_USER_REQUEST = BASE_URL + "/accounts/";
+
+}

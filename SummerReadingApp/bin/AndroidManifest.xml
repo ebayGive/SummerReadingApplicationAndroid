@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sccl.summerreadingapp"
-    android:versionCode="1"
-    android:versionName="1.0.0" >
+    android:versionCode="12"
+    android:versionName="1.0.11" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -33,7 +33,7 @@
         <activity android:name=".RegistrationActivity"
                   android:label="Register New Account"></activity>
         <activity android:name=".ChooseUserFromListActivity"
-                  android:label="Select family Member"></activity>
+                  android:label="Select Family Member"></activity>
         <activity android:name=".AddUserActivity"
                   android:label="Add a Family Member"></activity>
         </application>

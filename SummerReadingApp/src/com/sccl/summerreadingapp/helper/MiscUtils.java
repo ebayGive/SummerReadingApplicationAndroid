@@ -3,6 +3,7 @@ package com.sccl.summerreadingapp.helper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -54,11 +55,27 @@ public class MiscUtils {
 	}
 
 	public static Date parseDateString(String dateString) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC")); 
+
+		
 		Date parsedDate = null;
 		try {
-			parsedDate = new SimpleDateFormat(DATE_FORMAT).parse(dateString);
+			parsedDate = simpleDateFormat.parse(dateString);
 		} catch (ParseException e) {
 		}
 		return parsedDate;
+	}
+	
+	public static String convertDateToString(Date date) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC")); 
+
+		return simpleDateFormat.format(date); 
+	}
+
+	public static String getCurrentTimeInString() {
+		long now = System.currentTimeMillis();
+		return convertDateToString(new Date(now));
 	}
 }

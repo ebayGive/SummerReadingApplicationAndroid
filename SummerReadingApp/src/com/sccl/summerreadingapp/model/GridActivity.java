@@ -1,11 +1,11 @@
 package com.sccl.summerreadingapp.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.sccl.summerreadingapp.clients.GridActivityClient;
 import com.sccl.summerreadingapp.helper.MiscUtils;
 
 public class GridActivity implements Serializable {
@@ -13,13 +13,15 @@ public class GridActivity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -5574204293047294079L;
+	private static final String SAVE_TO_SERVER = "saveToServer";
 	private static String TYPE = "activity"; 
 	private static String NOTES = "notes"; 
 	private static String UPDATED_AT = "updatedAt"; 
 	
 	private int type;
 	private String notes;
-	private Date lastUpdated;
+	private String lastUpdated;
+	private boolean saveToServer;
 	
 	
 	static public GridActivity createGridActivity (JSONObject jsonObj)
@@ -27,19 +29,35 @@ public class GridActivity implements Serializable {
 		try {
 			int type = jsonObj.getInt(TYPE);
 			String notes = jsonObj.getString(NOTES);
-			String dateString = ""; // jsonObj.getString(UPDATED_AT);
-			Date d = MiscUtils.parseDateString(dateString);
-			return new GridActivity(type, notes, d);
+			String dateString = "";
+			boolean saveToServer = false;
+			try {
+				if (jsonObj.has(UPDATED_AT))
+					dateString = jsonObj.getString(UPDATED_AT);
+				if (jsonObj.has(SAVE_TO_SERVER))
+					saveToServer = jsonObj.getBoolean(SAVE_TO_SERVER);
+				} catch (JSONException e) {
+			}
+			
+			// If notes has text or type is 1, date will be empty ONLY if it was saved from the older version of app.
+			// In that case, lets sync it once just to be sure.
+        	if ((!MiscUtils.empty(notes) || type == 1) && MiscUtils.empty(dateString)) {
+    			dateString = MiscUtils.getCurrentTimeInString();
+    			saveToServer = true;
+			}
+        	
+			return new GridActivity(type, notes, dateString, saveToServer);
 		} catch (JSONException e) {
 			return null;
 		}
 	}
 	
-	public GridActivity (int type, String notes, Date lastUpdated)
+	private GridActivity (int type, String notes, String lastUpdated, boolean saveToServer)
 	{
 		this.type = type;
 		this.notes = notes;
-		//this.lastUpdated = lastUpdated;
+		this.lastUpdated = lastUpdated;
+		this.saveToServer = saveToServer;
 	}
 
 	public int getType() {
@@ -58,13 +76,22 @@ public class GridActivity implements Serializable {
 		this.notes = notes;
 	}
 
-	public Date getLastUpdated() {
+	public String getLastUpdated() {
 		return lastUpdated;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(String lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
+
+	public void saveToServer(boolean b) {
+		this.saveToServer = b;
+	}	
+	
+	public boolean getSaveToServer() {
+		return this.saveToServer;
+	}	
+	
 
 	public String toJSON(){
 
@@ -78,11 +105,12 @@ public class GridActivity implements Serializable {
 	    try {
 	        jsonObject.put(TYPE, getType());
 	        jsonObject.put(NOTES, getNotes());
-//	        jsonObject.put(UPDATED_AT, getLastUpdated());
+	        jsonObject.put(UPDATED_AT, getLastUpdated());
+	        jsonObject.put(SAVE_TO_SERVER, getSaveToServer());
 	    } catch (JSONException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
 	    }
         return jsonObject;
-	}	
+	}
 }

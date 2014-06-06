@@ -47,10 +47,13 @@ public class PrizeImageHandler {
 	}
 
 	private String getPrizeMessage(Prize prize) {
-//    	String message = prize.getState() == 1 ? 
-//        		"Congratulations on earning the prize. You can collect the prize by visiting library!" : "You need to finish one row/column/diagonal activities to earn prize. ";
-    	String message = "Complete 5 squares in a row (vertical, horizontal, or diagonal) to win a [prize name here]. Visit your local library to pick up prizes from June 2 to July 31.";
-    	return message;
+    	String message = prize.getState() == 1 ? 
+        	"Congratulations! You have won a prize. Visit your local San José Public Library to pick up prizes from June 2 to July 31." : 
+        	"Complete 5 squares in a row (vertical, horizontal, or diagonal) to win a prize. Visit your local library to pick up prizes from June 2 to July 31.";
+/*    	String message = "Complete 5 squares in a row (vertical, horizontal, or diagonal) to win a prize. Visit your local library to pick up prizes from June 2 to July 31.";
+    	if (prize.getState() == 1)
+    		message = "Congratulations! You have won a prize. Visit your local San José Public Library to pick up prizes from June 2 to July 31.";
+*/    	return message;
 	}
 
 	private void setPrizeImageClickListener(ImageView prizeView, String title, String message) {

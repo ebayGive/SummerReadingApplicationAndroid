@@ -32,6 +32,11 @@ public class LoginActivity extends Activity implements LoginAsyncListener {
 				    EditText passwordEdit = (EditText) findViewById(R.id.password);
 				    String password = passwordEdit.getText().toString();
 
+				    if (MiscUtils.empty(userName) || MiscUtils.empty(password)) {
+						MiscUtils.showAlertDialog(LoginActivity.this, "Error", "User Name and Password cannot be empty!");
+						return;
+				    }
+				    
 				    new LoginClient(LoginActivity.this, LoginActivity.this).execute(userName, password);
 				}
 				else {

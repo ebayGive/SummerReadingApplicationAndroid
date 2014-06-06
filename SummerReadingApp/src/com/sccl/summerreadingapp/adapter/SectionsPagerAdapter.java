@@ -13,7 +13,6 @@ import com.sccl.summerreadingapp.R;
 import com.sccl.summerreadingapp.SummerActivityFragment;
 import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.GridActivity;
-import com.sccl.summerreadingapp.model.User;
 
 
 /**
@@ -23,7 +22,7 @@ import com.sccl.summerreadingapp.model.User;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
     GridActivity[] data = null;
-	private User user;
+	// private User user;
 	SummerActivityFragment summer;
 	private Account account;
 	private int userIndex = -1;
@@ -79,8 +78,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     	this.account = account;
     	this.userIndex  = userIndex;
     	
-    	User users[] = account.getUsers();
-    	this.user = users[userIndex];
+    	// User users[] = account.getUsers();
+    	// this.user = users[userIndex];
     	
     	SummerActivityFragment fragment = (SummerActivityFragment) fm.findFragmentByTag(
   	                       "android:switcher:"+R.id.pager+":0");
@@ -97,6 +96,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 		}
 	}
 
+	public void refreshPager(FragmentManager fm) {
+    	SummerActivityFragment fragment = (SummerActivityFragment) fm.findFragmentByTag(
+                  "android:switcher:"+R.id.pager+":0");
+    	if(fragment != null)  {
+    		// fragment.setAccountAndSelectedUserIndex(user, account, userIndex);
+    		fragment.refreshImageAndPrizes();
+    	}
+	}
+	
 
 }
 

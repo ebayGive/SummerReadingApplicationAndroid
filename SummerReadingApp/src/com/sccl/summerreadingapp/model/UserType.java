@@ -1,15 +1,11 @@
 package com.sccl.summerreadingapp.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserType {
 
-	static Map<String, String> idToDescription = new HashMap<String, String>();
+/*	static Map<String, String> idToDescription = new HashMap<String, String>();
 	static {
 		idToDescription.put("C2747BE4-E0C9-45AC-9E50-549F43B49D31", "Reader");
 		idToDescription.put("3E7CAEB5-90BF-4109-8A1E-5703D8FDC063", "Pre-Reader");
@@ -31,13 +27,17 @@ public class UserType {
 		return "C2747BE4-E0C9-45AC-9E50-549F43B49D31";
 	}
 	
-	private static String ID = "id"; 
+*/	private static String ID = "id"; 
 	private static String NAME = "name"; 
 	private static String DESCRIPTION = "description"; 
+	private static String MIN_AGE = "minAge"; 
+	private static String MAX_AGE = "maxAge"; 
 	
 	private String id;
 	private String name;
 	private String description;
+	private int minAge;
+	private int maxAge;
 	
 	static public UserType createUserType (JSONObject jsonObj)
 	{
@@ -45,17 +45,21 @@ public class UserType {
 			String id = jsonObj.getString(ID);
 			String name = jsonObj.getString(NAME);
 			String desc = jsonObj.getString(DESCRIPTION);
+			int minAge = jsonObj.getInt(MIN_AGE);
+			int maxAge = jsonObj.getInt(MAX_AGE);
 	
-			return new UserType(id, name, desc);
+			return new UserType(id, name, desc, minAge, maxAge);
 		} catch (JSONException e) {
 			return null;
 		}
 	}
 	
-	public UserType(String id, String name, String desc) {
+	public UserType(String id, String name, String desc, int minAge, int maxAge) {
 		this.id = id;
 		this.name = name;
 		this.description = desc;
+		this.setMinAge(minAge);
+		this.setMaxAge(maxAge);
 	}
 
 	public String getId() {
@@ -80,6 +84,22 @@ public class UserType {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getMinAge() {
+		return minAge;
+	}
+
+	public void setMinAge(int minAge) {
+		this.minAge = minAge;
+	}
+
+	public int getMaxAge() {
+		return maxAge;
+	}
+
+	public void setMaxAge(int maxAge) {
+		this.maxAge = maxAge;
 	}
 
 }

@@ -1,0 +1,82 @@
+package com.sccl.summerreadingapp.clients;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.sccl.summerreadingapp.ConfigAsyncListener;
+import com.sccl.summerreadingapp.LoginActivity;
+import com.sccl.summerreadingapp.helper.Constants;
+import com.sccl.summerreadingapp.helper.JSONResultParser;
+import com.sccl.summerreadingapp.helper.ServiceInvoker;
+import com.sccl.summerreadingapp.model.Account;
+
+/**
+ * Async task class to get json by making HTTP call
+ * */
+public class AccountClient extends AsyncTask<String, Void, Account> {
+
+	private static final String ACCOUNT_REQUEST = Constants.BASE_URL + "/accounts/";
+	
+	
+	private Activity parent;
+	private ProgressDialog pDialog;
+	private ConfigAsyncListener listener;
+	private String accountId;
+
+	public AccountClient(Activity parent, ConfigAsyncListener listener, String accountId) {
+		super();
+		this.parent = parent;
+	}
+
+	@Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // Showing progress dialog
+        pDialog = new ProgressDialog(parent);
+        pDialog.setMessage("Getting account details...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+    }
+
+    @Override
+    protected Account doInBackground(String... arg0) {
+        // Creating service handler class instance
+        ServiceInvoker serviceInvoker = new ServiceInvoker();
+        String url = ACCOUNT_REQUEST + accountId + ".json";
+
+        // Making a request to url and getting response
+       String jsonStr = serviceInvoker.invoke(url, ServiceInvoker.GET);
+       Account account = null;
+
+        Log.d("Response: ", "> " + jsonStr);
+
+        if (jsonStr != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonStr);
+                account = JSONResultParser.createAccount(jsonObj);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("ServiceHandler", "Couldn't get any data from the url");
+        }
+
+        return account;
+    }
+
+    @Override
+    protected void onPostExecute(Account result) {
+        super.onPostExecute(result);
+        // Dismiss the progress dialog
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+        // listener.onResult();
+    }
+
+}

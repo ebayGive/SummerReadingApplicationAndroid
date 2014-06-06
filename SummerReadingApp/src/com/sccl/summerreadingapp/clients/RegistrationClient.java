@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.sccl.summerreadingapp.RegistrationAsyncListener;
+import com.sccl.summerreadingapp.helper.Constants;
 import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
 import com.sccl.summerreadingapp.model.Login;
@@ -23,7 +24,8 @@ import com.sccl.summerreadingapp.model.Login;
  * */
 public class RegistrationClient extends AsyncTask<String, Void, Login> {
 	
-	private static final String REGISTRATION_REQUEST = "http://hackathon.ebaystratus.com/accounts.json";
+	// private static final String REGISTRATION_REQUEST = "http://hackathon.ebaystratus.com/accounts.json";
+	private static final String REGISTRATION_REQUEST = Constants.BASE_URL + "/accounts.json";
 	private Activity parent;
 	private RegistrationAsyncListener listener;
 	private ProgressDialog pDialog;

@@ -10,8 +10,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
-import com.sccl.summerreadingapp.GridActivityAsyncListener;
 import com.sccl.summerreadingapp.SummerReadingApplication;
+import com.sccl.summerreadingapp.helper.Constants;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
 import com.sccl.summerreadingapp.model.GridActivity;
 import com.sccl.summerreadingapp.model.User;
@@ -21,9 +21,10 @@ import com.sccl.summerreadingapp.model.User;
  * */
 public class GridActivityClient extends AsyncTask<Void, Void, Void> {
 	
-	private static final String GRID_ACTIVITY_REQUEST = "http://hackathon.ebaystratus.com/accounts/";
+	// private static final String GRID_ACTIVITY_REQUEST = "http://hackathon.ebaystratus.com/accounts/";
+	private static final String GRID_ACTIVITY_REQUEST = Constants.ACCOUNT_REQUEST;
 	private Activity parent;
-	private GridActivityAsyncListener listener;
+// 	private GridActivityAsyncListener listener;
 	private ProgressDialog pDialog;
 	User user;
 	GridActivity gridActivities;
@@ -56,10 +57,14 @@ public class GridActivityClient extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... arg0) {
 		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) parent.getApplicationContext();
     	String url = GRID_ACTIVITY_REQUEST + summerReadingApplication.getAccount().getId() + "/users/" + user.getId() + "/activity_grid/" + index + ".json";
-        List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+        List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(3);
         nameValuePair.add(new BasicNameValuePair("activity", ""+gridActivities.getType()));
         nameValuePair.add(new BasicNameValuePair("notes", gridActivities.getNotes()));
+        nameValuePair.add(new BasicNameValuePair("updatedAt", gridActivities.getLastUpdated()));
         new ServiceInvoker().invoke(url, ServiceInvoker.PUT, nameValuePair);
+        // gridActivities.saveToServer(false); 
+        // cannot do it here because it is on a different thread and when we write to sharedpreference which is happening main 
+       // thread, it will still be true!!!
         return null;
     }
 

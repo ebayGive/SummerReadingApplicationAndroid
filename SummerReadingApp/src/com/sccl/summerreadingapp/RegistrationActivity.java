@@ -47,6 +47,13 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
 			    EditText passwordEdit = (EditText) findViewById(R.id.reg_password);
 			    String password = passwordEdit.getText().toString();
 
+
+			    if (MiscUtils.empty(userName) || MiscUtils.empty(password)) {
+					MiscUtils.showAlertDialog(RegistrationActivity.this, "Error", "User Name and Password cannot be empty!");
+					return;
+			    }
+			    
+			    
 			    EditText emailEdit = (EditText) findViewById(R.id.reg_email);
 			    String email = emailEdit.getText().toString();
 
