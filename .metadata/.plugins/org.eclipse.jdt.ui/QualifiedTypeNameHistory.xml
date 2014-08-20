@@ -5,7 +5,6 @@
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.drawable"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.clients.GridActivityClient"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.GridActivityAsyncListener"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.GridActivity"/>
 <fullyQualifiedTypeName name="org.apache.http.client.methods.HttpPut"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.RegistrationActivity"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Account"/>
@@ -25,6 +24,13 @@
 <fullyQualifiedTypeName name="android.widget.GridView"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Config"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.MiscUtils"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.color"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="android.text.Editable"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.Constants"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.MainActivity"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.MiscUtils"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.GridActivity"/>
 </qualifiedTypeNameHistroy>
