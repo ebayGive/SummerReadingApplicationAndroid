@@ -32,12 +32,14 @@ public class ImageAdapter extends BaseAdapter implements Serializable{
 		Map<String, Integer>tempMap = new HashMap<String, Integer>();
 		tempMap.put("READ", R.drawable.grid_read_disabled);
 		tempMap.put("LEARN", R.drawable.grid_learn_disabled);
-		tempMap.put("EXPLORE", R.drawable.grid_explore_disabled);
+		tempMap.put("DISCOVER", R.drawable.grid_explore_disabled);
+		//tempMap.put("EXPLORE", R.drawable.grid_explore_disabled);
 		tempMap.put("ROBOT", R.drawable.grid_robot_disabled);
 		tempMap.put("ENERGIZE", R.drawable.grid_energize_disabled);
 		tempMap.put("READ_DONE", R.drawable.grid_read_enabled);
 		tempMap.put("LEARN_DONE", R.drawable.grid_learn_enabled);
-		tempMap.put("EXPLORE_DONE", R.drawable.grid_explore_enabled);
+//		tempMap.put("EXPLORE_DONE", R.drawable.grid_explore_enabled);
+		tempMap.put("DISCOVER_DONE", R.drawable.grid_explore_enabled);
 		tempMap.put("ROBOT_DONE", R.drawable.grid_robot_enabled);
 		tempMap.put("ENERGIZE_DONE", R.drawable.grid_energize_enabled);
 		IMAGE_MAP = Collections.unmodifiableMap(tempMap);
@@ -125,8 +127,21 @@ public class ImageAdapter extends BaseAdapter implements Serializable{
 */    	
     	}
 
-    // references to our images
     private Integer[] mThumbIds = {
+            R.drawable.grid_energize_enabled, R.drawable.grid_explore_enabled, R.drawable.grid_learn_enabled, R.drawable.grid_read_enabled, 
+            R.drawable.grid_energize_enabled, R.drawable.grid_explore_enabled, R.drawable.grid_learn_enabled, R.drawable.grid_read_enabled, 
+            R.drawable.grid_energize_enabled, R.drawable.grid_explore_enabled, R.drawable.grid_learn_enabled, R.drawable.grid_read_enabled, 
+            R.drawable.grid_energize_enabled, R.drawable.grid_explore_enabled, R.drawable.grid_learn_enabled, R.drawable.grid_read_enabled 
+    };
+    // references to our images
+    private Integer[] mThumbIdsEnabled = {
+            R.drawable.grid_energize_disabled, R.drawable.grid_explore_disabled, R.drawable.grid_learn_disabled, R.drawable.grid_read_disabled, 
+            R.drawable.grid_energize_disabled, R.drawable.grid_explore_disabled, R.drawable.grid_learn_disabled, R.drawable.grid_read_disabled, 
+            R.drawable.grid_energize_disabled, R.drawable.grid_explore_disabled, R.drawable.grid_learn_disabled, R.drawable.grid_read_disabled, 
+            R.drawable.grid_energize_disabled, R.drawable.grid_explore_disabled, R.drawable.grid_learn_disabled, R.drawable.grid_read_disabled 
+    };
+
+/*    private Integer[] mThumbIds = {
             R.drawable.grid_robot_enabled, R.drawable.grid_energize_enabled,
             R.drawable.grid_explore_enabled, R.drawable.grid_learn_enabled,
             R.drawable.grid_read_enabled, 
@@ -161,4 +176,5 @@ public class ImageAdapter extends BaseAdapter implements Serializable{
             R.drawable.grid_explore_disabled, R.drawable.grid_learn_disabled,
             R.drawable.grid_read_disabled 
     };
+*/
 }

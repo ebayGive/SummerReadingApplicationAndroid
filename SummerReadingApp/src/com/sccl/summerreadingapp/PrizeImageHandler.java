@@ -22,7 +22,8 @@ public class PrizeImageHandler {
 
 	
 	public void handlePrizeImageClick(View rootView, Prize[] prizes) {
-		int[] resourceIds = {R.id.prize1, R.id.prize2, R.id.prize3, R.id.prize4, R.id.prize5};
+		// int[] resourceIds = {R.id.prize1, R.id.prize2, R.id.prize3, R.id.prize4, R.id.prize5};
+		int[] resourceIds = {R.id.prize1, R.id.prize2, R.id.prize3};
 		
 		for (int i = 0; i < resourceIds.length; i++) {
 			setPrizeImageClickListener((ImageView) rootView.findViewById(resourceIds[i]), 
@@ -32,13 +33,14 @@ public class PrizeImageHandler {
 	}
 
 	public void setPrizeImages(View rootView, Prize[] prizes) {
-		if (prizes != null && prizes.length > 3) {
+		// if (prizes != null && prizes.length > 3) {
+		if (prizes != null && prizes.length > 2) {
 			setPrizeImageBasedOnState(rootView, prizes[0], R.id.prize1);
 			setPrizeImageBasedOnState(rootView, prizes[1], R.id.prize2);
 			setPrizeImageBasedOnState(rootView, prizes[2], R.id.prize3);
-			setPrizeImageBasedOnState(rootView, prizes[3], R.id.prize4);
+/*			setPrizeImageBasedOnState(rootView, prizes[3], R.id.prize4);
 			setPrizeImageBasedOnState(rootView, prizes[4], R.id.prize5);
-		}
+*/		}
 	}
 
 	private String getPrizeTitle(Prize prize) {

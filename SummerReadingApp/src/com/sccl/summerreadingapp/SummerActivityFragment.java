@@ -24,9 +24,14 @@ import com.sccl.summerreadingapp.model.Prize;
 import com.sccl.summerreadingapp.model.User;
 
 public class SummerActivityFragment extends Fragment implements GridActivityAsyncListener{
-	private static final int TOTAL_ROWS = 5;
+/*	private static final int TOTAL_ROWS = 5;
 	private static final int TOTAL_COLUMNS = 5;
 	private static final int TOTAL_PRIZES = 5;
+*/
+	private static final int TOTAL_ROWS = 4;
+	private static final int TOTAL_COLUMNS = 4;
+	private static final int TOTAL_PRIZES = 3;
+	
 	public ImageAdapter imageAdapter;
 	View rootView;
 	User user;
@@ -102,19 +107,11 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 
     private void showConfirmActivityDialog(int index) {
     	if (user != null) {
-        	if (index == 12) {
+/*        	if (index == 12) {
         		((MainActivity)getActivity()).setCurrentPagerItem(1);
         		return;
-/*        		if (user.getReadingLog() < 900)
-        		{
-        			MiscUtils.showAlertDialog(getActivity(), "Finish Charging", "You need to charge the reading battery completely to activate this grid");
-        			return;
-        		}
-*/        		// else
-        			// MiscUtils.showAlertDialog(getActivity(), "Congratulations", "You finished charging the reading battery. Please go to Library to collect your prize.");
-        		// return;
         	}
-
+*/
 	        GridCell.CellData cellDataArray[] = gridCell.getCellData();
         	GridCell.CellData cellData = cellDataArray[index];
         	String title = cellData.getDescription();
@@ -201,7 +198,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 		if (total > 0 && prizes[0].getState() == 0)
         	prizes[0].setState(1);
 
-        if (total > 1 && prizes[1].getState() == 0)
+/*        if (total > 1 && prizes[1].getState() == 0)
         	prizes[1].setState(1);
 
         if (total > 2 && prizes[2].getState() == 0)
@@ -212,6 +209,9 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 
         if (total > 11 && prizes[4].getState() == 0)
         	prizes[4].setState(1);
+*/
+        if (total > 9 && prizes[4].getState() == 0)
+        	prizes[1].setState(1);
 	}
 
 	private boolean isRightDiagonalCompleted(GridActivity[] userGrid) {

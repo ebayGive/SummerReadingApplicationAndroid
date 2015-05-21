@@ -33,7 +33,7 @@
         android:gravity="center"
         android:horizontalSpacing="2dip"
         android:listSelector="@android:color/transparent"
-        android:numColumns="5"
+        android:numColumns="4"
         android:paddingLeft="5dip"
         android:paddingTop="5dip"
         android:stretchMode="columnWidth"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textPrizeTitle"
         android:layout_marginTop="5dip"
-        android:weightSum="5" >
+        android:weightSum="3" >
 
         <!--  android:layout_above="@id/footer"  
         android:paddingBottom="5dip"
@@ -103,7 +103,7 @@
             android:layout_height="80dp"
             android:layout_weight="1"
             android:src="@drawable/prize_not_ready" />
-
+<!--  
         <ImageView
             android:id="@+id/prize4"
             android:layout_width="80dp"
@@ -117,6 +117,8 @@
             android:layout_height="80dp"
             android:layout_weight="1"
             android:src="@drawable/prize_not_ready" />
+        -->
+
     </LinearLayout>
 
     <LinearLayout
