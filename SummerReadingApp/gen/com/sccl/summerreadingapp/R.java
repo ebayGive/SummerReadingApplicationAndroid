@@ -17,6 +17,7 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
+        public static final int languages=0x7f0c0001;
         public static final int reader_type=0x7f0c0000;
     }
     public static final class attr {
@@ -1298,11 +1299,11 @@ containing a value of this type.
         public static final int always=0x7f05000b;
         public static final int batteryLayout=0x7f050052;
         public static final int beginning=0x7f050011;
-        public static final int branch=0x7f050064;
+        public static final int branch=0x7f050065;
         public static final int btnAdd=0x7f050044;
         public static final int btnDone=0x7f050050;
         public static final int btnLogin=0x7f05005f;
-        public static final int btnRegister=0x7f050065;
+        public static final int btnRegister=0x7f050067;
         public static final int btn_cancel=0x7f05004f;
         public static final int btn_ok=0x7f05004e;
         public static final int checkbox=0x7f05002d;
@@ -1326,13 +1327,14 @@ containing a value of this type.
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
         public static final int informationWebView=0x7f050054;
-        public static final int link_to_login=0x7f050066;
+        public static final int language=0x7f050066;
+        public static final int link_to_login=0x7f050068;
         public static final int link_to_register=0x7f050060;
         public static final int listMode=0x7f050001;
         public static final int list_image=0x7f050047;
         public static final int list_item=0x7f050029;
         public static final int mainScrollView=0x7f050049;
-        public static final int miChangeUser=0x7f050067;
+        public static final int miChangeUser=0x7f050069;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
@@ -1349,6 +1351,7 @@ containing a value of this type.
         public static final int reader_type=0x7f050042;
         public static final int reg_email=0x7f050063;
         public static final int reg_password=0x7f050062;
+        public static final int reg_phone=0x7f050064;
         public static final int reg_username=0x7f050061;
         public static final int robotFullImageLayout=0x7f050051;
         public static final int search_badge=0x7f050032;
@@ -1501,24 +1504,26 @@ containing a value of this type.
         public static final int dialog_cancel=0x7f0a0014;
         public static final int dialog_close=0x7f0a0015;
         public static final int dialog_submit=0x7f0a0013;
-        public static final int info_body=0x7f0a002f;
-        public static final int info_bodyA=0x7f0a002e;
-        public static final int label_add=0x7f0a002a;
-        public static final int label_age=0x7f0a0029;
-        public static final int label_choose_user_add=0x7f0a002c;
-        public static final int label_choose_user_select=0x7f0a002d;
-        public static final int label_done=0x7f0a002b;
-        public static final int label_email=0x7f0a0023;
-        public static final int label_fname=0x7f0a0027;
-        public static final int label_fyp=0x7f0a0025;
-        public static final int label_lname=0x7f0a0028;
+        public static final int info_body=0x7f0a0031;
+        public static final int info_bodyA=0x7f0a0030;
+        public static final int label_add=0x7f0a002c;
+        public static final int label_age=0x7f0a0023;
+        public static final int label_choose_user_add=0x7f0a002e;
+        public static final int label_choose_user_select=0x7f0a002f;
+        public static final int label_done=0x7f0a002d;
+        public static final int label_email=0x7f0a0024;
+        public static final int label_fname=0x7f0a0029;
+        public static final int label_fyp=0x7f0a0027;
+        public static final int label_lname=0x7f0a002a;
         public static final int label_login=0x7f0a001f;
-        public static final int label_login_in_register=0x7f0a0024;
+        public static final int label_login_in_register=0x7f0a0026;
         public static final int label_name=0x7f0a0021;
+        public static final int label_phone=0x7f0a0025;
         public static final int label_phone_or_user=0x7f0a0020;
         public static final int label_pin=0x7f0a0022;
         public static final int label_register=0x7f0a001e;
-        public static final int label_register_in_login=0x7f0a0026;
+        public static final int label_register_in_login=0x7f0a0028;
+        public static final int languages_prompt=0x7f0a002b;
         public static final int reader_type=0x7f0a0012;
         public static final int title_activity_grid=0x7f0a001a;
         public static final int title_activity_prizes=0x7f0a001b;

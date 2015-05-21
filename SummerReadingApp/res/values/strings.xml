@@ -30,21 +30,36 @@
     <string name="label_phone_or_user">User Name / Phone Number</string>
     <string name="label_name">Name</string>
     <string name="label_pin">4 Digit Pin</string>
+    <string name="label_age">Age</string>
     <string name="label_email">EMail Address</string>
+    <string name="label_phone">Phone Number</string>
     <string name="label_login_in_register">Already have an account? Login Here</string>
     <string name="label_fyp">Forgot Pin?</string>
     <string name="label_register_in_login">Don\'t have an account? Register Here</string>
     
     <string name="label_fname">First Name</string>
     <string name="label_lname">Last Name</string>
-    <string name="label_age">Age</string>
     
     <string-array name="reader_type">
         <item>Pre Reader</item>
         <item>Reader</item>
         <item>Advanced</item>
     </string-array>
-    
+ 
+ <string name="languages_prompt">Spoken Language</string>
+ 
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>Vietnamese</item>
+        <item>Chinese</item>
+        <item>Tagalog</item>
+        <item>Korean</item>
+        <item>Hindi</item>
+        <item>Farsi</item>
+        <item>Other</item>
+        </string-array>
+
     <string name="label_add">Add</string>
     <string name="label_done">Done</string>
 

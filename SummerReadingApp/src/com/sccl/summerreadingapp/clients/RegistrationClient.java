@@ -60,6 +60,8 @@ public class RegistrationClient extends AsyncTask<String, Void, Login> {
         nameValuePair.add(new BasicNameValuePair("passcode", arg0[1]));
         nameValuePair.add(new BasicNameValuePair("emailAddress", arg0[2]));
         nameValuePair.add(new BasicNameValuePair("branchId", arg0[3]));
+        nameValuePair.add(new BasicNameValuePair("languageSpoken", arg0[4]));
+        nameValuePair.add(new BasicNameValuePair("phone", arg0[5]));
 
         // Making a request to url and getting response
        String jsonStr = new ServiceInvoker().invoke(REGISTRATION_REQUEST, ServiceInvoker.POST, nameValuePair);

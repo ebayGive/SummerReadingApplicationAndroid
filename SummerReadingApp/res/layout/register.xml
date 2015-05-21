@@ -129,6 +129,19 @@
                 android:singleLine="true"
                 android:textSize="12sp" />
 
+            <!-- Email Label -->
+
+            <EditText
+                android:id="@+id/reg_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:hint="@string/label_phone"
+                android:inputType="phone"
+                android:singleLine="true"
+                android:textSize="12sp" />
+
             <Spinner
                 android:id="@+id/branch"
                 android:layout_width="match_parent"
@@ -136,7 +149,16 @@
                 android:layout_marginBottom="@dimen/login_register_margin_bottom"
                 android:layout_marginTop="@dimen/login_register_margin_top" />
 
-		 	<View style="@style/DividerHorizontal"
+			<Spinner
+			    android:id="@+id/language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/login_register_margin_bottom"
+                android:layout_marginTop="@dimen/login_register_margin_top"
+			    android:entries="@array/languages"
+			    android:prompt="@string/languages_prompt" />
+ 
+            <View style="@style/DividerHorizontal"
 		        android:id="@+id/firstDivider"
 		        android:layout_marginTop="15dip"
 			    />

@@ -57,6 +57,9 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
 			    EditText emailEdit = (EditText) findViewById(R.id.reg_email);
 			    String email = emailEdit.getText().toString();
 
+			    EditText phoneEdit = (EditText) findViewById(R.id.reg_phone);
+			    String phone = phoneEdit.getText().toString();
+			    
 			    // EditText fullNameEdit = (EditText) findViewById(R.id.reg_fullname);
 			    // String fullName = fullNameEdit.getText().toString();
 			    
@@ -67,8 +70,11 @@ public class RegistrationActivity extends Activity implements RegistrationAsyncL
 			    String branchId = branch.getId();
 			    //String branch = "C36F2906-1173-459D-B5BC-73AD058673A3";
 			    
+				Spinner languageSpinner = (Spinner) findViewById(R.id.language);
+			    String languageSpinnerText = String.valueOf(languageSpinner.getSelectedItem()); 
+
 			    if (MiscUtils.isNetworkAvailable(getApplicationContext())) {
-				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, branchId);
+				    new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, branchId, languageSpinnerText, phone);
 				    // new RegistrationClient(RegistrationActivity.this, RegistrationActivity.this).execute(userName, password, email, fullName, branchId);
 				}
 				else {
