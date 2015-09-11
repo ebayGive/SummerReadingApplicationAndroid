@@ -31,20 +31,7 @@
             <!-- Logo Ends -->
         </LinearLayout>
         <!-- Header Ends -->
-        <!-- Footer Start -->
-        <!--
- 		 <LinearLayout android:id="@+id/footer"
-		    android:layout_width="fill_parent"
-		    android:background="@drawable/footer_repeat"
-		    android:layout_height="90dip"
-		    android:layout_alignParentBottom="true">
-			<TextView android:layout_height="1dip" 
-          		android:layout_width="fill_parent"
-		          android:layout_weight="1" />
-		 		</LinearLayout>
-        -->
-        <!-- android:background="@drawable/footer_repeat" -->
-
+        <!-- Footer Start
         <LinearLayout
             android:id="@+id/footer"
             android:layout_width="fill_parent"
@@ -52,18 +39,15 @@
             android:layout_alignParentBottom="true"
             android:gravity="center" >
 
-            <!-- Logo Start -->
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:gravity="center"
                 android:src="@drawable/homefooter" />
-            <!-- Logo Ends -->
         </LinearLayout>
 
-        <!-- Footer Ends -->
+Footer Ends -->
 
 
         <!-- Registration Form -->
@@ -86,7 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/login_register_margin_bottom"
                 android:layout_marginTop="@dimen/login_register_margin_top"
-                android:hint="@string/label_phone_or_user"
+                android:hint="@string/label_username"
+                android:maxLength="20"
                 android:singleLine="true"
                 android:textSize="12sp" />
             <!-- Pin -->
@@ -139,6 +124,7 @@
                 android:layout_marginTop="@dimen/login_register_margin_top"
                 android:hint="@string/label_phone"
                 android:inputType="phone"
+                android:maxLength="10"
                 android:singleLine="true"
                 android:textSize="12sp" />
 

@@ -2,8 +2,9 @@
 <resources>
 
     <string name="app_name">SJPL Summer Reading Challenge</string>
-    <string name="title_summer_activity">Game Grid</string>
-    <string name="title_daily_reading">Reading Battery</string>
+    <string name="title_summer_activity">Play</string>
+    <string name="title_daily_reading">Read</string>
+    <string name="title_daily_win">Win</string>
     <string name="title_information">Information</string>
     <string name="action_settings">Settings</string>
 
@@ -19,20 +20,30 @@
     
     <string name="confirm_activity_enter_note">Enter Note Here (Optional)</string>
     
-    <string name="title_activity_grid">Complete any 5 squares in a row to win a prize.</string>
-    <string name="title_activity_prizes">My Prizes</string>
+    <string name="title_activity_grid">Complete activities in any 4 squares in a row (vertical, horizontal, or diagonal) to win a prize. Complete all activities to be entered into prize drawings.</string>
+    <string name="title_activity_grid_old">Complete any 5 squares in a row to win a prize.</string>
+    <string name="title_activity_prizes">PRIZES</string>
+    <string name="title_activity_badges">READING BADGES</string>
+    
+    <string name="title_activity_you_have_read">You have read:</string>
+    <string name="title_win_prize_default">Tap to play</string>
+    <string name="title_win_prize_header_1">Bingo</string>
+    <string name="title_win_prize_header_2">Black out</string>
+    <string name="title_win_prize_header_3">Reading</string>
+    
     <string name="title_choose_user">Select your name to play</string>
     
-    <string name="daily_reading_add_twenty">+ I read for 20 minutes</string>
+    <string name="daily_reading_add_twenty">Add 20 minutes</string>
+    <string name="daily_reading_remove_twenty">oops! Remove 20 minutes</string>
     
     <string name="label_register">Register New Account</string>
     <string name="label_login">Login</string>
-    <string name="label_phone_or_user">User Name / Phone Number</string>
+    <string name="label_username">User Name</string>
     <string name="label_name">Name</string>
     <string name="label_pin">4 Digit Pin</string>
     <string name="label_age">Age</string>
-    <string name="label_email">EMail Address</string>
-    <string name="label_phone">Phone Number</string>
+    <string name="label_email">Email Address</string>
+    <string name="label_phone">Phone (10 Digits)</string>
     <string name="label_login_in_register">Already have an account? Login Here</string>
     <string name="label_fyp">Forgot Pin?</string>
     <string name="label_register_in_login">Don\'t have an account? Register Here</string>
@@ -61,7 +72,7 @@
         </string-array>
 
     <string name="label_add">Add</string>
-    <string name="label_done">Done</string>
+    <string name="label_done">Back</string>
 
     <string name="label_choose_user_add">Add a Family Member</string>
     <string name="label_choose_user_select">Select</string>

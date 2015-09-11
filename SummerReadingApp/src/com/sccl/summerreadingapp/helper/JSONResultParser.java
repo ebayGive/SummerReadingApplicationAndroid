@@ -14,6 +14,7 @@ import com.sccl.summerreadingapp.model.GridActivity;
 import com.sccl.summerreadingapp.model.GridCell;
 import com.sccl.summerreadingapp.model.Login;
 import com.sccl.summerreadingapp.model.Prize;
+import com.sccl.summerreadingapp.model.PrizeDescription;
 import com.sccl.summerreadingapp.model.User;
 import com.sccl.summerreadingapp.model.UserType;
 
@@ -24,7 +25,6 @@ public class JSONResultParser {
     private static final String USER_GRIDS = "activityGrid";
     private static final String USER_PRIZES = "prizes";
 	private static String AUTH_TOKEN = "authToken"; 
-	
 
 	static public Login createLogin(JSONObject jsonLoginObject) throws JSONException {
         String authToken = jsonLoginObject.getString(AUTH_TOKEN);
@@ -180,6 +180,37 @@ public class JSONResultParser {
     	}
 
 		return gridCells;
+	}
+
+	public static ArrayList<PrizeDescription> createPrizeDescriptios(String jsonStr) {
+		ArrayList<PrizeDescription> prizeDescriptions = new ArrayList<PrizeDescription>();
+
+    	Log.d("Response: ", "> " + jsonStr);
+
+    	if (jsonStr != null) {
+    		try {
+    			JSONArray jsonArray = new JSONArray(jsonStr);
+    			for (int i = 0; i < jsonArray.length(); i++) {
+	    			JSONObject jsonObj = jsonArray.getJSONObject(i);
+	    			prizeDescriptions.add(PrizeDescription.createPrizeDescription(jsonObj));
+    			}
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	} else {
+    		Log.e("ServiceHandler", "Couldn't get any data from the url");
+    	}
+
+    	return prizeDescriptions;
+	}
+
+	public static ArrayList<PrizeDescription> createPrizeDescriptios(ArrayList<UserType> userType) {
+		ArrayList<PrizeDescription> prizeDescriptions = new ArrayList<PrizeDescription>();
+
+		for (int i = 0; i < userType.size(); i++) {
+			prizeDescriptions.add(PrizeDescription.createPrizeDescription(userType.get(i).getName()));
+		}
+    	return prizeDescriptions;
 	}
 
 }

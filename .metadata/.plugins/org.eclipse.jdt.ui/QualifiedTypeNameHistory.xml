@@ -19,18 +19,20 @@
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.clients.BranchClient"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.SharedPreferenceHelper"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.JSONResultParser"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.UserType"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.GridView"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Config"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.R.color"/>
-<fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="android.text.Editable"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.Constants"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.MainActivity"/>
-<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.MiscUtils"/>
 <fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.GridActivity"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.WinFragment"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.MiscUtils"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.helper.Constants"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.PrizeDescription"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.UserType"/>
+<fullyQualifiedTypeName name="com.sccl.summerreadingapp.model.Config"/>
 </qualifiedTypeNameHistroy>

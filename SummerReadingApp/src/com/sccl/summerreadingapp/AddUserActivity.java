@@ -45,8 +45,8 @@ public class AddUserActivity extends Activity implements AddUserAsyncListener {
 		for (UserType userType:readerTypeList) {
 			if (userType.getName().indexOf("STAFF") < 0) {
 				listWithoutStaff.add(userType);
-				String withAgeRange = userType.getDescription() + 
-						" [" + userType.getMinAge() + " - " + userType.getMaxAge() + "]";
+				String withAgeRange = userType.getName() + 
+						" <Age " + userType.getMinAge() + " - " + userType.getMaxAge() + ">";
 				readerTypeNames.add(withAgeRange);
 			}
 				// readerTypeNames.add(userType.getName());

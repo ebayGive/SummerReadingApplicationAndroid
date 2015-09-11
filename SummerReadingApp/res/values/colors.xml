@@ -146,4 +146,17 @@
  <color name="LibraryGreen">#2CA341</color>
  <color name="LibraryGray">#6D6E70</color>
  <color name="LibraryTextGreen">#2CA341</color>
+ 
+ <color name="LibraryCyan">#02AF98</color>
+ <color name="LibraryLightCyan">#ADDDD7</color>
+ <color name="LibraryNewBlue">#1A9FDA</color>
+ <color name="LibraryLightNewBlue">#C2D6EE</color>
+ <color name="LibraryYellow">#FBAF3A</color>
+ <color name="LibraryLightYellow">#F4E5C3</color>
+ <color name="LibraryNewRed">#C1282D</color>
+ <color name="LibraryLightNewRed">#F7B1BB</color>
+ <color name="LibraryNewGray">#494949</color>
+ <color name="LibraryLightNewGray">#CFCFCF</color>
+ 
+ 
 </resources>

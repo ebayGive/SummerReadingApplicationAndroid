@@ -128,6 +128,12 @@ public class User implements Serializable {
 		this.readingLog += 20;
 	}
 
+	public void removeTwentyToReadingLog() {
+		if (this.readingLog > 0) {
+			this.readingLog -= 20;
+		}
+	}
+
 	public String toJSON(){
 
 	    JSONObject jsonObject = this.toJSONObject(true);

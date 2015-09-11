@@ -15,4 +15,6 @@ public class Constants {
 
 	public static final String GRID_ACTIVITY_REQUEST = BASE_URL + "/accounts/";
 
+	public static final int TOTAL_PRIZES = 3;
+
 }

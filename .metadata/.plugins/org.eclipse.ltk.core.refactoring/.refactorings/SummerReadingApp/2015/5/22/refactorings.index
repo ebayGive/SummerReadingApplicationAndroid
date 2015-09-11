@@ -1,0 +1,6 @@
+1432626013948	Extract constant 'IMAGE_COUNT'
+1432694494459	Delete elements
+1432877509996	Extract method 'setHoursAndMinutesTextView'
+1432883551318	Extract method 'setReadingBadgeImage'
+1432886150561	Rename local variable 'readingLogMinutesInHours'
+1432891164910	Rename method 'handleAddTwenty'

@@ -24,6 +24,7 @@
                 android:src="@drawable/homeheader" />
         </LinearLayout>
 
+        <!-- Footer starts 
         <LinearLayout
             android:id="@+id/footer"
             android:layout_width="fill_parent"
@@ -38,12 +39,12 @@
                 android:gravity="center"
                 android:src="@drawable/homefooter" />
         </LinearLayout>
+	 footer ends -->
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
-            android:layout_above="@id/footer"
             android:layout_marginLeft="16dip"
             android:layout_marginRight="16dip"
             android:background="@color/White"

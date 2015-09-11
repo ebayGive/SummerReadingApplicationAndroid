@@ -38,6 +38,7 @@ public class UserType {
 	private String description;
 	private int minAge;
 	private int maxAge;
+	private String[] prizeDescriptionArray; // TBD -- remove this. Check below for more comments
 	
 	static public UserType createUserType (JSONObject jsonObj)
 	{
@@ -47,6 +48,12 @@ public class UserType {
 			String desc = jsonObj.getString(DESCRIPTION);
 			int minAge = jsonObj.getInt(MIN_AGE);
 			int maxAge = jsonObj.getInt(MAX_AGE);
+			
+			// TBD
+			// This should be completely refactored. The prize description should come from the
+			// backend and parsed and PrizeDescription object should be created and then used.
+			// REMOVE THIS
+			String prizeDescriptionArray [] = new String[5];
 	
 			return new UserType(id, name, desc, minAge, maxAge);
 		} catch (JSONException e) {

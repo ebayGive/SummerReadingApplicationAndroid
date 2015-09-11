@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.Html;
 import android.widget.Toast;
 
 public class MiscUtils {
@@ -35,7 +36,7 @@ public class MiscUtils {
 	public static void showAlertDialog(Activity activity, String title, String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle(title);
-		builder.setMessage(message);
+		builder.setMessage(Html.fromHtml(message));
 		builder.setCancelable(false);
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {

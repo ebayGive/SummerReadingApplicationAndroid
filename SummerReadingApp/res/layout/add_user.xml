@@ -33,6 +33,7 @@
         <!-- Header Ends -->
         <!-- android:background="@drawable/footer_repeat" -->
 
+        <!-- Footer starts 
         <LinearLayout
             android:id="@+id/footer"
             android:layout_width="fill_parent"
@@ -40,21 +41,15 @@
             android:layout_alignParentBottom="true"
             android:gravity="center" >
 
-            <!-- Logo Start -->
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:gravity="center"
                 android:src="@drawable/homefooter" />
-            <!-- Logo Ends -->
         </LinearLayout>
 
-        <!-- Footer Ends -->
-
-
-        <!-- Registration Form -->
+   footer ends -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,16 +111,16 @@
 		        android:layout_marginTop="15dip"
 			    />
             
-            <Button
+            <!-- Button
                 android:id="@+id/btnAdd"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:onClick="onButtonClickHandler"
             	android:background="@color/LibraryOrange"
-                android:text="@string/label_add" />
+                android:text="@string/label_add" / -->
 		 	
-			<!-- RelativeLayout
+			<RelativeLayout
 		        android:layout_width="match_parent"
 		        android:paddingLeft="5dip"
 		        android:paddingRight="5dip"
@@ -148,7 +143,7 @@
 		            android:layout_alignParentRight="true"
                     android:onClick="onButtonClickHandler"
 		            android:text="@string/label_done" />
-			</RelativeLayout -->
+			</RelativeLayout>
         
             <!--
                 android:entries="@array/reader_type"

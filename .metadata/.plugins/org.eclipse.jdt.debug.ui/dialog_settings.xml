@@ -13,6 +13,8 @@
 		<item value="156" key="HEIGHT"/>
 		<item value="600" key="WIDTH"/>
 	</section>
+	<section name="conditionHistory">
+	</section>
 	<section name="STRING_VALUE_INPUT_DIALOG">
 		<item value="366" key="DIALOG_WIDTH"/>
 		<item value="false" key="USE_EVALUATION"/>

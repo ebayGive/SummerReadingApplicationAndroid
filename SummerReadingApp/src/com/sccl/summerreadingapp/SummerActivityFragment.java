@@ -21,6 +21,7 @@ import com.sccl.summerreadingapp.model.Config;
 import com.sccl.summerreadingapp.model.GridActivity;
 import com.sccl.summerreadingapp.model.GridCell;
 import com.sccl.summerreadingapp.model.Prize;
+import com.sccl.summerreadingapp.model.PrizeDescription;
 import com.sccl.summerreadingapp.model.User;
 
 public class SummerActivityFragment extends Fragment implements GridActivityAsyncListener{
@@ -39,6 +40,8 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 	private Account account;
 	GridCell gridCell;
 	private boolean refresh;
+	private String userTypeName;
+	private PrizeDescription prizeDescription;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,10 +49,10 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
  
         rootView = inflater.inflate(R.layout.fragment_summer_activity, container, false);
 
-        if (user != null) {
+/*        if (user != null) {
             new PrizeImageHandler(getActivity()).setImagesAndAssignClickHandler(rootView, user.getPrizes());
         }
-        
+*/        
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
     
 		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getActivity().getApplicationContext();
@@ -59,6 +62,8 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
         if (user != null) {
         	userGrid = user.getGridActivities();
         	gridCell = config.getGridCell(user.getUserType());
+	    	userTypeName = config.getUserTypeById(user.getUserType()).getName();
+			prizeDescription = config.getPrizeDescription(userTypeName);
         }
         imageAdapter = new ImageAdapter(container.getContext(), userGrid, gridCell);
 		gridview.setAdapter(imageAdapter);
@@ -92,6 +97,8 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
     		SummerReadingApplication summerReadingApplication = (SummerReadingApplication) getActivity().getApplicationContext();
     		Config config = summerReadingApplication.getConfig();
         	gridCell = config.getGridCell(user.getUserType());
+	    	userTypeName = config.getUserTypeById(user.getUserType()).getName();
+			prizeDescription = config.getPrizeDescription(userTypeName);
     		imageAdapter.setGridData(user.getGridActivities(), gridCell);
         	prizeWon(getActivity(), rootView);
     	}
@@ -130,6 +137,7 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
                 case 1:
                     if (resultCode == Activity.RESULT_OK) {
                     	prizeWon(getActivity(), rootView);
+                		((MainActivity)getActivity()).refreshPager(2);
                     	imageAdapter.notifyDataSetChanged();
                     	String notes = null;
                     	if (selectedIndex != -1) {
@@ -189,14 +197,16 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 
         setPrizes(prizes, total);
 
-        new PrizeImageHandler(getActivity()).setImagesAndAssignClickHandler(rootView, prizes);
+  //      new PrizeImageHandler(getActivity()).setImagesAndAssignClickHandler(rootView, prizes);
         
         // MiscUtils.displayToastMessage(context, "Prizes="+total);
     }
 
 	private void setPrizes(Prize[] prizes, int total) {
-		if (total > 0 && prizes[0].getState() == 0)
+		if (total > 0 && prizes[0].getState() == 0) {
+            new PrizeImageHandler(getActivity(), userTypeName).displayPrizeMessage(prizeDescription, 0);
         	prizes[0].setState(1);
+		}
 
 /*        if (total > 1 && prizes[1].getState() == 0)
         	prizes[1].setState(1);
@@ -210,8 +220,10 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
         if (total > 11 && prizes[4].getState() == 0)
         	prizes[4].setState(1);
 */
-        if (total > 9 && prizes[4].getState() == 0)
+        if (total > 9 && prizes[1].getState() == 0) {
+            new PrizeImageHandler(getActivity(), userTypeName).displayPrizeMessage(prizeDescription, 1);
         	prizes[1].setState(1);
+        }
 	}
 
 	private boolean isRightDiagonalCompleted(GridActivity[] userGrid) {
@@ -276,8 +288,6 @@ public class SummerActivityFragment extends Fragment implements GridActivityAsyn
 	}
 
 	@Override
-	public void onResult(GridActivity grid) {
-		// TODO Auto-generated method stub
-		
+	public void onResult(GridActivity grid) {		
 	}
 }

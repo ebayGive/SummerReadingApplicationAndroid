@@ -12,17 +12,20 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.sccl.summerreadingapp.R;
+import com.sccl.summerreadingapp.helper.MiscUtils;
 import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.User;
 
 public class DailyReadingImageAdapter extends BaseAdapter implements Serializable{
-    /**
+    private static final int IMAGE_COUNT = 30;
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6698923475338075042L;
 	
 	private Context mContext;
-    int batteryWidth, batteryHeight;
+    int batteryWidth, batteryHeight, imageSize;
 	Account account;
 	User user;
 
@@ -34,11 +37,12 @@ public class DailyReadingImageAdapter extends BaseAdapter implements Serializabl
         // imageSize = (int) mContext.getResources().getDimension(R.dimen.image_size);
         batteryWidth = (int) mContext.getResources().getDimension(R.dimen.battery_image_width);
         batteryHeight = (int) mContext.getResources().getDimension(R.dimen.battery_image_height);
-
+        imageSize = (int) mContext.getResources().getDimension(R.dimen.image_size);
     }
 
     public int getCount() {
-        return 45; //mThumbIds.length;
+        // return 45; //mThumbIds.length;
+        return IMAGE_COUNT; //mThumbIds.length;
     }
 
     public Object getItem(int position) {
@@ -51,6 +55,42 @@ public class DailyReadingImageAdapter extends BaseAdapter implements Serializabl
     
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
+
+    	ImageView imageView;
+        if (convertView == null) {  // if it's not recycled, initialize some attributes
+            imageView = new ImageView(mContext);
+            imageView.setLayoutParams(new GridView.LayoutParams(imageSize, imageSize));
+
+            // MiscUtils.displayToastMessage(mContext, "size="+imageSize);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            //imageView.setPadding(2, 2, 2, 2);
+        } else {
+            imageView = (ImageView) convertView;
+        }
+        
+        int id = android.R.color.transparent;
+        
+        int modSixHunderd = user != null ? user.getReadingLog() % 600 : 0;
+        int twentyAdded = modSixHunderd / 20;
+//        if (position >= 45 - twentyAdded) {
+//        if (position >= IMAGE_COUNT - twentyAdded) {
+        if (position <= twentyAdded - 1) {
+        	// id = R.drawable.robotactivated01 + position;
+        	// id = R.drawable.batteryon01 + position;
+
+            // Last best version
+        	// id = R.drawable.appbatteryon01 + position;
+
+        	// id = R.drawable.appbatteryon201 + position;
+        	id = R.drawable.read_checkmark;
+        }
+        imageView.setImageResource(id);
+        
+        return imageView;
+    	}
+
+
+    public View getViewOld(int position, View convertView, ViewGroup parent) {
 
     	ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
@@ -81,20 +121,24 @@ public class DailyReadingImageAdapter extends BaseAdapter implements Serializabl
         } else {
             imageView = (ImageView) convertView;
         }
-        // int id = R.drawable.robottestoff01 + position;
-        // int id = R.drawable.battery101 + position;
-        // Last best version
-        // int id = R.drawable.appbatteryoff01 + position;
-        int id = R.drawable.appbatteryoff201 + position;
         
-        int twentyAdded = user != null ? user.getReadingLog() / 20 : 0;
-        if (position >= 45 - twentyAdded) {
+//        int id = R.drawable.appbatteryoff201 + position;
+        // int id = R.drawable.read_checkmark_transparent;
+        int id = android.R.color.transparent;
+        
+        int modSixHunderd = user != null ? user.getReadingLog() % 600 : 0;
+        // int twentyAdded = user != null ? user.getReadingLog() / 20 : 0;
+        int twentyAdded = modSixHunderd / 20;
+//        if (position >= 45 - twentyAdded) {
+        if (position >= 30 - twentyAdded) {
         	// id = R.drawable.robotactivated01 + position;
         	// id = R.drawable.batteryon01 + position;
 
             // Last best version
         	// id = R.drawable.appbatteryon01 + position;
-        	id = R.drawable.appbatteryon201 + position;
+
+        	// id = R.drawable.appbatteryon201 + position;
+        	id = R.drawable.read_checkmark;
         }
         // imageView.setImageResource(id);
         
@@ -109,9 +153,16 @@ public class DailyReadingImageAdapter extends BaseAdapter implements Serializabl
         return imageView;
     	}
 
-	public void addTwenty() {
+    public void addTwenty() {
 		if (user != null) {
 			user.addTwentyToReadingLog();
+			this.notifyDataSetChanged();
+    	}
+	}
+
+    public void removeTwenty() {
+		if (user != null) {
+			user.removeTwentyToReadingLog();
 			this.notifyDataSetChanged();
     	}
 	}

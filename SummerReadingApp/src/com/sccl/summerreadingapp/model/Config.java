@@ -14,6 +14,8 @@ public class Config implements Serializable {
 	private String branchesString;
 	private String userTypesString;
 	private String gridCellsString;
+	private ArrayList<PrizeDescription> prizeDescriptions;
+	private String prizeDescriptionsString;
 	
 	public ArrayList<Branch> getBranches() {
 		return branches;
@@ -79,6 +81,9 @@ public class Config implements Serializable {
 	public void setGridCellsString(String gridCellsStr) {
 		this.gridCellsString = gridCellsStr;
 	}
+	public void setPrizeDescriptionsString(String prizeDescriptionsString) {
+		this.prizeDescriptionsString = prizeDescriptionsString;
+	}
 	public String getBranchesString() {
 		return branchesString;
 	}
@@ -88,4 +93,23 @@ public class Config implements Serializable {
 	public String getGridCellsString() {
 		return gridCellsString;
 	}
+	public String getPrizeDescriptionsString() {
+		return this.prizeDescriptionsString;
+	}
+	public void setPrizeDescriptions(ArrayList<PrizeDescription> prizeDescriptions) {
+		this.prizeDescriptions = prizeDescriptions;
+	}
+	public ArrayList<PrizeDescription> getPrizeDescriptions() {
+		return this.prizeDescriptions;
+	}
+
+	public PrizeDescription getPrizeDescription(String userType)
+	{
+		for (PrizeDescription prizeDescription:this.prizeDescriptions) {
+			if (userType.equalsIgnoreCase(prizeDescription.getUserType()))
+				return prizeDescription;
+		}
+		return null;
+	}
+
 }

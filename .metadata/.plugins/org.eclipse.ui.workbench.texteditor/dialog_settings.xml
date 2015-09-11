@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="notifyDataSetChanged" key="selection"/>
+		<item value="onBackPressed" key="selection"/>
 		<list key="findhistory">
-			<item value="notifyDataSetChanged"/>
-			<item value="setCentetGridStateToDone"/>
-			<item value="hideBatteryAndShowRobot"/>
+			<item value="onBackPressed"/>
+			<item value="prizeDescription"/>
 			<item value="user"/>
-			<item value="refreshTab"/>
-			<item value="userIndex"/>
-			<item value="layout"/>
-			<item value="setSelectedPosition"/>
+			<item value="gridCell"/>
+			<item value="userTypeName"/>
+			<item value="prizeWon"/>
+			<item value="prizeI"/>
+			<item value="createPrizeDescriptionArray"/>
 		</list>
 		<list key="replacehistory">
 		</list>

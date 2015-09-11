@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     		}
     		else {
     			MiscUtils.showAlertDialog(this, "Error", "Please enable network connection to use this application first time.");
-    			// finish();
+    			// finish(); // can't do this here as execution comes here even before the dialog is shown.
     		}
 		}
 

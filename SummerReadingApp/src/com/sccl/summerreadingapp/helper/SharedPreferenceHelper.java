@@ -68,6 +68,18 @@ public class SharedPreferenceHelper {
         	config.setGridCells(JSONResultParser.createGridCells(gridCellsStr));
         }
 
-        return config;
+        // TBD
+    	// Should use service version
+/*        String prizeDescriptionsStr = userDetails.getString("PrizeDescriptions", "");
+        if (!MiscUtils.empty(prizeDescriptions)) {
+        	config.createPrizeDescriptios(prizeDescriptions);
+        	config.createPrizeDescriptios(JSONResultParser.createPrizeDescriptios(prizeDescriptions));
+        }
+*/
+    	if (config.getUserTypes() != null) {
+    		config.setPrizeDescriptions(JSONResultParser.createPrizeDescriptios(config.getUserTypes()));
+    	}
+
+    	return config;
 	}
 }

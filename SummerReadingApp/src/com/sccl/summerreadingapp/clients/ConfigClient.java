@@ -11,6 +11,7 @@ import com.sccl.summerreadingapp.helper.JSONResultParser;
 import com.sccl.summerreadingapp.helper.ServiceInvoker;
 import com.sccl.summerreadingapp.helper.SharedPreferenceHelper;
 import com.sccl.summerreadingapp.model.Config;
+import com.sccl.summerreadingapp.model.UserType;
 
 /**
  * Async task class to get json by making HTTP call
@@ -60,6 +61,15 @@ public class ConfigClient extends AsyncTask<Void, Void, Void> {
     	String gridCellsStr = getGridCellFromUrl(serviceInvoker); 
     	config.setGridCellsString(gridCellsStr);
     	config.setGridCells(JSONResultParser.createGridCells(gridCellsStr));
+    	
+        // TBD
+    	// Should use service version
+    	// String prizeDescriptionString = getPrizeDescriptionsFromUrl(serviceInvoker); 
+    	// config.setPrizeDescriptionsString(prizeDescriptionString);
+    	// config.setPrizeDescriptions(JSONResultParser.createPrizeDescriptios(prizeDescriptionString)));
+    	if (config.getUserTypes() != null) {
+    		config.setPrizeDescriptions(JSONResultParser.createPrizeDescriptios(config.getUserTypes()));
+    	}
     	
     	SummerReadingApplication summerReadingApplication = (SummerReadingApplication) parent.getApplicationContext();
     	summerReadingApplication.setConfig(config);

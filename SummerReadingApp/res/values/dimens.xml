@@ -12,4 +12,7 @@
 	<dimen name="battery_image_height">49dp</dimen>    
 	<dimen name="daily_reading_padding_left">19dp</dimen>    
 	<dimen name="daily_reading_padding_right">20dp</dimen>    
+	<dimen name="win_text_title_size">15sp</dimen>    
+	<dimen name="win_text_hours_size">20sp</dimen>    
+	<dimen name="prize_text_title_size">14sp</dimen>    
 </resources>

@@ -11,6 +11,7 @@ import com.sccl.summerreadingapp.DailyReadingFragment;
 import com.sccl.summerreadingapp.InformationFragment;
 import com.sccl.summerreadingapp.R;
 import com.sccl.summerreadingapp.SummerActivityFragment;
+import com.sccl.summerreadingapp.WinFragment;
 import com.sccl.summerreadingapp.model.Account;
 import com.sccl.summerreadingapp.model.GridActivity;
 
@@ -24,6 +25,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     GridActivity[] data = null;
 	// private User user;
 	SummerActivityFragment summer;
+	WinFragment win;
 	private Account account;
 	private int userIndex = -1;
 
@@ -36,24 +38,24 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
         case 0:
-        	summer =  new SummerActivityFragment();
-        	// fragment.setGridData(data);
-        	// summer.setAccountAndSelectedUserIndex(user, account, userIndex);
-        	summer.setAccountAndSelectedUserIndex(account, userIndex);
-        	return summer;
-        case 1:
         	DailyReadingFragment daily =  new DailyReadingFragment();
         	daily.setAccountAndSelectedUserIndex(account, userIndex);
         	return daily;
+        case 1:
+        	summer =  new SummerActivityFragment();
+        	summer.setAccountAndSelectedUserIndex(account, userIndex);
+        	return summer;
         case 2:
-            return new InformationFragment();
+//            return new InformationFragment();
+        	win =  new WinFragment();
+        	win.setAccountAndSelectedUserIndex(account, userIndex);
+        	return win;
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
         return 3;
     }
 
@@ -61,13 +63,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         Locale l = Locale.getDefault();
         switch (position) {
-            case 0:
-//                return "Summer Activity";
-                return mContext.getString(R.string.title_summer_activity);
+          case 0:
+              return mContext.getString(R.string.title_daily_reading);
           case 1:
-                return mContext.getString(R.string.title_daily_reading);
-            case 2:
-                return mContext.getString(R.string.title_information);
+              return mContext.getString(R.string.title_summer_activity);
+          case 2:
+              return mContext.getString(R.string.title_daily_win);
         }
         return null;
     }
@@ -82,27 +83,39 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     	// this.user = users[userIndex];
     	
     	SummerActivityFragment fragment = (SummerActivityFragment) fm.findFragmentByTag(
-  	                       "android:switcher:"+R.id.pager+":0");
+  	                       "android:switcher:"+R.id.pager+":1");
 	  	if(fragment != null)  {
-	  		// fragment.setAccountAndSelectedUserIndex(user, account, userIndex);
 	  		fragment.setAccountAndSelectedUserIndex(account, userIndex);
 	  	}
 
     	DailyReadingFragment dailyFragment = (DailyReadingFragment) fm.findFragmentByTag(
-                  "android:switcher:"+R.id.pager+":1");
+                  "android:switcher:"+R.id.pager+":0");
 		if(dailyFragment != null)  {
-			// fragment.setAccountAndSelectedUserIndex(user, account, userIndex);
 			dailyFragment.setAccountAndSelectedUserIndex(account, userIndex);
 		}
+
+    	WinFragment winFragment = (WinFragment) fm.findFragmentByTag(
+                  "android:switcher:"+R.id.pager+":2");
+    	if(winFragment != null)  {
+    		winFragment.setAccountAndSelectedUserIndex(account, userIndex);
+    	}
+
 	}
 
 	public void refreshPager(FragmentManager fm) {
     	SummerActivityFragment fragment = (SummerActivityFragment) fm.findFragmentByTag(
-                  "android:switcher:"+R.id.pager+":0");
+                  "android:switcher:"+R.id.pager+":1");
     	if(fragment != null)  {
     		// fragment.setAccountAndSelectedUserIndex(user, account, userIndex);
     		fragment.refreshImageAndPrizes();
     	}
+
+    	WinFragment winFragment = (WinFragment) fm.findFragmentByTag(
+                "android:switcher:"+R.id.pager+":2");
+    	if(winFragment != null)  {
+    		winFragment.refreshImageAndPrizes();
+    	}
+
 	}
 	
 

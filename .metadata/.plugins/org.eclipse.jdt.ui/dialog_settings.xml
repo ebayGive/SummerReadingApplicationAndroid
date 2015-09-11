@@ -29,7 +29,7 @@
 		<item value="false" key="OmitCallToSuper"/>
 	</section>
 	<section name="BuildPathsPropertyPage">
-		<item value="2" key="pageIndex"/>
+		<item value="3" key="pageIndex"/>
 	</section>
 	<section name="JavaSearchPage">
 		<item value="false" key="CASE_SENSITIVE"/>
@@ -100,7 +100,7 @@
 	<section name="ExtractMethodWizard">
 		<item value="false" key="ThrowRuntimeExceptions"/>
 		<item value="false" key="GenerateJavadoc"/>
-		<item value="1" key="AccessModifier"/>
+		<item value="2" key="AccessModifier"/>
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>

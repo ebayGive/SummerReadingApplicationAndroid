@@ -58,28 +58,35 @@ public class ChooseUserAdapter extends BaseAdapter {
 		Config config = summerReadingApplication.getConfig();
 
         // String description = UserType.getDescription(userTypes[position]);
-        String description = config.getUserTypeById(userTypes[position]).getDescription();
-        int bgColor = vi.getResources().getColor(R.color.LibraryRed);
+        // String description = config.getUserTypeById(userTypes[position]).getDescription();
+        String description = config.getUserTypeById(userTypes[position]).getName();
+        int bgColor = vi.getResources().getColor(R.color.LibraryLightYellow);
+        int textColor = vi.getResources().getColor(R.color.LibraryYellow);
 		if ("Adult".equalsIgnoreCase(description)) { 
         	imageView.setImageResource(R.drawable.adult);
-        	bgColor = vi.getResources().getColor(R.color.LibraryGreen);
+        	bgColor = vi.getResources().getColor(R.color.LibraryLightCyan);
+        	textColor = vi.getResources().getColor(R.color.LibraryCyan);
         }
         else if ("Pre-Reader".equalsIgnoreCase(description)) {
         	imageView.setImageResource(R.drawable.prereader);
-        	bgColor = vi.getResources().getColor(R.color.LibraryOrange);
+        	bgColor = vi.getResources().getColor(R.color.LibraryLightNewRed);
+        	textColor = vi.getResources().getColor(R.color.LibraryNewRed);
     	}
         else if ("Teen".equalsIgnoreCase(description)) {
         	imageView.setImageResource(R.drawable.teen);
-        	bgColor = vi.getResources().getColor(R.color.LibraryBlue);
+        	bgColor = vi.getResources().getColor(R.color.LibraryLightNewBlue);
+        	textColor = vi.getResources().getColor(R.color.LibraryNewBlue);
         }
         else if ("Staff".equalsIgnoreCase(description)) {
         	imageView.setImageResource(R.drawable.staff);
-        	bgColor = vi.getResources().getColor(R.color.LibraryGray);
+        	bgColor = vi.getResources().getColor(R.color.LibraryLightNewGray);
+        	textColor = vi.getResources().getColor(R.color.LibraryNewGray);
         }
         else { // if ("Reader".equalsIgnoreCase(description)) 
         	imageView.setImageResource(R.drawable.reader);
         }
 
+		title.setTextColor(textColor);
         if (position == mCurrSelected) {
         	vi.setBackgroundColor(activity.getResources().getColor(R.color.LightSkyBlue));
         }
