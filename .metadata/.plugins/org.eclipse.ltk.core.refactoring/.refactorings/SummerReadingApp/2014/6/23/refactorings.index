@@ -1,5 +1,0 @@
-1401817811260	Extract local variable 'networkAvailable'
-1401831034907	Extract method 'getLatestAccountDataFromServer'
-1401864794006	Extract local variable 'gridActivities'
-1401948700275	Extract local variable 'readingLogDone'
-1401950929438	Extract local variable 'simpleDateFormat'

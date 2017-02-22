@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-<typeInfo handle="=SummerReadingApp/src&lt;com.sccl.summerreadingapp{LoginActivity.java[LoginActivity" modifiers="1" timestamp="1402033819000"/>
-<typeInfo handle="=SummerReadingApp/src&lt;com.sccl.summerreadingapp.clients{LoginClient.java[LoginClient" modifiers="1" timestamp="1401483084000"/>
-<typeInfo handle="=SummerReadingApp/src&lt;com.sccl.summerreadingapp.model{User.java[User" modifiers="1" timestamp="1432890925000"/>
-<typeInfo handle="=SummerReadingApp/src&lt;com.sccl.summerreadingapp.helper{JSONResultParser.java[JSONResultParser" modifiers="1" timestamp="1433303593000"/>
-<typeInfo handle="=SummerReadingApp/src&lt;com.sccl.summerreadingapp{ConfirmSummerActivityFragment.java[ConfirmSummerActivityFragment" modifiers="1" timestamp="1401944433000"/>
-<typeInfo handle="=SummerReadingApp/src&lt;com.sccl.summerreadingapp{SummerActivityFragment.java[SummerActivityFragment" modifiers="1" timestamp="1433308372000"/>
-</typeInfoHistroy>
